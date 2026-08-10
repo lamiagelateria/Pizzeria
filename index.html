@@ -98,17 +98,17 @@ main{
 
 .products{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(145px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
   gap:10px;
 }
 
 .product{
-  min-height:105px;
+  min-height:150px;
   border:2px solid #444;
   border-radius:10px;
   background:#343434;
   color:white;
-  padding:14px;
+  padding:12px;
   text-align:left;
 }
 
@@ -121,7 +121,15 @@ main{
   display:block;
   font-size:16px;
   line-height:1.2;
-  margin-bottom:15px;
+  margin-bottom:8px;
+}
+
+.productIngredients{
+  color:#ccc;
+  font-size:11px;
+  line-height:1.4;
+  min-height:48px;
+  margin-bottom:8px;
 }
 
 .product span{
@@ -313,7 +321,7 @@ aside{
 }
 
 .box{
-  width:min(600px,96vw);
+  width:min(650px,96vw);
   max-height:95vh;
   overflow-y:auto;
   background:#292929;
@@ -365,6 +373,25 @@ aside{
   margin-bottom:10px;
 }
 
+.baseIngredients{
+  background:#171717;
+  border-radius:8px;
+  padding:12px;
+  margin-bottom:12px;
+}
+
+.baseIngredientsTitle{
+  font-weight:bold;
+  color:#ffc107;
+  margin-bottom:7px;
+}
+
+.baseIngredientsText{
+  color:#ddd;
+  font-size:14px;
+  line-height:1.6;
+}
+
 .ingredientList{
   display:flex;
   flex-direction:column;
@@ -390,11 +417,13 @@ aside{
 .ingredientPrice{
   color:#ffc107;
   font-size:12px;
+  margin-top:3px;
 }
 
 .ingredientButtons{
   display:flex;
   gap:4px;
+  flex-wrap:wrap;
 }
 
 .ingredientButtons button{
@@ -430,7 +459,7 @@ aside{
 .modLine{
   display:flex;
   justify-content:space-between;
-  padding:4px 0;
+  padding:5px 0;
   border-bottom:1px solid #333;
   font-size:13px;
 }
@@ -441,8 +470,6 @@ aside{
   color:#ffc107;
   padding:12px 0;
 }
-
-/* TASTIERA LETTERE - GRANDE */
 
 .keyboardInput{
   background:#111!important;
@@ -525,10 +552,6 @@ aside{
   border-radius:7px;
   color:white;
   min-height:70px;
-}
-
-.cashKeys button:active{
-  background:#666;
 }
 
 .cashKeys .clear{
@@ -660,8 +683,8 @@ aside{
 <h2>⚙️ GESTIONE MENU</h2>
 
 <select id="managerCategory"
-        class="managerSelect"
-        onchange="renderManager()">
+class="managerSelect"
+onchange="renderManager()">
 
 <option>Pizze</option>
 <option>Bibite</option>
@@ -699,27 +722,18 @@ Nessun tavolo / ordine
 
 <div class="actions">
 
-<button class="green" onclick="openCash()">
-💶 CONTANTI
-</button>
-
-<button class="blue" onclick="payCard()">
-💳 CARTA
-</button>
-
-<button class="orange" onclick="printOrder()">
-🧾 COMANDA
-</button>
-
-<button class="red" onclick="clearOrder()">
-🗑️ ANNULLA
-</button>
+<button class="green" onclick="openCash()">💶 CONTANTI</button>
+<button class="blue" onclick="payCard()">💳 CARTA</button>
+<button class="orange" onclick="printOrder()">🧾 COMANDA</button>
+<button class="red" onclick="clearOrder()">🗑️ ANNULLA</button>
 
 </div>
 
 </aside>
 </div>
 
+
+<!-- MODALE PIZZA -->
 
 <div class="modal" id="productModal">
 
@@ -732,19 +746,36 @@ Prezzo base:
 <b id="pizzaBasePrice">€ 0,00</b>
 </div>
 
+<div class="baseIngredients">
+<div class="baseIngredientsTitle">
+🍕 INGREDIENTI DELLA PIZZA
+</div>
+
+<div id="pizzaBaseIngredients"
+class="baseIngredientsText">
+</div>
+</div>
+
 <label>Quantità</label>
+
 <input id="pizzaQty"
-       type="number"
-       min="1"
-       value="1">
+type="number"
+min="1"
+value="1">
 
 <h3>🧀 MODIFICA INGREDIENTI</h3>
 
-<div id="ingredientList" class="ingredientList"></div>
+<div id="ingredientList"
+class="ingredientList"></div>
 
 <div class="selectedMods">
+
 <b>Modifiche:</b>
-<div id="selectedMods">Nessuna modifica</div>
+
+<div id="selectedMods">
+Nessuna modifica
+</div>
+
 </div>
 
 <div class="finalPrice">
@@ -755,19 +786,23 @@ Totale pizza:
 <label>📝 Note aggiuntive</label>
 
 <textarea id="pizzaNote"
-placeholder="Es. ben cotta, tagliata, ecc."></textarea>
+placeholder="Es. ben cotta, tagliata, poco pomodoro..."></textarea>
 
-<button class="green" onclick="addPizzaToOrder()">
+<button class="green"
+onclick="addPizzaToOrder()">
 ➕ AGGIUNGI ALLA COMANDA
 </button>
 
-<button class="gray" onclick="closeModal('productModal')">
+<button class="gray"
+onclick="closeModal('productModal')">
 ANNULLA
 </button>
 
 </div>
 </div>
 
+
+<!-- TAVOLI -->
 
 <div class="modal" id="tableModal">
 
@@ -796,6 +831,8 @@ CHIUDI
 </div>
 </div>
 
+
+<!-- PRENOTAZIONE -->
 
 <div class="modal" id="bookingModal">
 
@@ -835,6 +872,8 @@ ANNULLA
 </div>
 </div>
 
+
+<!-- ASPORTO -->
 
 <div class="modal" id="takeawayModal">
 
@@ -879,7 +918,7 @@ ANNULLA
 </div>
 
 
-<!-- TASTIERA LETTERE GRANDE -->
+<!-- TASTIERA -->
 
 <div class="modal" id="textKeyboardModal">
 
@@ -922,23 +961,20 @@ readonly>
 <button onclick="textKey('N')">N</button>
 <button onclick="textKey('M')">M</button>
 
-<button class="space" onclick="textKey(' ')">
-SPAZIO
-</button>
+<button class="space" onclick="textKey(' ')">SPAZIO</button>
 
-<button class="back" onclick="textBackspace()">
-⌫
-</button>
+<button class="back" onclick="textBackspace()">⌫</button>
 
 <button class="ok" onclick="textKeyboardOK()">
 CONFERMA
 </button>
 
 </div>
-
 </div>
 </div>
 
+
+<!-- NUMERICO -->
 
 <div class="modal" id="numericKeyboardModal">
 
@@ -948,7 +984,6 @@ CONFERMA
 
 <input id="numericKeyboardInput"
 class="keyboardInput"
-inputmode="numeric"
 readonly>
 
 <div class="cashKeys">
@@ -975,10 +1010,11 @@ CONFERMA
 </button>
 
 </div>
-
 </div>
 </div>
 
+
+<!-- CASSA -->
 
 <div class="modal" id="cashModal">
 
@@ -1033,6 +1069,10 @@ ANNULLA
 
 <script>
 
+/* =========================
+   PRODOTTI
+========================= */
+
 const pizzaNames=[
 "Margherita","Marinara","Diavola","Quattro Formaggi",
 "Capricciosa","Prosciutto e Funghi","Quattro Stagioni","Bufalina",
@@ -1062,6 +1102,11 @@ const pizzaNames=[
 "Pizza Gourmet"
 ];
 
+
+/* =========================
+   INGREDIENTI DISPONIBILI
+========================= */
+
 const defaultIngredients=[
 {name:"Pomodoro",price:0},
 {name:"Mozzarella",price:0},
@@ -1084,17 +1129,261 @@ const defaultIngredients=[
 {name:"Bufala",price:2},
 {name:"Gorgonzola",price:1.5},
 {name:"Pesto",price:1},
-{name:"'Nduja",price:1.5},
+{name:"Nduja",price:1.5},
 {name:"Bresaola",price:2},
 {name:"Tonno",price:1.5},
-{name:"Acciughe",price:1}
+{name:"Acciughe",price:1},
+{name:"Brie",price:1.5},
+{name:"Taleggio",price:1.5},
+{name:"Provola",price:1.5},
+{name:"Parmigiano",price:1},
+{name:"Patatine",price:1},
+{name:"Friarielli",price:1},
+{name:"Pistacchio",price:2},
+{name:"Mortadella",price:1.5},
+{name:"Stracciatella",price:2},
+{name:"Porcini",price:2},
+{name:"Crudo",price:2},
+{name:"Carciofi",price:1},
+{name:"Fiori di zucca",price:1.5},
+{name:"Gamberetti",price:2},
+{name:"Salmone",price:2},
+{name:"Frutti di mare",price:3},
+{name:"Uovo",price:.7},
+{name:"Panna",price:.7},
+{name:"Pere",price:1},
+{name:"Tartufo",price:2}
 ];
 
+
+/* =========================
+   INGREDIENTI BASE DELLE PIZZE
+========================= */
+
+const pizzaIngredients={
+
+"Margherita":[
+"Pomodoro","Mozzarella","Basilico","Olio"
+],
+
+"Marinara":[
+"Pomodoro","Aglio","Origano","Olio"
+],
+
+"Diavola":[
+"Pomodoro","Mozzarella","Salame piccante","Origano"
+],
+
+"Quattro Formaggi":[
+"Mozzarella","Gorgonzola","Provola","Parmigiano"
+],
+
+"Capricciosa":[
+"Pomodoro","Mozzarella","Prosciutto","Funghi","Olive","Carciofi"
+],
+
+"Prosciutto e Funghi":[
+"Pomodoro","Mozzarella","Prosciutto","Funghi"
+],
+
+"Quattro Stagioni":[
+"Pomodoro","Mozzarella","Prosciutto","Funghi","Olive","Carciofi"
+],
+
+"Bufalina":[
+"Pomodoro","Mozzarella","Bufala","Basilico","Olio"
+],
+
+"Boscaiola":[
+"Mozzarella","Funghi","Salsiccia","Parmigiano"
+],
+
+"Tonno e Cipolla":[
+"Pomodoro","Mozzarella","Tonno","Cipolla"
+],
+
+"Napoli":[
+"Pomodoro","Mozzarella","Acciughe","Origano","Olive"
+],
+
+"Romana":[
+"Pomodoro","Mozzarella","Acciughe","Capperi","Origano"
+],
+
+"Parmigiana":[
+"Pomodoro","Mozzarella","Melanzane","Parmigiano"
+],
+
+"Vegetariana":[
+"Pomodoro","Mozzarella","Peperoni","Melanzane","Zucchine","Olive"
+],
+
+"Patatosa":[
+"Mozzarella","Patatine"
+],
+
+"Wurstel e Patatine":[
+"Mozzarella","Wurstel","Patatine"
+],
+
+"Salsiccia":[
+"Pomodoro","Mozzarella","Salsiccia"
+],
+
+"Salsiccia e Friarielli":[
+"Mozzarella","Salsiccia","Friarielli"
+],
+
+"Speck e Brie":[
+"Mozzarella","Speck","Brie"
+],
+
+"Speck e Gorgonzola":[
+"Mozzarella","Speck","Gorgonzola"
+],
+
+"Mortadella e Pistacchio":[
+"Mozzarella","Mortadella","Pistacchio"
+],
+
+"Pistacchio e Burrata":[
+"Mozzarella","Pistacchio","Burrata"
+],
+
+"Porcini":[
+"Mozzarella","Porcini","Parmigiano"
+],
+
+"Crudo e Rucola":[
+"Mozzarella","Crudo","Rucola","Parmigiano"
+],
+
+"Salame Piccante":[
+"Pomodoro","Mozzarella","Salame piccante"
+],
+
+"Nduja":[
+"Pomodoro","Mozzarella","Nduja"
+],
+
+"Calabrese":[
+"Pomodoro","Mozzarella","Nduja","Salame piccante","Olive"
+],
+
+"Zucchine e Speck":[
+"Mozzarella","Zucchine","Speck"
+],
+
+"Melanzane e Salsiccia":[
+"Pomodoro","Mozzarella","Melanzane","Salsiccia"
+],
+
+"Peperoni e Tonno":[
+"Pomodoro","Mozzarella","Peperoni","Tonno"
+],
+
+"Carciofi e Speck":[
+"Mozzarella","Carciofi","Speck"
+],
+
+"Cipolla e Gorgonzola":[
+"Mozzarella","Cipolla","Gorgonzola"
+],
+
+"Gorgonzola e Pere":[
+"Mozzarella","Gorgonzola","Pere"
+],
+
+"Taleggio e Speck":[
+"Mozzarella","Taleggio","Speck"
+],
+
+"Scamorza e Speck":[
+"Mozzarella","Provola","Speck"
+],
+
+"Provola e Nduja":[
+"Mozzarella","Provola","Nduja"
+],
+
+"Fiori di Zucca":[
+"Mozzarella","Fiori di zucca","Acciughe"
+],
+
+"Alici e Burrata":[
+"Mozzarella","Acciughe","Burrata"
+],
+
+"Pomodorini e Rucola":[
+"Mozzarella","Pomodoro","Rucola","Olio"
+],
+
+"Pesto e Stracciatella":[
+"Mozzarella","Pesto","Stracciatella"
+],
+
+"Tartufo":[
+"Mozzarella","Tartufo","Parmigiano"
+],
+
+"Tartufo e Funghi":[
+"Mozzarella","Tartufo","Funghi","Parmigiano"
+],
+
+"Porchetta":[
+"Mozzarella","Porchetta"
+],
+
+"Porchetta e Provola":[
+"Mozzarella","Porchetta","Provola"
+],
+
+"Carbonara":[
+"Mozzarella","Pancetta","Uovo","Panna","Parmigiano"
+],
+
+"Amatriciana":[
+"Pomodoro","Mozzarella","Pancetta","Parmigiano"
+],
+
+"Cacio e Pepe":[
+"Mozzarella","Parmigiano","Pepe"
+],
+
+"Genovese":[
+"Mozzarella","Pesto","Parmigiano"
+],
+
+"Siciliana":[
+"Pomodoro","Mozzarella","Melanzane","Olive","Acciughe"
+],
+
+"Greca":[
+"Mozzarella","Olive","Cipolla","Pomodoro"
+],
+
+"Mediterranea":[
+"Mozzarella","Pomodoro","Olive","Acciughe","Rucola"
+],
+
+"Italiana":[
+"Pomodoro","Mozzarella","Crudo","Rucola","Parmigiano"
+]
+
+};
+
+
+/* =========================
+   MENU
+========================= */
+
 const menu={
+
 Pizze:pizzaNames.map((name,i)=>({
  name,
  price:Number((7.5+(i%8)*.5).toFixed(2))
 })),
+
 Bibite:[
 {name:"Acqua Naturale",price:1.5},
 {name:"Acqua Frizzante",price:1.5},
@@ -1105,15 +1394,18 @@ Bibite:[
 {name:"Estathé",price:3},
 {name:"Chinotto",price:3}
 ],
+
 Birre:[
 {name:"Birra Piccola",price:3},
 {name:"Birra Media",price:4},
 {name:"Birra Grande",price:5},
 {name:"Birra Artigianale",price:6}
 ],
+
 Fritti:[
 {name:"Patatine",price:4}
 ],
+
 Dolci:[
 {name:"Tiramisù",price:4},
 {name:"Panna Cotta",price:4},
@@ -1122,12 +1414,14 @@ Dolci:[
 {name:"Pizza Nutella",price:6},
 {name:"Gelato",price:4}
 ],
+
 Bambini:[
 {name:"Menù Bimbi Margherita",price:6},
 {name:"Menù Bimbi Wurstel",price:6},
 {name:"Menù Bimbi Patatine",price:5},
 {name:"Pizza Baby",price:5}
 ],
+
 Extra:[
 {name:"Mozzarella",price:1},
 {name:"Doppia Mozzarella",price:2},
@@ -1139,7 +1433,13 @@ Extra:[
 {name:"Burrata",price:2},
 {name:"Bufala",price:2}
 ]
+
 };
+
+
+/* =========================
+   STATO
+========================= */
 
 let currentCategory="Pizze";
 let selectedProduct=null;
@@ -1150,12 +1450,18 @@ let keyboardTarget=null;
 let numericTarget=null;
 let cashAmount="";
 
+
 const tables=Array.from({length:70},(_,i)=>({
  number:i+1,
  status:"free",
  order:[],
  reservation:null
 }));
+
+
+/* =========================
+   FUNZIONI GENERALI
+========================= */
 
 function money(n){
  return "€ "+Number(n||0).toFixed(2).replace(".",",");
@@ -1189,7 +1495,13 @@ function hidePages(){
  document.getElementById("managerPage").style.display="none";
 }
 
+
+/* =========================
+   CATEGORIE
+========================= */
+
 function category(cat,button){
+
  hidePages();
 
  document.getElementById("productsPage").style.display="block";
@@ -1218,6 +1530,43 @@ function category(cat,button){
  renderProducts();
 }
 
+
+/* =========================
+   INGREDIENTI PIZZA
+========================= */
+
+function getPizzaBaseIngredients(name){
+
+ if(pizzaIngredients[name]){
+  return pizzaIngredients[name];
+ }
+
+ /*
+  Per le pizze non ancora specificate
+  viene mostrata una base generica.
+ */
+ return [
+  "Pomodoro",
+  "Mozzarella"
+ ];
+}
+
+
+function getIngredientObject(name){
+
+ const found=defaultIngredients.find(function(i){
+  return i.name.toLowerCase()===name.toLowerCase();
+ });
+
+ if(found)return found;
+
+ return {
+  name:name,
+  price:1
+ };
+}
+
+
 function renderProducts(){
 
  const box=document.getElementById("products");
@@ -1227,7 +1576,7 @@ function renderProducts(){
  const list=menu[currentCategory];
 
  document.getElementById("productCount").textContent=
- list.length+" prodotti";
+  list.length+" prodotti";
 
  list.forEach(function(product,index){
 
@@ -1235,8 +1584,24 @@ function renderProducts(){
 
   button.className="product";
 
+  let ingredientText="";
+
+  if(currentCategory==="Pizze"){
+
+   ingredientText=getPizzaBaseIngredients(product.name)
+   .join(" • ");
+
+  }else{
+
+   ingredientText="Premi per aggiungere";
+
+  }
+
   button.innerHTML=
    "<b>"+escapeHTML(product.name)+"</b>"+
+   "<div class='productIngredients'>"+
+   escapeHTML(ingredientText)+
+   "</div>"+
    "<span>"+money(product.price)+"</span>";
 
   button.onclick=function(){
@@ -1246,6 +1611,11 @@ function renderProducts(){
   box.appendChild(button);
  });
 }
+
+
+/* =========================
+   APERTURA PRODOTTO
+========================= */
 
 function openProduct(category,index){
 
@@ -1259,37 +1629,52 @@ function openProduct(category,index){
  ingredientMods=[];
 
  document.getElementById("pizzaTitle").textContent=
-  "🍕 "+product.name;
+  category==="Pizze"
+  ?"🍕 "+product.name
+  :"🛒 "+product.name;
 
  document.getElementById("pizzaBasePrice").textContent=
   money(product.price);
 
  document.getElementById("pizzaQty").value=1;
+
  document.getElementById("pizzaNote").value="";
 
- renderIngredients();
+
+ if(category==="Pizze"){
+
+  document.getElementById("pizzaBaseIngredients").textContent=
+   getPizzaBaseIngredients(product.name).join(" • ");
+
+  document.getElementById("ingredientList")
+  .style.display="flex";
+
+  document.querySelector("#productModal h3")
+  .style.display="block";
+
+  renderIngredients();
+
+ }else{
+
+  document.getElementById("pizzaBaseIngredients").textContent=
+   "Nessun ingrediente da modificare.";
+
+  document.getElementById("ingredientList")
+  .style.display="none";
+
+  document.querySelector("#productModal h3")
+  .style.display="none";
+ }
+
  updatePizzaPrice();
 
  document.getElementById("productModal").classList.add("show");
 }
 
-function getIngredients(){
 
- if(!localStorage.getItem("pizzaIngredients")){
-  localStorage.setItem(
-   "pizzaIngredients",
-   JSON.stringify(defaultIngredients)
-  );
- }
-
- try{
-  return JSON.parse(
-   localStorage.getItem("pizzaIngredients")
-  );
- }catch(e){
-  return defaultIngredients;
- }
-}
+/* =========================
+   LISTA MODIFICHE
+========================= */
 
 function renderIngredients(){
 
@@ -1297,7 +1682,33 @@ function renderIngredients(){
 
  box.innerHTML="";
 
- getIngredients().forEach(function(ingredient){
+ const product=
+  menu[selectedProduct.category][selectedProduct.index];
+
+ const base=getPizzaBaseIngredients(product.name);
+
+ /*
+  Mostriamo prima gli ingredienti che la pizza possiede.
+  Poi tutti gli altri ingredienti disponibili.
+ */
+
+ const names=[];
+
+ base.forEach(function(name){
+  if(!names.includes(name))names.push(name);
+ });
+
+ defaultIngredients.forEach(function(item){
+  if(!names.includes(item.name))names.push(item.name);
+ });
+
+ names.forEach(function(name){
+
+  const ingredient=getIngredientObject(name);
+
+  const isBase=base.some(function(x){
+   return x.toLowerCase()===name.toLowerCase();
+  });
 
   const row=document.createElement("div");
 
@@ -1306,32 +1717,35 @@ function renderIngredients(){
   row.innerHTML=`
    <div>
     <div class="ingredientName">
-     ${escapeHTML(ingredient.name)}
+     ${isBase?"🍕 ":"➕ "}${escapeHTML(name)}
     </div>
+
     <div class="ingredientPrice">
-     ${ingredient.price>0?"+"+money(ingredient.price):"compreso"}
+     ${isBase
+       ?"INGREDIENTE PRESENTE"
+       :"Extra "+money(ingredient.price)}
     </div>
    </div>
 
    <div class="ingredientButtons">
 
     <button class="remove"
-    onclick="modifyIngredient('${escapeJS(ingredient.name)}','remove')">
+    onclick="modifyIngredient('${escapeJS(name)}','remove')">
     ❌
     </button>
 
     <button class="half"
-    onclick="modifyIngredient('${escapeJS(ingredient.name)}','half')">
+    onclick="modifyIngredient('${escapeJS(name)}','half')">
     ½
     </button>
 
     <button class="double"
-    onclick="modifyIngredient('${escapeJS(ingredient.name)}','double')">
+    onclick="modifyIngredient('${escapeJS(name)}','double')">
     ×2
     </button>
 
     <button class="extra"
-    onclick="modifyIngredient('${escapeJS(ingredient.name)}','extra')">
+    onclick="modifyIngredient('${escapeJS(name)}','extra')">
     ➕
     </button>
 
@@ -1342,47 +1756,74 @@ function renderIngredients(){
  });
 }
 
+
 function escapeJS(value){
  return String(value)
  .replace(/\\/g,"\\\\")
  .replace(/'/g,"\\'");
 }
 
+
+/* =========================
+   MODIFICA INGREDIENTI
+========================= */
+
 function modifyIngredient(name,type){
 
- const ingredient=getIngredients()
- .find(function(x){return x.name===name;});
+ const product=
+  menu[selectedProduct.category][selectedProduct.index];
 
- if(!ingredient)return;
+ const base=getPizzaBaseIngredients(product.name);
 
- const old=ingredientMods.find(function(x){
-  return x.name===name;
+ const ingredient=getIngredientObject(name);
+
+ const isBase=base.some(function(x){
+  return x.toLowerCase()===name.toLowerCase();
  });
 
- if(old){
-  ingredientMods=ingredientMods.filter(function(x){
-   return x.name!==name;
-  });
- }
+ ingredientMods=ingredientMods.filter(function(x){
+  return x.name.toLowerCase()!==name.toLowerCase();
+ });
 
  let price=0;
  let text="";
 
  if(type==="remove"){
+
+  if(!isBase){
+   alert(name+" non è un ingrediente presente nella pizza.");
+   return;
+  }
+
   text="❌ Senza "+name;
+  price=0;
  }
 
  if(type==="half"){
+
+  if(!isBase){
+   alert(name+" non è un ingrediente presente nella pizza.");
+   return;
+  }
+
   text="½ "+name;
-  price=ingredient.price>0?ingredient.price/2:0;
+  price=0;
  }
 
  if(type==="double"){
-  text="×2 "+name;
-  price=ingredient.price;
+
+  if(!isBase){
+   text="×2 "+name;
+   price=ingredient.price;
+  }else{
+
+   text="×2 "+name;
+   price=ingredient.price;
+  }
  }
 
  if(type==="extra"){
+
   text="➕ Extra "+name;
   price=ingredient.price;
  }
@@ -1397,17 +1838,23 @@ function modifyIngredient(name,type){
  updatePizzaPrice();
 }
 
+
+/* =========================
+   PREZZO PIZZA
+========================= */
+
 function updatePizzaPrice(){
 
  if(!selectedProduct)return;
 
- const base=menu[selectedProduct.category][selectedProduct.index].price;
+ const product=
+  menu[selectedProduct.category][selectedProduct.index];
 
  const modsPrice=ingredientMods.reduce(function(sum,m){
   return sum+m.price;
  },0);
 
- const price=base+modsPrice;
+ const price=product.price+modsPrice;
 
  document.getElementById("pizzaFinalPrice").textContent=
   money(price);
@@ -1415,7 +1862,10 @@ function updatePizzaPrice(){
  const box=document.getElementById("selectedMods");
 
  if(!ingredientMods.length){
-  box.innerHTML="<span style='color:#777'>Nessuna modifica</span>";
+
+  box.innerHTML=
+   "<span style='color:#777'>Nessuna modifica</span>";
+
  }else{
 
   box.innerHTML=ingredientMods.map(function(m){
@@ -1430,6 +1880,11 @@ function updatePizzaPrice(){
   }).join("");
  }
 }
+
+
+/* =========================
+   AGGIUNGI ALLA COMANDA
+========================= */
 
 function addPizzaToOrder(){
 
@@ -1448,6 +1903,11 @@ function addPizzaToOrder(){
   JSON.stringify(ingredientMods)
  );
 
+ const baseIngredients=
+  selectedProduct.category==="Pizze"
+  ?getPizzaBaseIngredients(product.name)
+  :[];
+
  const modsPrice=mods.reduce(function(sum,m){
   return sum+m.price;
  },0);
@@ -1455,17 +1915,30 @@ function addPizzaToOrder(){
  const unitPrice=product.price+modsPrice;
 
  cart.push({
+
   name:product.name,
+
   price:unitPrice,
+
   qty:qty,
+
   note:note,
+
+  baseIngredients:baseIngredients,
+
   mods:mods
+
  });
 
  closeModal("productModal");
 
  renderCart();
 }
+
+
+/* =========================
+   CARRELLO
+========================= */
 
 function renderCart(){
 
@@ -1488,22 +1961,45 @@ function renderCart(){
 
    let details="";
 
+   if(item.baseIngredients &&
+      item.baseIngredients.length){
+
+    details+=
+     "<b>🍕 Ingredienti:</b><br>"+
+     item.baseIngredients
+     .map(function(x){
+      return escapeHTML(x);
+     })
+     .join(" • ");
+   }
+
    if(item.mods && item.mods.length){
 
-    details+=item.mods.map(function(m){
-     return escapeHTML(m.text);
-    }).join("<br>");
+    details+=
+     "<br><b>✏️ Modifiche:</b><br>"+
+     item.mods.map(function(m){
+      return escapeHTML(m.text);
+     }).join("<br>");
    }
 
    if(item.note){
+
     details+=(details?"<br>":"")+
     "📝 "+escapeHTML(item.note);
    }
 
    div.innerHTML=`
+
     <div class="itemTop">
-      <span>${item.qty} × ${escapeHTML(item.name)}</span>
-      <span>${money(item.price*item.qty)}</span>
+
+      <span>
+       ${item.qty} × ${escapeHTML(item.name)}
+      </span>
+
+      <span>
+       ${money(item.price*item.qty)}
+      </span>
+
     </div>
 
     ${details?
@@ -1524,6 +2020,7 @@ function renderCart(){
      </button>
 
     </div>
+
    `;
 
    box.appendChild(div);
@@ -1533,6 +2030,7 @@ function renderCart(){
  document.getElementById("total").textContent=
   money(orderTotal());
 }
+
 
 function changeQuantity(index,amount){
 
@@ -1545,10 +2043,14 @@ function changeQuantity(index,amount){
  renderCart();
 }
 
+
 function removeCartItem(index){
+
  cart.splice(index,1);
+
  renderCart();
 }
+
 
 function clearOrder(){
 
@@ -1571,6 +2073,11 @@ function clearOrder(){
  }
 }
 
+
+/* =========================
+   TAVOLI
+========================= */
+
 function showTables(){
 
  hidePages();
@@ -1579,6 +2086,7 @@ function showTables(){
 
  renderTables();
 }
+
 
 function renderTables(){
 
@@ -1609,6 +2117,7 @@ function renderTables(){
  });
 }
 
+
 function selectTable(number){
 
  selectedTable=number;
@@ -1636,6 +2145,7 @@ function selectTable(number){
  document.getElementById("tableModal").classList.add("show");
 }
 
+
 function openTableOrder(){
 
  const table=tables[selectedTable-1];
@@ -1655,6 +2165,7 @@ function openTableOrder(){
  renderTables();
 }
 
+
 function freeSelectedTable(){
 
  const table=tables[selectedTable-1];
@@ -1671,11 +2182,14 @@ function freeSelectedTable(){
    "Nessun tavolo / ordine";
  }
 
+ selectedTable=null;
+
  closeModal("tableModal");
 
  renderCart();
  renderTables();
 }
+
 
 function reserveSelectedTable(){
 
@@ -1685,6 +2199,7 @@ function reserveSelectedTable(){
 
  openBooking(number);
 }
+
 
 function openBooking(preferredTable=null){
 
@@ -1702,7 +2217,9 @@ function openBooking(preferredTable=null){
    const option=document.createElement("option");
 
    option.value=table.number;
-   option.textContent="Tavolo "+table.number;
+
+   option.textContent=
+    "Tavolo "+table.number;
 
    if(table.number===preferredTable){
     option.selected=true;
@@ -1719,6 +2236,7 @@ function openBooking(preferredTable=null){
 
  document.getElementById("bookingModal").classList.add("show");
 }
+
 
 function saveBooking(){
 
@@ -1738,12 +2256,16 @@ function saveBooking(){
   Number(document.getElementById("bookTable").value);
 
  if(!name){
+
   alert("Inserisci il nome del cliente.");
+
   return;
  }
 
  if(!time){
+
   alert("Inserisci l'orario.");
+
   return;
  }
 
@@ -1768,14 +2290,21 @@ function saveBooking(){
  );
 }
 
+
+/* =========================
+   ASPORTO
+========================= */
+
 function openTakeaway(){
 
  document.getElementById("takeName").value="";
  document.getElementById("takePhone").value="";
  document.getElementById("takeAddress").value="";
 
- document.getElementById("takeawayModal").classList.add("show");
+ document.getElementById("takeawayModal")
+ .classList.add("show");
 }
+
 
 function saveTakeaway(){
 
@@ -1789,12 +2318,16 @@ function saveTakeaway(){
   document.getElementById("takeAddress").value.trim();
 
  if(!name){
+
   alert("Inserisci il nome.");
+
   return;
  }
 
  if(type==="Domicilio"&&!address){
+
   alert("Inserisci l'indirizzo.");
+
   return;
  }
 
@@ -1807,7 +2340,9 @@ function saveTakeaway(){
 }
 
 
-/* TASTIERA LETTERE */
+/* =========================
+   TASTIERA LETTERE
+========================= */
 
 function openTextKeyboard(target,title){
 
@@ -1819,8 +2354,10 @@ function openTextKeyboard(target,title){
  document.getElementById("textKeyboardInput").value=
   document.getElementById(target).value;
 
- document.getElementById("textKeyboardModal").classList.add("show");
+ document.getElementById("textKeyboardModal")
+ .classList.add("show");
 }
+
 
 function textKey(value){
 
@@ -1830,6 +2367,7 @@ function textKey(value){
  input.value+=value;
 }
 
+
 function textBackspace(){
 
  const input=
@@ -1837,6 +2375,7 @@ function textBackspace(){
 
  input.value=input.value.slice(0,-1);
 }
+
 
 function textKeyboardOK(){
 
@@ -1847,7 +2386,9 @@ function textKeyboardOK(){
 }
 
 
-/* TASTIERINO NUMERICO */
+/* =========================
+   TASTIERINO NUMERICO
+========================= */
 
 function openNumericKeyboard(target,title){
 
@@ -1859,25 +2400,30 @@ function openNumericKeyboard(target,title){
  document.getElementById("numericKeyboardInput").value=
   document.getElementById(target).value;
 
- document.getElementById("numericKeyboardModal").classList.add("show");
+ document.getElementById("numericKeyboardModal")
+ .classList.add("show");
 }
+
 
 function numericKey(value){
 
  const input=
   document.getElementById("numericKeyboardInput");
 
- if(value==="." && input.value.includes(".")){
+ if(value==="."&&input.value.includes(".")){
   return;
  }
 
  input.value+=value;
 }
 
+
 function numericClear(){
 
- document.getElementById("numericKeyboardInput").value="";
+ document.getElementById("numericKeyboardInput")
+ .value="";
 }
+
 
 function numericKeyboardOK(){
 
@@ -1888,7 +2434,9 @@ function numericKeyboardOK(){
 }
 
 
-/* PAGAMENTO */
+/* =========================
+   PAGAMENTO
+========================= */
 
 function openCash(){
 
@@ -1909,8 +2457,10 @@ function openCash(){
 
  document.getElementById("change").innerHTML="";
 
- document.getElementById("cashModal").classList.add("show");
+ document.getElementById("cashModal")
+ .classList.add("show");
 }
+
 
 function cashKey(value){
 
@@ -1924,6 +2474,7 @@ function cashKey(value){
   money(Number(cashAmount)||0);
 }
 
+
 function cashClear(){
 
  cashAmount="";
@@ -1934,9 +2485,11 @@ function cashClear(){
  document.getElementById("change").innerHTML="";
 }
 
+
 function confirmCash(){
 
  const given=Number(cashAmount)||0;
+
  const total=orderTotal();
 
  if(given<total){
@@ -1974,6 +2527,7 @@ function confirmCash(){
  },150);
 }
 
+
 function payCard(){
 
  if(!cart.length){
@@ -1995,6 +2549,7 @@ function payCard(){
  }
 }
 
+
 function finishPayment(){
 
  if(selectedTable){
@@ -2005,16 +2560,23 @@ function finishPayment(){
  }
 
  cart=[];
+
  selectedTable=null;
 
  document.getElementById("orderInfo").textContent=
   "Nessun tavolo / ordine";
 
  renderCart();
+
  renderTables();
 
  closeModal("cashModal");
 }
+
+
+/* =========================
+   STAMPA COMANDA
+========================= */
 
 function printOrder(){
 
@@ -2040,15 +2602,27 @@ function printOrder(){
    money(item.price*item.qty)+
    "\n";
 
+  if(item.baseIngredients &&
+     item.baseIngredients.length){
+
+   text+="   Ingredienti: "+
+   item.baseIngredients.join(", ")+
+   "\n";
+  }
+
   if(item.mods){
 
    item.mods.forEach(function(m){
+
     text+="   "+m.text+"\n";
+
    });
   }
 
   if(item.note){
+
    text+="   📝 "+item.note+"\n";
+
   }
 
  });
@@ -2061,16 +2635,20 @@ function printOrder(){
 }
 
 
-/* GESTIONE MENU */
+/* =========================
+   GESTIONE MENU
+========================= */
 
 function showManager(){
 
  hidePages();
 
- document.getElementById("managerPage").style.display="block";
+ document.getElementById("managerPage")
+ .style.display="block";
 
  renderManager();
 }
+
 
 function renderManager(){
 
@@ -2117,24 +2695,26 @@ function renderManager(){
 
    renderManager();
    renderProducts();
- };
+  };
 
- row.children[3].onclick=function(){
 
-  if(confirm(
-   "Eliminare "+product.name+"?"
-  )){
+  row.children[3].onclick=function(){
 
-   menu[category].splice(index,1);
+   if(confirm(
+    "Eliminare "+product.name+"?"
+   )){
 
-   renderManager();
-   renderProducts();
-  }
- };
+    menu[category].splice(index,1);
 
- box.appendChild(row);
+    renderManager();
+    renderProducts();
+   }
+  };
+
+  box.appendChild(row);
  });
 }
+
 
 function addProduct(){
 
@@ -2157,13 +2737,22 @@ function addProduct(){
  }
 
  menu[category].push({
+
   name:name.trim(),
+
   price:Number(price.toFixed(2))
+
  });
 
  renderManager();
+
  renderProducts();
 }
+
+
+/* =========================
+   SALVATAGGIO TAVOLO
+========================= */
 
 function saveCurrentTableOrder(){
 
@@ -2174,16 +2763,30 @@ function saveCurrentTableOrder(){
  }
 }
 
-document.querySelectorAll(".modal").forEach(function(modal){
+
+/* =========================
+   CHIUSURA MODALI
+========================= */
+
+document.querySelectorAll(".modal")
+.forEach(function(modal){
 
  modal.addEventListener("click",function(event){
 
   if(event.target===modal){
+
    modal.classList.remove("show");
+
   }
 
  });
+
 });
+
+
+/* =========================
+   AVVIO
+========================= */
 
 category(
  "Pizze",
@@ -2191,6 +2794,7 @@ category(
 );
 
 renderCart();
+
 renderTables();
 
 </script>
