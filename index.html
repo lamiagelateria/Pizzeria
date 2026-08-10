@@ -44,8 +44,6 @@ header{
   grid-template-columns:115px 1fr 350px;
 }
 
-/* MENU SINISTRO */
-
 nav{
   background:#252525;
   padding:8px;
@@ -75,8 +73,6 @@ nav hr{
   border-top:1px solid #555;
   margin:10px 0;
 }
-
-/* CENTRO */
 
 main{
   padding:18px;
@@ -133,8 +129,6 @@ main{
   font-size:18px;
   font-weight:bold;
 }
-
-/* DESTRA COMANDA */
 
 aside{
   background:#111;
@@ -236,8 +230,6 @@ aside{
 .orange{background:#b77700!important}
 .purple{background:#7040a0!important}
 
-/* TAVOLI */
-
 .tables{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
@@ -262,8 +254,6 @@ aside{
   margin-top:6px;
   opacity:.8;
 }
-
-/* GESTIONE MENU */
 
 .managerSelect{
   width:100%;
@@ -306,8 +296,6 @@ aside{
   color:white;
   font-weight:bold;
 }
-
-/* MODALI */
 
 .modal{
   position:fixed;
@@ -369,8 +357,6 @@ aside{
   margin:4px;
   font-weight:bold;
 }
-
-/* INGREDIENTI */
 
 .baseInfo{
   background:#202020;
@@ -456,7 +442,7 @@ aside{
   padding:12px 0;
 }
 
-/* TASTIERA LETTERE */
+/* TASTIERA LETTERE - GRANDE */
 
 .keyboardInput{
   background:#111!important;
@@ -469,35 +455,40 @@ aside{
 .keyboard{
   display:grid;
   grid-template-columns:repeat(10,1fr);
-  gap:6px;
+  gap:8px;
+  margin-top:10px;
 }
 
 .keyboard button{
   margin:0;
-  padding:15px 2px;
+  padding:20px 4px;
   background:#444;
-  font-size:17px;
-  min-height:55px;
+  color:white;
+  font-size:24px;
+  font-weight:bold;
+  min-height:75px;
+  border:0;
+  border-radius:8px;
 }
 
 .keyboard button:hover{
   background:#e53935;
 }
 
-.keyboard .wide{
-  grid-column:span 3;
-}
-
-.keyboard .ok{
-  background:#168844;
-  grid-column:span 3;
+.keyboard .space{
+  grid-column:span 4;
+  background:#555;
 }
 
 .keyboard .back{
+  grid-column:span 2;
   background:#9b2020;
 }
 
-/* NUMERICO */
+.keyboard .ok{
+  grid-column:span 4;
+  background:#168844;
+}
 
 .cashDisplay{
   background:#080808;
@@ -563,8 +554,6 @@ aside{
   background:#7d2020;
 }
 
-/* RESPONSIVE */
-
 @media(max-width:1000px){
   .app{
     grid-template-columns:95px 1fr;
@@ -591,13 +580,26 @@ aside{
   }
 
   .keyboard{
-    gap:4px;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
   }
 
   .keyboard button{
-    min-height:48px;
-    padding:10px 1px;
-    font-size:14px;
+    min-height:60px;
+    padding:13px 2px;
+    font-size:20px;
+  }
+
+  .keyboard .space{
+    grid-column:span 3;
+  }
+
+  .keyboard .back{
+    grid-column:span 2;
+  }
+
+  .keyboard .ok{
+    grid-column:span 2;
   }
 }
 </style>
@@ -611,8 +613,6 @@ aside{
 </header>
 
 <div class="app">
-
-<!-- SINISTRA -->
 
 <nav>
 <button class="active" onclick="category('Pizze',this)">🍕<br>PIZZE</button>
@@ -631,8 +631,6 @@ aside{
 <button onclick="showManager()">⚙️<br>MENU</button>
 </nav>
 
-<!-- PAGINA PRODOTTI -->
-
 <main id="productsPage">
 
 <div class="pageTitle">
@@ -643,8 +641,6 @@ aside{
 <div id="products" class="products"></div>
 
 </main>
-
-<!-- PAGINA TAVOLI -->
 
 <main id="tablesPage" style="display:none">
 
@@ -658,8 +654,6 @@ aside{
 <div id="tables" class="tables"></div>
 
 </main>
-
-<!-- PAGINA MENU -->
 
 <main id="managerPage" style="display:none">
 
@@ -686,8 +680,6 @@ aside{
 <div id="manager"></div>
 
 </main>
-
-<!-- COMANDA -->
 
 <aside>
 
@@ -728,8 +720,6 @@ Nessun tavolo / ordine
 </aside>
 </div>
 
-
-<!-- MODALE PIZZA -->
 
 <div class="modal" id="productModal">
 
@@ -779,8 +769,6 @@ ANNULLA
 </div>
 
 
-<!-- MODALE TAVOLO -->
-
 <div class="modal" id="tableModal">
 
 <div class="box">
@@ -808,8 +796,6 @@ CHIUDI
 </div>
 </div>
 
-
-<!-- PRENOTAZIONE -->
 
 <div class="modal" id="bookingModal">
 
@@ -849,8 +835,6 @@ ANNULLA
 </div>
 </div>
 
-
-<!-- ASPORTO -->
 
 <div class="modal" id="takeawayModal">
 
@@ -895,7 +879,7 @@ ANNULLA
 </div>
 
 
-<!-- TASTIERA LETTERE -->
+<!-- TASTIERA LETTERE GRANDE -->
 
 <div class="modal" id="textKeyboardModal">
 
@@ -904,7 +888,8 @@ ANNULLA
 <h2 id="textKeyboardTitle">⌨️ TASTIERA</h2>
 
 <input id="textKeyboardInput"
-class="keyboardInput">
+class="keyboardInput"
+readonly>
 
 <div class="keyboard">
 
@@ -928,7 +913,6 @@ class="keyboardInput">
 <button onclick="textKey('J')">J</button>
 <button onclick="textKey('K')">K</button>
 <button onclick="textKey('L')">L</button>
-<button onclick="textKey(' ')">SPAZIO</button>
 
 <button onclick="textKey('Z')">Z</button>
 <button onclick="textKey('X')">X</button>
@@ -938,19 +922,13 @@ class="keyboardInput">
 <button onclick="textKey('N')">N</button>
 <button onclick="textKey('M')">M</button>
 
-<button onclick="textKey('1')">1</button>
-<button onclick="textKey('2')">2</button>
-<button onclick="textKey('3')">3</button>
+<button class="space" onclick="textKey(' ')">
+SPAZIO
+</button>
 
-<button onclick="textKey('4')">4</button>
-<button onclick="textKey('5')">5</button>
-<button onclick="textKey('6')">6</button>
-<button onclick="textKey('7')">7</button>
-<button onclick="textKey('8')">8</button>
-<button onclick="textKey('9')">9</button>
-<button onclick="textKey('0')">0</button>
-
-<button class="back" onclick="textBackspace()">⌫</button>
+<button class="back" onclick="textBackspace()">
+⌫
+</button>
 
 <button class="ok" onclick="textKeyboardOK()">
 CONFERMA
@@ -962,8 +940,6 @@ CONFERMA
 </div>
 
 
-<!-- TASTIERINO NUMERICO -->
-
 <div class="modal" id="numericKeyboardModal">
 
 <div class="box">
@@ -972,7 +948,8 @@ CONFERMA
 
 <input id="numericKeyboardInput"
 class="keyboardInput"
-inputmode="numeric">
+inputmode="numeric"
+readonly>
 
 <div class="cashKeys">
 
@@ -1002,8 +979,6 @@ CONFERMA
 </div>
 </div>
 
-
-<!-- PAGAMENTO -->
 
 <div class="modal" id="cashModal">
 
@@ -1057,10 +1032,6 @@ ANNULLA
 
 
 <script>
-
-/* =====================================================
-   MENU
-===================================================== */
 
 const pizzaNames=[
 "Margherita","Marinara","Diavola","Quattro Formaggi",
@@ -1170,11 +1141,6 @@ Extra:[
 ]
 };
 
-
-/* =====================================================
-   STATO
-===================================================== */
-
 let currentCategory="Pizze";
 let selectedProduct=null;
 let selectedTable=null;
@@ -1190,11 +1156,6 @@ const tables=Array.from({length:70},(_,i)=>({
  order:[],
  reservation:null
 }));
-
-
-/* =====================================================
-   UTILITÀ
-===================================================== */
 
 function money(n){
  return "€ "+Number(n||0).toFixed(2).replace(".",",");
@@ -1221,11 +1182,6 @@ function orderTotal(){
 function closeModal(id){
  document.getElementById(id).classList.remove("show");
 }
-
-
-/* =====================================================
-   PAGINE
-===================================================== */
 
 function hidePages(){
  document.getElementById("productsPage").style.display="none";
@@ -1290,11 +1246,6 @@ function renderProducts(){
   box.appendChild(button);
  });
 }
-
-
-/* =====================================================
-   PIZZE / INGREDIENTI
-===================================================== */
 
 function openProduct(category,index){
 
@@ -1516,11 +1467,6 @@ function addPizzaToOrder(){
  renderCart();
 }
 
-
-/* =====================================================
-   COMANDA
-===================================================== */
-
 function renderCart(){
 
  const box=document.getElementById("cart");
@@ -1624,11 +1570,6 @@ function clearOrder(){
   renderCart();
  }
 }
-
-
-/* =====================================================
-   TAVOLI
-===================================================== */
 
 function showTables(){
 
@@ -1745,11 +1686,6 @@ function reserveSelectedTable(){
  openBooking(number);
 }
 
-
-/* =====================================================
-   PRENOTAZIONI
-===================================================== */
-
 function openBooking(preferredTable=null){
 
  const select=document.getElementById("bookTable");
@@ -1832,11 +1768,6 @@ function saveBooking(){
  );
 }
 
-
-/* =====================================================
-   ASPORTO
-===================================================== */
-
 function openTakeaway(){
 
  document.getElementById("takeName").value="";
@@ -1876,9 +1807,7 @@ function saveTakeaway(){
 }
 
 
-/* =====================================================
-   TASTIERA LETTERE
-===================================================== */
+/* TASTIERA LETTERE */
 
 function openTextKeyboard(target,title){
 
@@ -1918,9 +1847,7 @@ function textKeyboardOK(){
 }
 
 
-/* =====================================================
-   TASTIERINO NUMERICO GENERALE
-===================================================== */
+/* TASTIERINO NUMERICO */
 
 function openNumericKeyboard(target,title){
 
@@ -1961,9 +1888,7 @@ function numericKeyboardOK(){
 }
 
 
-/* =====================================================
-   PAGAMENTO CONTANTI
-===================================================== */
+/* PAGAMENTO */
 
 function openCash(){
 
@@ -2049,11 +1974,6 @@ function confirmCash(){
  },150);
 }
 
-
-/* =====================================================
-   PAGAMENTO CARTA
-===================================================== */
-
 function payCard(){
 
  if(!cart.length){
@@ -2095,11 +2015,6 @@ function finishPayment(){
 
  closeModal("cashModal");
 }
-
-
-/* =====================================================
-   COMANDA
-===================================================== */
 
 function printOrder(){
 
@@ -2146,9 +2061,7 @@ function printOrder(){
 }
 
 
-/* =====================================================
-   GESTIONE MENU
-===================================================== */
+/* GESTIONE MENU */
 
 function showManager(){
 
@@ -2252,11 +2165,6 @@ function addProduct(){
  renderProducts();
 }
 
-
-/* =====================================================
-   SALVATAGGIO TAVOLO
-===================================================== */
-
 function saveCurrentTableOrder(){
 
  if(selectedTable){
@@ -2265,11 +2173,6 @@ function saveCurrentTableOrder(){
    JSON.parse(JSON.stringify(cart));
  }
 }
-
-
-/* =====================================================
-   CHIUSURA MODALI
-===================================================== */
 
 document.querySelectorAll(".modal").forEach(function(modal){
 
@@ -2281,11 +2184,6 @@ document.querySelectorAll(".modal").forEach(function(modal){
 
  });
 });
-
-
-/* =====================================================
-   AVVIO
-===================================================== */
 
 category(
  "Pizze",
