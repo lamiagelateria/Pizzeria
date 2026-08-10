@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pizzeria POS</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#151515;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+header{
+  height:64px;
+  background:#c62828;
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  font-size:24px;
+  font-weight:bold;
+}
+.app{
+  height:calc(100vh - 64px);
+  display:grid;
+  grid-template-columns:125px 1fr 340px;
+}
+nav{
+  background:#242424;
+  padding:8px;
+  overflow:auto;
+}
+nav button{
+  width:100%;
+  min-height:70px;
+  margin-bottom:7px;
+  border:0;
+  border-radius:8px;
+  background:#383838;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
+nav button:hover,nav button.active{
+  background:#e53935;
+}
+main{
+  padding:18px;
+  overflow:auto;
+  background:#202020;
+}
+h2{margin-top:0}
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(145px,1fr));
+  gap:10px;
+}
+.product{
+  min-height:105px;
+  border:2px solid #444;
+  border-radius:10px;
+  background:#343434;
+  color:white;
+  padding:14px;
+  text-align:left;
+  cursor:pointer;
+}
+.product:hover{
+  background:#454545;
+  border-color:#ef5350;
+}
+.product b{display:block;font-size:16px;margin-bottom:15px}
+.product span{color:#ffc107;font-size:18px;font-weight:bold}
+
+aside{
+  background:#101010;
+  border-left:2px solid #333;
+  display:flex;
+  flex-direction:column;
+}
+.orderHead{
+  padding:15px;
+  background:#292929;
+  font-size:20px;
+  font-weight:bold;
+}
+.orderInfo{
+  display:block;
+  margin-top:5px;
+  color:#aaa;
+  font-size:13px;
+}
+.cart{
+  flex:1;
+  overflow:auto;
+  padding:10px;
+}
+.item{
+  background:#292929;
+  border-radius:7px;
+  padding:10px;
+  margin-bottom:8px;
+}
+.itemTop{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  font-weight:bold;
+}
+.item small{display:block;color:#aaa;margin-top:5px}
+.itemBtns{display:flex;gap:5px;margin-top:8px}
+.itemBtns button{
+  border:0;
+  background:#555;
+  color:#fff;
+  border-radius:5px;
+  padding:6px 10px;
+}
+.total{
+  border-top:1px solid #444;
+  padding:16px;
+  display:flex;
+  justify-content:space-between;
+  font-size:23px;
+}
+.actions{
+  padding:9px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+.actions button{
+  padding:13px 5px;
+  border:0;
+  border-radius:7px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+.green{background:#168844!important}
+.blue{background:#1769aa!important}
+.red{background:#c62828!important}
+.gray{background:#555!important}
+.orange{background:#b77700!important}
+
+.hidden{display:none!important}
+
+.tables{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+  gap:10px;
+}
+.table{
+  height:90px;
+  border:0;
+  border-radius:9px;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
+.free{background:#168844}
+.busy{background:#c62828}
+.reserved{background:#b77700}
+
+.managerRow{
+  display:grid;
+  grid-template-columns:1fr 110px 70px 70px;
+  gap:6px;
+  margin-bottom:7px;
+}
+.managerRow input{
+  width:100%;
+  padding:10px;
+  border:0;
+  border-radius:5px;
+}
+.managerRow button{
+  border:0;
+  border-radius:5px;
+  color:#fff;
+  font-weight:bold;
+}
+.addBtn{
+  padding:12px 16px;
+  border:0;
+  border-radius:7px;
+  background:#168844;
+  color:#fff;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+.box{
+  width:min(520px,94vw);
+  max-height:94vh;
+  overflow:auto;
+  background:#292929;
+  border-radius:12px;
+  padding:20px;
+}
+.box h2{margin-top:0}
+.box input,.box textarea,.box select{
+  width:100%;
+  padding:12px;
+  margin:5px 0 10px;
+  border:0;
+  border-radius:6px;
+  font-size:16px;
+}
+.box button{
+  border:0;
+  border-radius:7px;
+  color:#fff;
+  padding:12px 15px;
+  margin:4px;
+  font-weight:bold;
+}
+
+/* Tastiera */
+.keyboard{
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:5px;
+}
+.keyboard button{
+  margin:0;
+  padding:13px 2px;
+  background:#444;
+  font-size:15px;
+}
+.keyboard button:hover{background:#e53935}
+.keyboard .space{grid-column:span 5}
+.keyboard .ok{background:#168844}
+
+/* Tastierino contanti */
+.cashDisplay{
+  background:#080808;
+  color:#7cff8a;
+  border:2px solid #555;
+  border-radius:8px;
+  padding:15px;
+  text-align:right;
+  font-size:30px;
+  margin-bottom:10px;
+}
+.cashTotal{
+  background:#111;
+  border-radius:7px;
+  padding:12px;
+  text-align:center;
+  margin-bottom:10px;
+}
+.cashKeys{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+}
+.cashKeys button{
+  margin:0;
+  font-size:23px;
+  padding:17px;
+  background:#444;
+}
+.cashKeys .confirm{
+  grid-column:span 3;
+  background:#168844;
+}
+.cashKeys .clear{background:#c62828}
+.change{
+  text-align:center;
+  background:#145d30;
+  border-radius:8px;
+  padding:14px;
+  margin:10px 0;
+  font-size:24px;
+}
+.warning{
+  background:#7d2020;
+}
+
+@media(max-width:900px){
+  .app{grid-template-columns:85px 1fr}
+  aside{
+    position:fixed;
+    right:0;
+    top:64px;
+    width:340px;
+    height:calc(100vh - 64px);
+    z-index:30;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>🍕 PIZZERIA POS</header>
+
+<div class="app">
+
+<nav>
+<button class="active" onclick="category('Pizze',this)">🍕<br>PIZZE</button>
+<button onclick="category('Bibite',this)">🥤<br>BIBITE</button>
+<button onclick="category('Birre',this)">🍺<br>BIRRE</button>
+<button onclick="category('Fritti',this)">🍟<br>FRITTI</button>
+<button onclick="category('Dolci',this)">🍰<br>DOLCI</button>
+<button onclick="category('Bambini',this)">👶<br>BIMBI</button>
+<button onclick="category('Extra',this)">➕<br>EXTRA</button>
+<hr>
+<button onclick="showTables()">🪑<br>TAVOLI</button>
+<button onclick="booking()">📅<br>PRENOTA</button>
+<button onclick="takeaway()">📦<br>ASPORTO</button>
+<button onclick="showMenuManager()">⚙️<br>MENU</button>
+</nav>
+
+<main id="productsPage">
+<h2 id="categoryTitle">🍕 Pizze</h2>
+<div id="products" class="products"></div>
+</main>
+
+<main id="tablesPage" class="hidden">
+<h2>🪑 70 TAVOLI</h2>
+<p>🟢 Libero &nbsp; 🔴 Occupato &nbsp; 🟡 Prenotato</p>
+<div id="tables" class="tables"></div>
+</main>
+
+<main id="managerPage" class="hidden">
+<h2>⚙️ MODIFICA MENU</h2>
+<select id="managerCategory" onchange="renderManager()">
+<option>Pizze</option>
+<option>Bibite</option>
+<option>Birre</option>
+<option>Fritti</option>
+<option>Dolci</option>
+<option>Bambini</option>
+<option>Extra</option>
+</select>
+<br><br>
+<button class="addBtn" onclick="addMenuItem()">➕ AGGIUNGI PRODOTTO</button>
+<div id="manager"></div>
+</main>
+
+<aside>
+<div class="orderHead">
+🧾 COMANDA
+<span class="orderInfo" id="orderInfo">Nessun tavolo</span>
+</div>
+
+<div id="cart" class="cart"></div>
+
+<div class="total">
+<span>TOTALE</span>
+<b id="total">€ 0,00</b>
+</div>
+
+<div class="actions">
+<button class="green" onclick="cash()">💶 CONTANTI</button>
+<button class="blue" onclick="card()">💳 CARTA</button>
+<button class="orange" onclick="printOrder()">🧾 COMANDA</button>
+<button class="red" onclick="clearCart()">🗑️ ANNULLA</button>
+</div>
+</aside>
+</div>
+
+
+<!-- PRODOTTO -->
+<div class="modal" id="productModal">
+<div class="box">
+<h2 id="selectedProductName"></h2>
+<b id="selectedProductPrice"></b>
+
+<label>Quantità</label>
+<input id="quantity" type="number" min="1" value="1">
+
+<label>Note</label>
+<textarea id="note" placeholder="Es. senza mozzarella..."></textarea>
+
+<button class="green" onclick="addToCart()">AGGIUNGI ALLA COMANDA</button>
+<button class="gray" onclick="closeModal('productModal')">ANNULLA</button>
+</div>
+</div>
+
+
+<!-- TAVOLO -->
+<div class="modal" id="tableModal">
+<div class="box">
+<h2 id="tableTitle"></h2>
+<button class="green" onclick="openTable()">🧾 APRI COMANDA</button>
+<button class="orange" onclick="reserveTable()">📅 PRENOTA</button>
+<button class="red" onclick="freeTable()">🟢 LIBERA</button>
+<button class="gray" onclick="closeModal('tableModal')">CHIUDI</button>
+</div>
+</div>
+
+
+<!-- PRENOTAZIONE -->
+<div class="modal" id="bookingModal">
+<div class="box">
+<h2>📅 PRENOTAZIONE</h2>
+
+<label>Nome cliente</label>
+<input id="bookName" readonly onclick="textKeyboard('bookName','Nome cliente')">
+
+<label>Telefono</label>
+<input id="bookPhone" readonly onclick="textKeyboard('bookPhone','Telefono')">
+
+<label>Numero persone</label>
+<input id="bookPeople" readonly onclick="numberKeyboard('bookPeople','Numero persone')">
+
+<label>Orario</label>
+<input id="bookTime" type="time">
+
+<label>Tavolo</label>
+<select id="bookTable"></select>
+
+<button class="green" onclick="saveBooking()">SALVA PRENOTAZIONE</button>
+<button class="gray" onclick="closeModal('bookingModal')">ANNULLA</button>
+</div>
+</div>
+
+
+<!-- ASPORTO -->
+<div class="modal" id="takeawayModal">
+<div class="box">
+<h2>📦 ORDINE ASPORTO</h2>
+
+<label>Tipo</label>
+<select id="takeType">
+<option value="Ritiro">📦 Ritiro in pizzeria</option>
+<option value="Domicilio">🚚 Domicilio</option>
+</select>
+
+<label>Nome</label>
+<input id="takeName" readonly onclick="textKeyboard('takeName','Nome cliente')">
+
+<label>Telefono</label>
+<input id="takePhone" readonly onclick="textKeyboard('takePhone','Telefono')">
+
+<label>Indirizzo</label>
+<input id="takeAddress" readonly onclick="textKeyboard('takeAddress','Indirizzo')">
+
+<button class="green" onclick="saveTakeaway()">APRI ORDINE</button>
+<button class="gray" onclick="closeModal('takeawayModal')">ANNULLA</button>
+</div>
+</div>
+
+
+<!-- TASTIERA -->
+<div class="modal" id="keyboardModal">
+<div class="box">
+<h2 id="keyboardTitle">⌨️ TASTIERA</h2>
+<input id="keyboardInput">
+
+<div class="keyboard">
+<button onclick="key('Q')">Q</button><button onclick="key('W')">W</button>
+<button onclick="key('E')">E</button><button onclick="key('R')">R</button>
+<button onclick="key('T')">T</button><button onclick="key('Y')">Y</button>
+<button onclick="key('U')">U</button><button onclick="key('I')">I</button>
+<button onclick="key('O')">O</button><button onclick="key('P')">P</button>
+
+<button onclick="key('A')">A</button><button onclick="key('S')">S</button>
+<button onclick="key('D')">D</button><button onclick="key('F')">F</button>
+<button onclick="key('G')">G</button><button onclick="key('H')">H</button>
+<button onclick="key('J')">J</button><button onclick="key('K')">K</button>
+<button onclick="key('L')">L</button><button onclick="key(' ')">SPAZIO</button>
+
+<button onclick="key('Z')">Z</button><button onclick="key('X')">X</button>
+<button onclick="key('C')">C</button><button onclick="key('V')">V</button>
+<button onclick="key('B')">B</button><button onclick="key('N')">N</button>
+<button onclick="key('M')">M</button><button onclick="key('1')">1</button>
+<button onclick="key('2')">2</button><button onclick="key('3')">3</button>
+
+<button onclick="key('4')">4</button><button onclick="key('5')">5</button>
+<button onclick="key('6')">6</button><button onclick="key('7')">7</button>
+<button onclick="key('8')">8</button><button onclick="key('9')">9</button>
+<button onclick="key('0')">0</button><button onclick="key('.')">.</button>
+<button onclick="backspace()">⌫</button>
+<button class="ok" onclick="keyboardOK()">OK</button>
+</div>
+</div>
+</div>
+
+
+<!-- CONTANTI -->
+<div class="modal" id="cashModal">
+<div class="box">
+<h2>💶 PAGAMENTO CONTANTI</h2>
+
+<div class="cashTotal">
+TOTALE<br>
+<b id="cashTotal">€ 0,00</b>
+</div>
+
+<div class="cashDisplay" id="cashDisplay">€ 0,00</div>
+
+<div class="cashKeys">
+<button onclick="cashKey('1')">1</button>
+<button onclick="cashKey('2')">2</button>
+<button onclick="cashKey('3')">3</button>
+<button onclick="cashKey('4')">4</button>
+<button onclick="cashKey('5')">5</button>
+<button onclick="cashKey('6')">6</button>
+<button onclick="cashKey('7')">7</button>
+<button onclick="cashKey('8')">8</button>
+<button onclick="cashKey('9')">9</button>
+<button class="clear" onclick="cashClear()">C</button>
+<button onclick="cashKey('0')">0</button>
+<button onclick="cashKey('.')">,</button>
+<button class="confirm" onclick="confirmCash()">CONFERMA PAGAMENTO</button>
+</div>
+
+<div id="change"></div>
+
+<button class="gray" onclick="closeModal('cashModal')">ANNULLA</button>
+</div>
+</div>
+
+
+<script>
+/* =========================
+   MENU
+========================= */
+
+const pizzaNames=[
+"Margherita","Marinara","Diavola","Quattro Formaggi",
+"Capricciosa","Prosciutto e Funghi","Quattro Stagioni","Bufalina",
+"Boscaiola","Tonno e Cipolla","Napoli","Romana","Parmigiana",
+"Vegetariana","Patatosa","Wurstel e Patatine","Salsiccia",
+"Salsiccia e Friarielli","Speck e Brie","Speck e Gorgonzola",
+"Mortadella e Pistacchio","Pistacchio e Burrata","Porcini",
+"Crudo e Rucola","Salame Piccante","'Nduja","Calabrese","Mexicana",
+"Americana","BBQ","Chicken","Kebab","Kebab Special","Bufala e Crudo",
+"Bufala e Alici","Zucchine e Speck","Melanzane e Salsiccia",
+"Peperoni e Tonno","Carciofi e Speck","Cipolla e Gorgonzola",
+"Gorgonzola e Pere","Taleggio e Speck","Scamorza e Speck",
+"Provola e 'Nduja","Fiori di Zucca","Alici e Burrata",
+"Pomodorini e Rucola","Pesto e Stracciatella","Tartufo",
+"Tartufo e Funghi","Porchetta","Porchetta e Provola",
+"Mortadella Special","Pistacchio Special","Burrata Special",
+"Burrata e Alici","Burrata e Speck","Burrata e 'Nduja",
+"Bufala Special","Bufala e Pesto","Ortolana","Contadina","Rustica",
+"Deliziosa","Golosa","Speciale Casa","Pizza del Giorno","Chef",
+"Regina","Imperiale","Premium","Montanara","Parmigiana Special",
+"Carbonara","Amatriciana","Cacio e Pepe","Pugliese","Genovese",
+"Siciliana","Campagnola","Bosco","Tirolese","Trentina","Valtellina",
+"Bresaola","Gamberetti","Frutti di Mare","Salmonata","Mare e Monti",
+"Greca","Mediterranea","Italiana","Diavola Special","Casa Special",
+"Fantasia","Suprema","Reale","Gran Pizzeria","Bufala Reale",
+"Pizza del Cuoco","Pizza Gourmet"
+];
+
+const menu={
+ Pizze:pizzaNames.map((name,i)=>({
+   name,
+   price:Number((7.5+(i%8)*.5).toFixed(2))
+ })),
+ Bibite:[
+  {name:"Acqua Naturale",price:1.5},
+  {name:"Acqua Frizzante",price:1.5},
+  {name:"Coca-Cola",price:3},
+  {name:"Coca-Cola Zero",price:3},
+  {name:"Fanta",price:3},
+  {name:"Sprite",price:3},
+  {name:"Estathé",price:3}
+ ],
+ Birre:[
+  {name:"Birra Piccola",price:3},
+  {name:"Birra Media",price:4},
+  {name:"Birra Grande",price:5},
+  {name:"Birra Artigianale",price:6}
+ ],
+ Fritti:[
+  {name:"Patatine",price:4}
+ ],
+ Dolci:[
+  {name:"Tiramisù",price:4},
+  {name:"Panna Cotta",price:4},
+  {name:"Cheesecake",price:4.5},
+  {name:"Cannolo",price:4},
+  {name:"Pizza Nutella",price:6},
+  {name:"Gelato",price:4}
+ ],
+ Bambini:[
+  {name:"Menù Bimbi Margherita",price:6},
+  {name:"Menù Bimbi Wurstel",price:6},
+  {name:"Menù Bimbi Patatine",price:5},
+  {name:"Pizza Baby",price:5}
+ ],
+ Extra:[
+  {name:"Mozzarella",price:1},
+  {name:"Doppia Mozzarella",price:2},
+  {name:"Prosciutto",price:1.5},
+  {name:"Funghi",price:1},
+  {name:"Wurstel",price:1},
+  {name:"Olive",price:1},
+  {name:"Rucola",price:1},
+  {name:"Burrata",price:2},
+  {name:"Bufala",price:2}
+ ]
+};
+
+
+/* =========================
+   STATO
+========================= */
+
+let currentCategory="Pizze";
+let selected=null;
+let cart=[];
+let selectedTable=null;
+let keyboardTarget=null;
+let cashAmount="";
+
+const tables=Array.from({length:70},(_,i)=>({
+ number:i+1,
+ status:"free",
+ order:[],
+ reservation:null
+}));
+
+
+/* =========================
+   GENERALE
+========================= */
+
+function money(n){
+ return "€ "+Number(n).toFixed(2).replace(".",",");
+}
+
+function total(){
+ return cart.reduce((s,x)=>s+x.price*x.qty,0);
+}
+
+function closeModal(id){
+ document.getElementById(id).style.display="none";
+}
+
+function hidePages(){
+ document.getElementById("productsPage").classList.add("hidden");
+ document.getElementById("tablesPage").classList.add("hidden");
+ document.getElementById("managerPage").classList.add("hidden");
+}
+
+
+/* =========================
+   CATEGORIE
+========================= */
+
+function category(cat,button){
+ hidePages();
+ document.getElementById("productsPage").classList.remove("hidden");
+
+ currentCategory=cat;
+
+ document.querySelectorAll("nav button")
+ .forEach(b=>b.classList.remove("active"));
+
+ if(button)button.classList.add("active");
+
+ const names={
+  Pizze:"🍕 Pizze",
+  Bibite:"🥤 Bibite",
+  Birre:"🍺 Birre",
+  Fritti:"🍟 Fritti",
+  Dolci:"🍰 Dolci",
+  Bambini:"👶 Menù bambini",
+  Extra:"➕ Extra"
+ };
+
+ document.getElementById("categoryTitle").textContent=names[cat];
+ renderProducts();
+}
+
+function renderProducts(){
+ const box=document.getElementById("products");
+ box.innerHTML="";
+
+ menu[currentCategory].forEach((p,i)=>{
+  const b=document.createElement("button");
+  b.className="product";
+  b.innerHTML="<b>"+escape(p.name)+"</b><span>"+money(p.price)+"</span>";
+  b.onclick=()=>openProduct(currentCategory,i);
+  box.appendChild(b);
+ });
+}
+
+function escape(x){
+ return String(x).replace(/[&<>"']/g,m=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#039;"
+ }[m]));
+}
+
+
+/* =========================
+   PRODOTTO
+========================= */
+
+function openProduct(cat,index){
+ selected={cat,index};
+ const p=menu[cat][index];
+
+ document.getElementById("selectedProductName").textContent=p.name;
+ document.getElementById("selectedProductPrice").textContent=money(p.price);
+ document.getElementById("quantity").value=1;
+ document.getElementById("note").value="";
+ document.getElementById("productModal").style.display="flex";
+}
+
+function addToCart(){
+ const p=menu[selected.cat][selected.index];
+ const qty=Math.max(1,parseInt(document.getElementById("quantity").value)||1);
+ const note=document.getElementById("note").value.trim();
+
+ cart.push({
+  name:p.name,
+  price:p.price,
+  qty,
+  note
+ });
+
+ closeModal("productModal");
+ renderCart();
+}
+
+
+/* =========================
+   COMANDA
+========================= */
+
+function renderCart(){
+ const box=document.getElementById("cart");
+ box.innerHTML="";
+
+ if(!cart.length){
+  box.innerHTML="<div style='text-align:center;color:#777;padding:40px'>Nessun prodotto</div>";
+ }else{
+  cart.forEach((x,i)=>{
+   const div=document.createElement("div");
+   div.className="item";
+   div.innerHTML=`
+    <div class="itemTop">
+      <span>${x.qty} × ${escape(x.name)}</span>
+      <span>${money(x.price*x.qty)}</span>
+    </div>
+    ${x.note?`<small>📝 ${escape(x.note)}</small>`:""}
+    <div class="itemBtns">
+      <button onclick="changeQty(${i},1)">＋</button>
+      <button onclick="changeQty(${i},-1)">−</button>
+      <button onclick="removeItem(${i})">Rimuovi</button>
+    </div>
+   `;
+   box.appendChild(div);
+  });
+ }
+
+ document.getElementById("total").textContent=money(total());
+}
+
+function changeQty(i,n){
+ cart[i].qty+=n;
+ if(cart[i].qty<=0)cart.splice(i,1);
+ renderCart();
+}
+
+function removeItem(i){
+ cart.splice(i,1);
+ renderCart();
+}
+
+function clearCart(){
+ if(!cart.length)return;
+ if(confirm("Vuoi annullare la comanda?")){
+  cart=[];
+  selectedTable=null;
+  document.getElementById("orderInfo").textContent="Nessun tavolo";
+  renderCart();
+ }
+}
+
+
+/* =========================
+   TAVOLI
+========================= */
+
+function showTables(){
+ hidePages();
+ document.getElementById("tablesPage").classList.remove("hidden");
+ renderTables();
+}
+
+function renderTables(){
+ const box=document.getElementById("tables");
+ box.innerHTML="";
+
+ tables.forEach(t=>{
+  const b=document.createElement("button");
+  b.className="table "+t.status;
+  const status=t.status==="free"?"LIBERO":
+               t.status==="busy"?"OCCUPATO":"PRENOTATO";
+
+  b.innerHTML=`TAVOLO ${t.number}<br><small>${status}</small>`;
+  b.onclick=()=>selectTable(t.number);
+  box.appendChild(b);
+ });
+}
+
+function selectTable(n){
+ selectedTable=n;
+ document.getElementById("tableTitle").textContent="🪑 TAVOLO "+n;
+ document.getElementById("tableModal").style.display="flex";
+}
+
+function openTable(){
+ const t=tables[selectedTable-1];
+
+ cart=[...t.order];
+ t.status="busy";
+
+ document.getElementById("orderInfo").textContent="🪑 Tavolo "+selectedTable;
+
+ closeModal("tableModal");
+ renderCart();
+ renderTables();
+}
+
+function freeTable(){
+ const t=tables[selectedTable-1];
+ t.status="free";
+ t.order=[];
+ t.reservation=null;
+
+ if(selectedTable){
+  cart=[];
+  document.getElementById("orderInfo").textContent="Nessun tavolo";
+  renderCart();
+ }
+
+ closeModal("tableModal");
+ renderTables();
+}
+
+function reserveTable(){
+ closeModal("tableModal");
+ booking(selectedTable);
+}
+
+
+/* =========================
+   PRENOTAZIONI
+========================= */
+
+function booking(tableNumber=null){
+ const select=document.getElementById("bookTable");
+ select.innerHTML="";
+
+ tables.forEach(t=>{
+  if(t.status!=="busy" || t.number===tableNumber){
+   const o=document.createElement("option");
+   o.value=t.number;
+   o.textContent="Tavolo "+t.number;
+   if(t.number===tableNumber)o.selected=true;
+   select.appendChild(o);
+  }
+ });
+
+ document.getElementById("bookName").value="";
+ document.getElementById("bookPhone").value="";
+ document.getElementById("bookPeople").value="";
+ document.getElementById("bookTime").value="";
+
+ document.getElementById("bookingModal").style.display="flex";
+}
+
+function saveBooking(){
+ const name=document.getElementById("bookName").value.trim();
+ const phone=document.getElementById("bookPhone").value.trim();
+ const people=document.getElementById("bookPeople").value;
+ const time=document.getElementById("bookTime").value;
+ const n=Number(document.getElementById("bookTable").value);
+
+ if(!name){
+  alert("Inserisci il nome del cliente.");
+  return;
+ }
+
+ if(!time){
+  alert("Inserisci l'orario.");
+  return;
+ }
+
+ tables[n-1].status="reserved";
+ tables[n-1].reservation={name,phone,people,time};
+
+ closeModal("bookingModal");
+ renderTables();
+
+ alert("✅ Prenotazione salvata!\n\n"+name+
+       "\nTavolo "+n+"\nOre "+time);
+}
+
+
+/* =========================
+   ASPORTO
+========================= */
+
+function takeaway(){
+ document.getElementById("takeName").value="";
+ document.getElementById("takePhone").value="";
+ document.getElementById("takeAddress").value="";
+ document.getElementById("takeawayModal").style.display="flex";
+}
+
+function saveTakeaway(){
+ const type=document.getElementById("takeType").value;
+ const name=document.getElementById("takeName").value.trim();
+ const address=document.getElementById("takeAddress").value.trim();
+
+ if(!name){
+  alert("Inserisci il nome.");
+  return;
+ }
+
+ if(type==="Domicilio"&&!address){
+  alert("Inserisci l'indirizzo.");
+  return;
+ }
+
+ document.getElementById("orderInfo").textContent=
+ type==="Domicilio"?"🚚 "+name+" — "+address:"📦 Ritiro — "+name;
+
+ closeModal("takeawayModal");
+}
+
+
+/* =========================
+   TASTIERA
+========================= */
+
+function textKeyboard(target,title){
+ keyboardTarget=target;
+ document.getElementById("keyboardTitle").textContent="⌨️ "+title;
+ document.getElementById("keyboardInput").value=
+  document.getElementById(target).value;
+ document.getElementById("keyboardModal").style.display="flex";
+}
+
+function numberKeyboard(target,title){
+ textKeyboard(target,title);
+}
+
+function key(k){
+ document.getElementById("keyboardInput").value+=k;
+}
+
+function backspace(){
+ const i=document.getElementById("keyboardInput");
+ i.value=i.value.slice(0,-1);
+}
+
+function keyboardOK(){
+ document.getElementById(keyboardTarget).value=
+  document.getElementById("keyboardInput").value;
+ closeModal("keyboardModal");
+}
+
+
+/* =========================
+   CONTANTI
+========================= */
+
+function cash(){
+ if(!cart.length){
+  alert("La comanda è vuota.");
+  return;
+ }
+
+ cashAmount="";
+ document.getElementById("cashTotal").textContent=money(total());
+ document.getElementById("cashDisplay").textContent="€ 0,00";
+ document.getElementById("change").innerHTML="";
+ document.getElementById("cashModal").style.display="flex";
+}
+
+function cashKey(k){
+ if(k==="."&&cashAmount.includes("."))return;
+
+ cashAmount+=k;
+
+ const n=Number(cashAmount)||0;
+ document.getElementById("cashDisplay").textContent=money(n);
+}
+
+function cashClear(){
+ cashAmount="";
+ document.getElementById("cashDisplay").textContent="€ 0,00";
+ document.getElementById("change").innerHTML="";
+}
+
+function confirmCash(){
+ const given=Number(cashAmount)||0;
+ const t=total();
+
+ if(given<t){
+  document.getElementById("change").innerHTML=
+   `<div class="change warning">
+    ⚠️ MANCANO<br>${money(t-given)}
+   </div>`;
+  return;
+ }
+
+ const resto=given-t;
+
+ document.getElementById("change").innerHTML=
+  `<div class="change">
+   💶 RESTO<br><b>${money(resto)}</b>
+  </div>`;
+
+ setTimeout(()=>{
+  if(confirm(
+   "Pagamento completato!\n\n"+
+   "Totale: "+money(t)+
+   "\nContanti: "+money(given)+
+   "\nResto: "+money(resto)+
+   "\n\nChiudere la comanda?"
+  )){
+   finishPayment();
+  }
+ },100);
+}
+
+
+/* =========================
+   CARTA
+========================= */
+
+function card(){
+ if(!cart.length){
+  alert("La comanda è vuota.");
+  return;
+ }
+
+ if(confirm("Pagamento con carta\n\nTotale: "+money(total())+"\n\nConfermare?")){
+  finishPayment();
+  alert("✅ PAGAMENTO CON CARTA COMPLETATO");
+ }
+}
+
+function finishPayment(){
+ if(selectedTable){
+  tables[selectedTable-1].status="free";
+  tables[selectedTable-1].order=[];
+ }
+
+ cart=[];
+ selectedTable=null;
+ document.getElementById("orderInfo").textContent="Nessun tavolo";
+
+ renderCart();
+ renderTables();
+ closeModal("cashModal");
+}
+
+
+/* =========================
+   STAMPA COMANDA
+========================= */
+
+function printOrder(){
+ if(!cart.length){
+  alert("La comanda è vuota.");
+  return;
+ }
+
+ let s="🍕 PIZZERIA\n====================\n";
+ s+=document.getElementById("orderInfo").textContent+"\n";
+ s+="--------------------\n";
+
+ cart.forEach(x=>{
+  s+=x.qty+" × "+x.name+"   "+money(x.price*x.qty)+"\n";
+  if(x.note)s+="   📝 "+x.note+"\n";
+ });
+
+ s+="--------------------\nTOTALE: "+money(total());
+
+ alert(s);
+}
+
+
+/* =========================
+   MODIFICA MENU
+========================= */
+
+function showMenuManager(){
+ hidePages();
+ document.getElementById("managerPage").classList.remove("hidden");
+ renderManager();
+}
+
+function renderManager(){
+ const cat=document.getElementById("managerCategory").value;
+ const box=document.getElementById("manager");
+ box.innerHTML="";
+
+ menu[cat].forEach((p,i)=>{
+  const row=document.createElement("div");
+  row.className="managerRow";
+
+  row.innerHTML=`
+   <input value="${escape(p.name)}">
+   <input type="number" step="0.10" value="${p.price}">
+   <button class="green">SALVA</button>
+   <button class="red">ELIMINA</button>
+  `;
+
+  row.children[2].onclick=()=>{
+   const name=row.children[0].value.trim();
+   const price=Number(row.children[1].value);
+
+   if(!name||isNaN(price)){
+    alert("Dati non validi.");
+    return;
+   }
+
+   menu[cat][i]={name,price:Number(price.toFixed(2))};
+   renderManager();
+   renderProducts();
+  };
+
+  row.children[3].onclick=()=>{
+   if(confirm("Eliminare "+p.name+"?")){
+    menu[cat].splice(i,1);
+    renderManager();
+    renderProducts();
+   }
+  };
+
+  box.appendChild(row);
+ });
+}
+
+function addMenuItem(){
+ const cat=document.getElementById("managerCategory").value;
+ const name=prompt("Nome prodotto:");
+ if(!name)return;
+
+ const price=Number(prompt("Prezzo €:"));
+ if(isNaN(price)){
+  alert("Prezzo non valido.");
+  return;
+ }
+
+ menu[cat].push({
+  name:name.trim(),
+  price:Number(price.toFixed(2))
+ });
+
+ renderManager();
+ renderProducts();
+}
+
+
+/* =========================
+   AVVIO
+========================= */
+
+category("Pizze",document.querySelector("nav button"));
+renderCart();
+renderTables();
+
+</script>
+</body>
+</html>
