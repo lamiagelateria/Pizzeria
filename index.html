@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pizzeria POS</title>
+<title>Pizzeria POS Demo</title>
 
 <style>
 *{box-sizing:border-box}
@@ -28,7 +28,9 @@ header{
   padding:0 22px;
   font-size:24px;
   font-weight:bold;
-  box-shadow:0 2px 8px #000
+  box-shadow:0 2px 8px #000;
+  position:relative;
+  z-index:20
 }
 
 .headerRight{
@@ -44,7 +46,7 @@ header{
   grid-template-columns:125px 1fr 390px
 }
 
-/* SINISTRA */
+/* NAV */
 
 nav{
   background:#242424;
@@ -55,7 +57,7 @@ nav{
 
 nav button{
   width:100%;
-  min-height:74px;
+  min-height:70px;
   margin-bottom:8px;
   border:0;
   border-radius:10px;
@@ -84,7 +86,7 @@ nav hr{
   margin:10px 0
 }
 
-/* CENTRO */
+/* MAIN */
 
 main{
   padding:18px;
@@ -152,7 +154,7 @@ main{
   margin-top:10px
 }
 
-/* COMANDA DESTRA */
+/* COMANDA */
 
 aside{
   background:#101010;
@@ -232,7 +234,7 @@ aside{
 }
 
 .cover input{
-  width:80px;
+  width:70px;
   padding:8px;
   background:#333;
   color:#fff;
@@ -307,6 +309,11 @@ aside{
   font-weight:bold
 }
 
+.table small{
+  display:block;
+  margin-top:5px
+}
+
 .free{background:#168844}
 .busy{background:#c62828}
 .reserved{background:#b77700}
@@ -368,7 +375,7 @@ aside{
   font-weight:bold
 }
 
-/* MODIFICA INGREDIENTI */
+/* INGREDIENTI */
 
 .ingredients{
   display:flex;
@@ -418,7 +425,7 @@ aside{
   padding:15px
 }
 
-/* TASTIERINO */
+/* KEYPAD */
 
 .keypad{
   display:grid;
@@ -435,6 +442,7 @@ aside{
 }
 
 .keypad .clear{background:#c62828}
+
 .keypad .ok{
   background:#168844;
   grid-column:span 3
@@ -450,7 +458,7 @@ aside{
   font-size:32px
 }
 
-/* TASTIERA NOME */
+/* TASTIERA */
 
 .keyboard{
   display:grid;
@@ -521,6 +529,27 @@ aside{
   color:#7cff8a!important
 }
 
+/* SCONTRINO DEMO */
+
+.demoWarning{
+  border:3px solid #c62828;
+  color:#c62828;
+  text-align:center;
+  padding:12px;
+  margin-bottom:15px;
+  font-family:Arial,sans-serif;
+  font-weight:bold
+}
+
+.receiptPaper{
+  background:#fff;
+  color:#111;
+  padding:20px;
+  font-family:monospace;
+  max-height:65vh;
+  overflow:auto
+}
+
 /* RESPONSIVE */
 
 @media(max-width:1250px){
@@ -530,6 +559,7 @@ aside{
 
 @media(max-width:950px){
   .app{grid-template-columns:90px 1fr}
+
   aside{
     position:fixed;
     right:0;
@@ -539,13 +569,28 @@ aside{
     height:calc(100vh - 68px);
     z-index:50
   }
+
   .products{grid-template-columns:repeat(2,1fr)}
 }
 
 @media(max-width:600px){
-  .products{grid-template-columns:repeat(2,1fr);gap:7px}
-  .product{min-height:125px;padding:10px}
-  .tables{grid-template-columns:repeat(3,1fr)}
+  .products{
+    grid-template-columns:repeat(2,1fr);
+    gap:7px
+  }
+
+  .product{
+    min-height:125px;
+    padding:10px
+  }
+
+  .tables{
+    grid-template-columns:repeat(3,1fr)
+  }
+
+  .bigGrid{
+    grid-template-columns:1fr 1fr
+  }
 }
 </style>
 </head>
@@ -554,12 +599,11 @@ aside{
 
 <header>
   🍕 PIZZERIA POS
-  <span class="headerRight">CASSA 01</span>
+  <span class="headerRight">CASSA 01 • DEMO</span>
 </header>
 
 <div class="app">
 
-<!-- MENU SINISTRA -->
 <nav>
 
 <button class="active" onclick="category('Pizze',this)">
@@ -614,9 +658,6 @@ aside{
 
 </nav>
 
-
-<!-- CENTRO -->
-
 <main id="productsPage">
 
 <div class="pageTitle">
@@ -627,7 +668,6 @@ aside{
 <div id="products" class="products"></div>
 
 </main>
-
 
 <main id="tablesPage" style="display:none">
 
@@ -642,7 +682,6 @@ aside{
 
 </main>
 
-
 <main id="ordersPage" style="display:none">
 
 <div class="pageTitle">
@@ -654,7 +693,6 @@ aside{
 
 </main>
 
-
 <main id="timersPage" style="display:none">
 
 <div class="pageTitle">
@@ -664,9 +702,6 @@ aside{
 <div id="timers"></div>
 
 </main>
-
-
-<!-- COMANDA DESTRA -->
 
 <aside>
 
@@ -681,8 +716,12 @@ Nessun tavolo / ordine
 
 <div class="cover">
 👥 Coperti
-<input id="coverQty" type="number" min="0" value="0"
-onchange="updateCover()">
+<input
+ id="coverQty"
+ type="number"
+ min="0"
+ value="0"
+ onchange="updateCover()">
 &nbsp; × €0,50
 </div>
 
@@ -692,18 +731,36 @@ onchange="updateCover()">
 </div>
 
 <div class="actions">
-<button class="green" onclick="openCash()">💶 CONTANTI</button>
-<button class="blue" onclick="payCard()">💳 CARTA</button>
-<button class="orange" onclick="printReceipt()">🧾 SCONTRINO</button>
-<button class="purple" onclick="saveCurrentOrder()">📋 SALVA ORDINE</button>
-<button class="red" onclick="clearOrder()">🗑️ ANNULLA</button>
-<button class="gray" onclick="showTimers()">🍟 TIMER</button>
+
+<button class="green" onclick="openCash()">
+💶 CONTANTI
+</button>
+
+<button class="blue" onclick="payCard()">
+💳 CARTA
+</button>
+
+<button class="orange" onclick="printReceipt()">
+🧾 SCONTRINO DEMO
+</button>
+
+<button class="purple" onclick="saveCurrentOrder()">
+📋 SALVA ORDINE
+</button>
+
+<button class="red" onclick="clearOrder()">
+🗑️ ANNULLA
+</button>
+
+<button class="gray" onclick="showTimers()">
+🍟 TIMER
+</button>
+
 </div>
 
 </aside>
 
 </div>
-
 
 <!-- PRODOTTO -->
 
@@ -743,8 +800,9 @@ Prezzo base:
 <input id="productQty" type="number" min="1" value="1">
 
 <label>📝 Note</label>
-<textarea id="productNote"
-placeholder="Es. ben cotto, senza cipolla..."></textarea>
+<textarea
+ id="productNote"
+ placeholder="Es. ben cotto, senza cipolla..."></textarea>
 
 <div class="final">
 Totale: <b id="finalPrice"></b>
@@ -760,7 +818,6 @@ ANNULLA
 
 </div>
 </div>
-
 
 <!-- ASPORTO -->
 
@@ -787,16 +844,10 @@ onclick="selectTakeaway('Ritiro')">
 
 <div id="takeawayForm" style="display:none">
 
-<h3>2️⃣ APRI ORDINE</h3>
-
-<button class="green"
-style="width:100%;font-size:18px"
-onclick="openTakeawayOrder()">
-📋 APRI ORDINE
-</button>
+<h3>2️⃣ DATI ORDINE</h3>
 
 <label>Nome cliente</label>
-<input id="takeName" onclick="openNameKeyboard('takeName')">
+<input id="takeName">
 
 <label>Telefono</label>
 <input id="takePhone" inputmode="numeric">
@@ -811,21 +862,28 @@ onclick="openTakeawayOrder()">
 <label>Orario</label>
 <input id="takeTime" type="time">
 
-<button class="green" style="width:100%"
+<button class="green"
+style="width:100%"
+onclick="openTakeawayOrder()">
+📋 APRI ORDINE
+</button>
+
+<button class="blue"
+style="width:100%"
 onclick="confirmTakeaway()">
 ✅ CONFERMA DATI ORDINE
 </button>
 
 </div>
 
-<button class="gray" style="width:100%"
+<button class="gray"
+style="width:100%"
 onclick="closeModal('takeawayModal')">
 CHIUDI
 </button>
 
 </div>
 </div>
-
 
 <!-- TAVOLO -->
 
@@ -863,8 +921,7 @@ CHIUDI
 </div>
 </div>
 
-
-<!-- CASSA -->
+<!-- CONTANTI -->
 
 <div class="modal" id="cashModal">
 <div class="box">
@@ -915,35 +972,6 @@ ANNULLA
 </div>
 </div>
 
-
-<!-- TASTIERA NOME -->
-
-<div class="modal" id="keyboardModal">
-<div class="box">
-
-<h2>⌨️ INSERISCI NOME</h2>
-
-<input id="keyboardDisplay"
-style="font-size:25px">
-
-<div class="keyboard" id="keyboard"></div>
-
-<button class="green"
-style="width:100%;font-size:18px"
-onclick="confirmKeyboard()">
-✅ CONFERMA
-</button>
-
-<button class="gray"
-style="width:100%"
-onclick="closeModal('keyboardModal')">
-CHIUDI
-</button>
-
-</div>
-</div>
-
-
 <!-- PRENOTAZIONE -->
 
 <div class="modal" id="bookingModal">
@@ -978,14 +1006,20 @@ ANNULLA
 </div>
 </div>
 
-
-<!-- SCONTRINO -->
+<!-- SCONTRINO DEMO -->
 
 <div class="modal" id="receiptModal">
 <div class="box">
 
-<div id="receipt"
-style="background:#fff;color:#111;padding:20px;font-family:monospace">
+<div class="receiptPaper">
+
+<div class="demoWarning">
+⚠️ DOCUMENTO DEMO<br>
+NON FISCALE
+</div>
+
+<div id="receipt"></div>
+
 </div>
 
 <button class="green"
@@ -997,7 +1031,6 @@ CHIUDI
 </div>
 </div>
 
-
 <script>
 
 /* =========================
@@ -1005,35 +1038,67 @@ CHIUDI
 ========================= */
 
 const pizzaNames=[
-"Margherita","Marinara","Diavola","Quattro Formaggi","Capricciosa",
-"Prosciutto e Funghi","Quattro Stagioni","Bufalina","Boscaiola",
-"Tonno e Cipolla","Napoli","Romana","Parmigiana","Vegetariana",
-"Patatosa","Wurstel e Patatine","Salsiccia","Salsiccia e Friarielli",
-"Speck e Brie","Speck e Gorgonzola","Mortadella e Pistacchio",
-"Pistacchio e Burrata","Porcini","Crudo e Rucola","Salame Piccante",
-"Nduja","Calabrese","Mexicana","Americana","BBQ","Chicken","Kebab",
-"Kebab Special","Bufala e Crudo","Zucchine e Speck",
-"Melanzane e Salsiccia","Peperoni e Tonno","Carciofi e Speck",
-"Cipolla e Gorgonzola","Gorgonzola e Pere","Taleggio e Speck",
-"Scamorza e Speck","Provola e Nduja","Fiori di Zucca",
-"Alici e Burrata","Pomodorini e Rucola","Pesto e Stracciatella",
-"Tartufo","Tartufo e Funghi","Porchetta","Porchetta e Provola",
-"Carbonara","Amatriciana","Cacio e Pepe","Genovese","Siciliana",
-"Greca","Mediterranea","Italiana"
+"Margherita","Marinara","Diavola","Quattro Formaggi",
+"Capricciosa","Prosciutto e Funghi","Quattro Stagioni",
+"Bufalina","Boscaiola","Tonno e Cipolla","Napoli","Romana",
+"Parmigiana","Vegetariana","Patatosa","Wurstel e Patatine",
+"Salsiccia","Salsiccia e Friarielli","Speck e Brie",
+"Speck e Gorgonzola","Mortadella e Pistacchio",
+"Pistacchio e Burrata","Porcini","Crudo e Rucola",
+"Salame Piccante","Nduja","Calabrese","Mexicana",
+"Americana","BBQ","Chicken","Kebab","Kebab Special",
+"Bufala e Crudo","Zucchine e Speck","Melanzane e Salsiccia",
+"Peperoni e Tonno","Carciofi e Speck","Cipolla e Gorgonzola",
+"Gorgonzola e Pere","Taleggio e Speck","Scamorza e Speck",
+"Provola e Nduja","Fiori di Zucca","Alici e Burrata",
+"Pomodorini e Rucola","Pesto e Stracciatella","Tartufo",
+"Tartufo e Funghi","Porchetta","Porchetta e Provola",
+"Carbonara","Amatriciana","Cacio e Pepe","Genovese",
+"Siciliana","Greca","Mediterranea","Italiana"
 ];
 
 const baseIng=[
-["Pomodoro",0],["Mozzarella",0],["Basilico",0],["Origano",0],
-["Funghi",1],["Prosciutto",1.5],["Wurstel",1],["Salame piccante",1],
-["Cipolla",.7],["Olive",.7],["Peperoni",1],["Melanzane",1],
-["Zucchine",1],["Rucola",1],["Salsiccia",1.5],["Speck",1.5],
-["Burrata",2],["Bufala",2],["Gorgonzola",1.5],["Pesto",1],
-["Nduja",1.5],["Bresaola",2],["Tonno",1.5],["Acciughe",1],
-["Brie",1.5],["Taleggio",1.5],["Provola",1.5],["Parmigiano",1],
-["Patatine",1],["Friarielli",1],["Pistacchio",2],
-["Mortadella",1.5],["Stracciatella",2],["Porcini",2],
-["Crudo",2],["Carciofi",1],["Fiori di zucca",1.5],
-["Uovo",.7],["Panna",.7],["Pere",1],["Tartufo",2]
+["Pomodoro",0],
+["Mozzarella",0],
+["Basilico",0],
+["Origano",0],
+["Funghi",1],
+["Prosciutto",1.5],
+["Wurstel",1],
+["Salame piccante",1],
+["Cipolla",.7],
+["Olive",.7],
+["Peperoni",1],
+["Melanzane",1],
+["Zucchine",1],
+["Rucola",1],
+["Salsiccia",1.5],
+["Speck",1.5],
+["Burrata",2],
+["Bufala",2],
+["Gorgonzola",1.5],
+["Pesto",1],
+["Nduja",1.5],
+["Bresaola",2],
+["Tonno",1.5],
+["Acciughe",1],
+["Brie",1.5],
+["Taleggio",1.5],
+["Provola",1.5],
+["Parmigiano",1],
+["Patatine",1],
+["Friarielli",1],
+["Pistacchio",2],
+["Mortadella",1.5],
+["Stracciatella",2],
+["Porcini",2],
+["Crudo",2],
+["Carciofi",1],
+["Fiori di zucca",1.5],
+["Uovo",.7],
+["Panna",.7],
+["Pere",1],
+["Tartufo",2]
 ];
 
 const menu={
@@ -1057,7 +1122,11 @@ Panini:[
 ["Panino Nduja","Nduja, mozzarella, pomodoro, rucola",8],
 ["Panino Special","Hamburger, burrata, speck, salsa",9],
 ["Panino Casa","Hamburger, provola, funghi, pancetta",9]
-].map(x=>({name:x[0],desc:x[1],price:x[2]})),
+].map(x=>({
+ name:x[0],
+ desc:x[1],
+ price:x[2]
+})),
 
 Bibite:[
 {name:"Acqua Naturale",price:1.5},
@@ -1124,7 +1193,10 @@ const gelati=[
 "Nocciola","Fiordilatte","Fragola","Limone","Crema","Caffè"
 ];
 
-/* ========================= */
+
+/* =========================
+   STATO
+========================= */
 
 let currentCategory="Pizze";
 let selectedProduct=null;
@@ -1134,21 +1206,21 @@ let cover=0;
 let mods=[];
 let cash="";
 let takeawayType="";
-let keyboardTarget="";
-let keyboardValue="";
-
-const tables=Array.from({length:70},(_,i)=>({
- number:i+1,
- status:"free",
- order:[],
- reservation:null
-}));
-
 let savedOrders=[];
+
+const tables=Array.from(
+ {length:70},
+ (_,i)=>({
+  number:i+1,
+  status:"free",
+  order:[],
+  reservation:null
+ })
+);
 
 
 /* =========================
-   FUNZIONI BASE
+   FUNZIONI GENERALI
 ========================= */
 
 function money(n){
@@ -1157,16 +1229,19 @@ function money(n){
 
 function esc(s){
  return String(s).replace(/[&<>"']/g,m=>({
- "&":"&amp;",
- "<":"&lt;",
- ">":"&gt;",
- '"':"&quot;",
- "'":"&#039;"
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#039;"
  }[m]));
 }
 
 function total(){
- return cart.reduce((s,x)=>s+x.price*x.qty,0)+cover*.5;
+ return cart.reduce(
+  (sum,item)=>sum+item.price*item.qty,
+  0
+ )+(cover*.5);
 }
 
 function closeModal(id){
@@ -1174,8 +1249,12 @@ function closeModal(id){
 }
 
 function hidePages(){
- ["productsPage","tablesPage","ordersPage","timersPage"]
- .forEach(id=>{
+ [
+  "productsPage",
+  "tablesPage",
+  "ordersPage",
+  "timersPage"
+ ].forEach(id=>{
   document.getElementById(id).style.display="none";
  });
 }
@@ -1189,27 +1268,30 @@ function category(cat,btn){
 
  hidePages();
 
- document.getElementById("productsPage").style.display="block";
+ document.getElementById("productsPage")
+ .style.display="block";
 
  currentCategory=cat;
 
  document.querySelectorAll("nav button")
  .forEach(b=>b.classList.remove("active"));
 
- if(btn)btn.classList.add("active");
+ if(btn)
+  btn.classList.add("active");
 
  const names={
- Pizze:"🍕 Pizze",
- Panini:"🥪 Panini",
- Bibite:"🥤 Bibite",
- Birre:"🍺 Birre",
- Fritti:"🍟 Fritti",
- Dolci:"🍰 Dolci",
- Bambini:"👶 Menù bambini",
- Extra:"➕ Extra"
+  Pizze:"🍕 Pizze",
+  Panini:"🥪 Panini",
+  Bibite:"🥤 Bibite",
+  Birre:"🍺 Birre",
+  Fritti:"🍟 Fritti",
+  Dolci:"🍰 Dolci",
+  Bambini:"👶 Menù bambini",
+  Extra:"➕ Extra"
  };
 
- document.getElementById("categoryTitle").textContent=names[cat];
+ document.getElementById("categoryTitle")
+ .textContent=names[cat];
 
  renderProducts();
 }
@@ -1227,37 +1309,40 @@ function renderProducts(){
 
  const arr=menu[currentCategory];
 
- document.getElementById("productCount").textContent=
- arr.length+" prodotti";
+ document.getElementById("productCount")
+ .textContent=arr.length+" prodotti";
 
  arr.forEach((p,i)=>{
 
-  const b=document.createElement("button");
+  const button=document.createElement("button");
 
-  b.className="product";
+  button.className="product";
 
   let desc=p.desc||
-   (currentCategory==="Dolci"&&p.name==="Gelato"
-    ?"Scegli due gusti"
-    :"Premi per aggiungere");
+   (
+    currentCategory==="Dolci" &&
+    p.name==="Gelato"
+   ?
+    "Scegli due gusti"
+   :
+    "Premi per aggiungere"
+   );
 
-  b.innerHTML=`
+  button.innerHTML=`
    <b>${esc(p.name)}</b>
    <small>${esc(desc)}</small>
    <span class="price">${money(p.price)}</span>
   `;
 
-  b.onclick=()=>openProduct(i);
+  button.onclick=()=>openProduct(i);
 
-  box.appendChild(b);
-
+  box.appendChild(button);
  });
-
 }
 
 
 /* =========================
-   MODIFICA PRODOTTO
+   PRODOTTO
 ========================= */
 
 function openProduct(i){
@@ -1267,17 +1352,21 @@ function openProduct(i){
 
  const p=menu[currentCategory][i];
 
- document.getElementById("productTitle").textContent=
-  (currentCategory==="Pizze"?"🍕 ":
-   currentCategory==="Panini"?"🥪 ":"🛒 ")+p.name;
+ document.getElementById("productTitle")
+ .textContent=
+  (
+   currentCategory==="Pizze"?"🍕 ":
+   currentCategory==="Panini"?"🥪 ":"🛒 "
+  )+p.name;
 
- document.getElementById("basePrice").textContent=money(p.price);
+ document.getElementById("basePrice")
+ .textContent=money(p.price);
 
  document.getElementById("productQty").value=1;
  document.getElementById("productNote").value="";
 
  const editable=
-  currentCategory==="Pizze"||
+  currentCategory==="Pizze" ||
   currentCategory==="Panini";
 
  document.getElementById("ingredientsBox")
@@ -1285,18 +1374,25 @@ function openProduct(i){
 
  document.getElementById("gelatoBox")
  .style.display=
- currentCategory==="Dolci"&&p.name==="Gelato"
- ?"block":"none";
+  currentCategory==="Dolci" &&
+  p.name==="Gelato"
+  ?"block":"none";
 
- if(editable)renderIngredients();
+ if(editable)
+  renderIngredients();
 
- if(currentCategory==="Dolci"&&p.name==="Gelato"){
+ if(
+  currentCategory==="Dolci" &&
+  p.name==="Gelato"
+ ){
 
   ["gelato1","gelato2"].forEach(id=>{
-   document.getElementById(id).innerHTML=
-    gelati.map(g=>`<option>${g}</option>`).join("");
-  });
 
+   document.getElementById(id).innerHTML=
+    gelati.map(g=>`<option>${esc(g)}</option>`)
+    .join("");
+
+  });
  }
 
  updatePrice();
@@ -1327,16 +1423,24 @@ function renderIngredients(){
    <div class="ingBtns">
 
     <button class="red"
-     onclick="modIng('${name}','remove')">❌</button>
+     onclick="modIng('${esc(name)}','remove')">
+     ❌
+    </button>
 
     <button class="gray"
-     onclick="modIng('${name}','half')">½</button>
+     onclick="modIng('${esc(name)}','half')">
+     ½
+    </button>
 
     <button class="blue"
-     onclick="modIng('${name}','double')">×2</button>
+     onclick="modIng('${esc(name)}','double')">
+     ×2
+    </button>
 
     <button class="green"
-     onclick="modIng('${name}','extra')">➕</button>
+     onclick="modIng('${esc(name)}','extra')">
+     ➕
+    </button>
 
    </div>
   `;
@@ -1356,16 +1460,26 @@ function modIng(name,type){
 
  let text="";
 
- if(type==="remove")text="❌ Senza "+name;
- if(type==="half")text="½ "+name;
- if(type==="double")text="×2 "+name;
- if(type==="extra")text="➕ Extra "+name;
+ if(type==="remove")
+  text="❌ Senza "+name;
+
+ if(type==="half")
+  text="½ "+name;
+
+ if(type==="double")
+  text="×2 "+name;
+
+ if(type==="extra")
+  text="➕ Extra "+name;
 
  mods.push({
   name,
   type,
   text,
-  price:(type==="remove"||type==="half")?0:price
+  price:
+   type==="remove" || type==="half"
+   ?0
+   :price
  });
 
  updatePrice();
@@ -1374,26 +1488,30 @@ function modIng(name,type){
 
 function updatePrice(){
 
- if(selectedProduct===null)return;
+ if(selectedProduct===null)
+  return;
 
  const p=menu[currentCategory][selectedProduct];
 
  const price=
   p.price+
-  mods.reduce((s,x)=>s+x.price,0);
+  mods.reduce((sum,x)=>sum+x.price,0);
 
  document.getElementById("finalPrice")
  .textContent=money(price);
 
  document.getElementById("selectedMods")
- .innerHTML=mods.length
- ?mods.map(x=>`
+ .innerHTML=
+  mods.length
+  ?
+  mods.map(x=>`
    <div class="mod">
     <span>${esc(x.text)}</span>
     <b>${x.price?money(x.price):""}</b>
    </div>
   `).join("")
- :"Nessuna modifica";
+  :
+  "Nessuna modifica";
 }
 
 
@@ -1407,11 +1525,16 @@ function addProductToOrder(){
  );
 
  const note=
-  document.getElementById("productNote").value.trim();
+  document.getElementById("productNote")
+  .value.trim();
 
  let name=p.name;
 
- if(currentCategory==="Dolci"&&p.name==="Gelato"){
+ if(
+  currentCategory==="Dolci" &&
+  p.name==="Gelato"
+ ){
+
   name+=
    " ("+
    document.getElementById("gelato1").value+
@@ -1422,7 +1545,7 @@ function addProductToOrder(){
 
  const price=
   p.price+
-  mods.reduce((s,x)=>s+x.price,0);
+  mods.reduce((sum,x)=>sum+x.price,0);
 
  cart.push({
   name,
@@ -1452,53 +1575,76 @@ function renderCart(){
 
  if(!cart.length){
 
-  box.innerHTML=
-   `<div class="empty">
+  box.innerHTML=`
+   <div class="empty">
     🧾<br><br>
     Nessun prodotto nella comanda
-   </div>`;
+   </div>
+  `;
 
  }else{
 
-  cart.forEach((x,i)=>{
+  cart.forEach((item,index)=>{
 
-   let det="";
+   let details="";
 
-   if(x.mods?.length)
-    det+=x.mods.map(m=>m.text).join("<br>");
+   if(item.mods?.length){
 
-   if(x.note)
-    det+=(det?"<br>":"")+"📝 "+esc(x.note);
+    details+=item.mods
+     .map(m=>esc(m.text))
+     .join("<br>");
 
-   const d=document.createElement("div");
+   }
 
-   d.className="item";
+   if(item.note){
 
-   d.innerHTML=`
+    details+=
+     (details?"<br>":"")+
+     "📝 "+esc(item.note);
+
+   }
+
+   const div=document.createElement("div");
+
+   div.className="item";
+
+   div.innerHTML=`
     <div class="itemTop">
-     <span>${x.qty} × ${esc(x.name)}</span>
-     <span>${money(x.price*x.qty)}</span>
+     <span>
+      ${item.qty} × ${esc(item.name)}
+     </span>
+
+     <span>
+      ${money(item.price*item.qty)}
+     </span>
     </div>
 
-    ${det?
-    `<div class="itemDetails">${det}</div>`:""}
+    ${
+     details
+     ?
+     `<div class="itemDetails">${details}</div>`
+     :""
+    }
 
     <div class="itemBtns">
 
-     <button onclick="qty(${i},1)">＋</button>
-     <button onclick="qty(${i},-1)">−</button>
-     <button onclick="removeItem(${i})">🗑️</button>
+     <button onclick="qty(${index},1)">＋</button>
+
+     <button onclick="qty(${index},-1)">−</button>
+
+     <button onclick="removeItem(${index})">
+      🗑️
+     </button>
 
     </div>
    `;
 
-   box.appendChild(d);
-
+   box.appendChild(div);
   });
-
  }
 
- document.getElementById("total").textContent=money(total());
+ document.getElementById("total")
+ .textContent=money(total());
 }
 
 
@@ -1537,14 +1683,18 @@ function updateCover(){
 
 function clearOrder(){
 
- if(!confirm("Vuoi annullare la comanda?"))return;
+ if(!cart.length)
+  return;
+
+ if(!confirm("Vuoi annullare la comanda?"))
+  return;
 
  cart=[];
  cover=0;
 
  document.getElementById("coverQty").value=0;
 
- if(selectedTable){
+ if(selectedTable!==null){
 
   tables[selectedTable-1].order=[];
   tables[selectedTable-1].status="free";
@@ -1582,31 +1732,34 @@ function renderTables(){
 
  box.innerHTML="";
 
- tables.forEach(t=>{
+ tables.forEach(table=>{
 
-  const b=document.createElement("button");
+  const button=document.createElement("button");
 
-  b.className="table "+t.status;
+  button.className="table "+table.status;
 
-  const stato=
-   t.status==="free"?"LIBERO":
-   t.status==="busy"?"OCCUPATO":
-   "PRENOTATO";
+  const status=
+   table.status==="free"
+   ?"LIBERO"
+   :
+   table.status==="busy"
+   ?"OCCUPATO"
+   :"PRENOTATO";
 
-  b.innerHTML=`
-   TAVOLO ${t.number}
+  button.innerHTML=`
+   TAVOLO ${table.number}
    <small>
-    ${stato}
-    ${t.order.length?" • 🧾":""}
+    ${status}
+    ${table.order.length?" • 🧾":""}
    </small>
   `;
 
-  b.onclick=()=>selectTable(t.number);
+  button.onclick=()=>{
+   selectTable(table.number);
+  };
 
-  box.appendChild(b);
-
+  box.appendChild(button);
  });
-
 }
 
 
@@ -1614,30 +1767,34 @@ function selectTable(n){
 
  selectedTable=n;
 
- const t=tables[n-1];
+ const table=tables[n-1];
 
  document.getElementById("tableTitle")
  .textContent="🪑 TAVOLO "+n;
 
  document.getElementById("tableInfo").innerHTML=
 
- t.reservation
- ?`
-  <div class="cover">
-   📅 <b>Prenotazione</b><br>
-   ${esc(t.reservation.name)}<br>
-   Ore ${t.reservation.time}<br>
-   ${t.reservation.people} persone
-  </div>
- `
- :t.order.length
- ?`
-  <div class="cover">
-   🧾 <b>Comanda presente</b><br>
-   ${t.order.length} prodotti
-  </div>
- `
- :"<p>Tavolo libero.</p>";
+  table.reservation
+  ?
+  `
+   <div class="cover">
+    📅 <b>Prenotazione</b><br>
+    ${esc(table.reservation.name)}<br>
+    Ore ${esc(table.reservation.time)}<br>
+    ${table.reservation.people} persone
+   </div>
+  `
+  :
+  table.order.length
+  ?
+  `
+   <div class="cover">
+    🧾 <b>Comanda presente</b><br>
+    ${table.order.length} prodotti
+   </div>
+  `
+  :
+  "<p>Tavolo libero.</p>";
 
  document.getElementById("tableModal")
  .classList.add("show");
@@ -1646,16 +1803,22 @@ function selectTable(n){
 
 function openTableOrder(){
 
- const t=tables[selectedTable-1];
+ if(selectedTable===null)
+  return;
 
- cart=JSON.parse(JSON.stringify(t.order||[]));
+ const table=tables[selectedTable-1];
 
- t.status="busy";
+ cart=JSON.parse(
+  JSON.stringify(table.order||[])
+ );
+
+ table.status="busy";
 
  document.getElementById("orderInfo")
  .textContent="🪑 Tavolo "+selectedTable;
 
- document.getElementById("coverQty").value=cover=0;
+ document.getElementById("coverQty")
+ .value=cover=0;
 
  closeModal("tableModal");
 
@@ -1666,21 +1829,25 @@ function openTableOrder(){
 
 function saveTable(){
 
- if(selectedTable)
+ if(selectedTable!==null){
+
   tables[selectedTable-1].order=
    JSON.parse(JSON.stringify(cart));
+
+ }
 }
 
 
 function freeTable(){
 
- if(selectedTable===null)return;
+ if(selectedTable===null)
+  return;
 
- const t=tables[selectedTable-1];
+ const table=tables[selectedTable-1];
 
- t.status="free";
- t.order=[];
- t.reservation=null;
+ table.status="free";
+ table.order=[];
+ table.reservation=null;
 
  cart=[];
  cover=0;
@@ -1688,6 +1855,8 @@ function freeTable(){
 
  document.getElementById("orderInfo")
  .textContent="Nessun tavolo / ordine";
+
+ document.getElementById("coverQty").value=0;
 
  closeModal("tableModal");
 
@@ -1704,15 +1873,18 @@ function reserveTable(){
 
  closeModal("tableModal");
 
- const select=document.getElementById("bookTable");
+ const select=
+  document.getElementById("bookTable");
 
- select.innerHTML=tables
- .filter(t=>t.status!=="busy")
- .map(t=>`
-  <option value="${t.number}">
-   Tavolo ${t.number}
-  </option>
- `).join("");
+ select.innerHTML=
+  tables
+  .filter(t=>t.status!=="busy")
+  .map(t=>`
+   <option value="${t.number}">
+    Tavolo ${t.number}
+   </option>
+  `)
+  .join("");
 
  if(selectedTable)
   select.value=selectedTable;
@@ -1729,25 +1901,32 @@ function reserveTable(){
 function saveBooking(){
 
  const name=
-  document.getElementById("bookName").value.trim();
+  document.getElementById("bookName")
+  .value.trim();
 
  const people=
-  +document.getElementById("bookPeople").value||0;
+  +document.getElementById("bookPeople")
+  .value||0;
 
  const time=
-  document.getElementById("bookTime").value;
+  document.getElementById("bookTime")
+  .value;
 
- const no=
+ const number=
   +document.getElementById("bookTable").value;
 
- if(!name||!time)
-  return alert("Inserisci nome e orario.");
+ if(!name||!time){
 
- const t=tables[no-1];
+  alert("Inserisci nome e orario.");
+  return;
 
- t.status="reserved";
+ }
 
- t.reservation={
+ const table=tables[number-1];
+
+ table.status="reserved";
+
+ table.reservation={
   name,
   people,
   time
@@ -1794,12 +1973,16 @@ function selectTakeaway(type){
 
  document.getElementById("addressBox")
  .style.display=
-  type==="Domicilio"?"block":"none";
-
+  type==="Domicilio"
+  ?"block"
+  :"none";
 }
 
 
 function openTakeawayOrder(){
+
+ if(!takeawayType)
+  return alert("Seleziona consegna o ritiro.");
 
  cart=[];
  cover=0;
@@ -1809,36 +1992,44 @@ function openTakeawayOrder(){
 
  document.getElementById("orderInfo")
  .textContent=
- takeawayType==="Domicilio"
- ?"🚚 Ordine domicilio"
- :"🏪 Ritiro in pizzeria";
+  takeawayType==="Domicilio"
+  ?"🚚 Ordine domicilio"
+  :"🏪 Ordine ritiro";
 
  closeModal("takeawayModal");
 
  renderCart();
 
- alert("📋 Ordine aperto!\n\nOra puoi aggiungere pizze, bibite, fritti ecc.");
+ alert(
+  "📋 Ordine aperto!\n\n"+
+  "Ora puoi aggiungere i prodotti."
+ );
 }
 
 
 function confirmTakeaway(){
 
  const name=
-  document.getElementById("takeName").value.trim();
+  document.getElementById("takeName")
+  .value.trim();
 
  if(!name)
   return alert("Inserisci il nome del cliente.");
 
  document.getElementById("orderInfo")
  .textContent=
-  (takeawayType==="Domicilio"?"🚚 ":"🏪 ")+name;
+  (
+   takeawayType==="Domicilio"
+   ?"🚚 "
+   :"🏪 "
+  )+name;
 
  closeModal("takeawayModal");
 }
 
 
 /* =========================
-   ORDINI APERTI
+   ORDINI
 ========================= */
 
 function saveCurrentOrder(){
@@ -1847,9 +2038,13 @@ function saveCurrentOrder(){
   return alert("La comanda è vuota.");
 
  const name=
-  prompt("Nome dell'ordine:", "Ordine "+(savedOrders.length+1));
+  prompt(
+   "Nome dell'ordine:",
+   "Ordine "+(savedOrders.length+1)
+  );
 
- if(!name)return;
+ if(!name)
+  return;
 
  savedOrders.push({
   id:Date.now(),
@@ -1860,7 +2055,10 @@ function saveCurrentOrder(){
 
  renderOrders();
 
- alert("📋 Ordine salvato.\nPuoi pagarlo più tardi dalla sezione ORDINI.");
+ alert(
+  "📋 Ordine salvato.\n\n"+
+  "Puoi pagarlo più tardi dalla sezione ORDINI."
+ );
 }
 
 
@@ -1877,7 +2075,8 @@ function showOrders(){
 
 function renderOrders(){
 
- const box=document.getElementById("ordersList");
+ const box=
+  document.getElementById("ordersList");
 
  box.innerHTML="";
 
@@ -1886,38 +2085,45 @@ function renderOrders(){
 
  if(!savedOrders.length){
 
-  box.innerHTML=
-   `<div class="empty">
+  box.innerHTML=`
+   <div class="empty">
     📋<br><br>
     Nessun ordine aperto
-   </div>`;
+   </div>
+  `;
 
   return;
  }
 
- savedOrders.forEach((o,index)=>{
+ savedOrders.forEach((order,index)=>{
 
   const div=document.createElement("div");
 
   div.className="orderCard";
 
-  const products=o.cart
-   .map(x=>`${x.qty} × ${esc(x.name)}`)
+  const products=
+   order.cart
+   .map(x=>
+    `${x.qty} × ${esc(x.name)}`
+   )
    .join("<br>");
 
-  const tot=
-   o.cart.reduce((s,x)=>s+x.price*x.qty,0)+
-   o.cover*.5;
+  const orderTotal=
+   order.cart.reduce(
+    (sum,x)=>sum+x.price*x.qty,
+    0
+   )+
+   order.cover*.5;
 
   div.innerHTML=`
-   <h3>📋 ${esc(o.name)}</h3>
+   <h3>📋 ${esc(order.name)}</h3>
 
    <div class="orderProducts">
     ${products}
    </div>
 
    <h3 style="color:#ffc107">
-    ${money(tot)}
+    ${money(orderTotal)}
    </h3>
 
    <div class="orderButtons">
@@ -1947,48 +2153,56 @@ function renderOrders(){
 
 function loadOrder(index){
 
- const o=savedOrders[index];
+ const order=savedOrders[index];
 
- cart=JSON.parse(JSON.stringify(o.cart));
+ cart=JSON.parse(
+  JSON.stringify(order.cart)
+ );
 
- cover=o.cover;
+ cover=order.cover;
 
- document.getElementById("coverQty").value=cover;
+ document.getElementById("coverQty")
+ .value=cover;
 
  document.getElementById("orderInfo")
- .textContent="📋 "+o.name;
+ .textContent="📋 "+order.name;
 
  savedOrders.splice(index,1);
 
  renderCart();
  renderOrders();
 
- alert("Ordine aperto nella comanda a destra.");
+ alert(
+  "Ordine aperto nella comanda a destra."
+ );
 }
 
 
 function paySavedOrder(index){
 
- const o=savedOrders[index];
+ const order=savedOrders[index];
 
- cart=JSON.parse(JSON.stringify(o.cart));
+ cart=JSON.parse(
+  JSON.stringify(order.cart)
+ );
 
- cover=o.cover;
+ cover=order.cover;
 
- document.getElementById("cashTotal")
- .textContent=money(total());
-
- openCash();
+ document.getElementById("coverQty")
+ .value=cover;
 
  savedOrders.splice(index,1);
 
  renderOrders();
+
+ payCard();
 }
 
 
 function deleteSavedOrder(index){
 
- if(!confirm("Eliminare questo ordine?"))return;
+ if(!confirm("Eliminare questo ordine?"))
+  return;
 
  savedOrders.splice(index,1);
 
@@ -1997,7 +2211,7 @@ function deleteSavedOrder(index){
 
 
 /* =========================
-   PAGAMENTO
+   PAGAMENTO CONTANTI
 ========================= */
 
 function openCash(){
@@ -2013,21 +2227,27 @@ function openCash(){
  document.getElementById("cashDisplay")
  .textContent="€ 0,00";
 
- document.getElementById("change").innerHTML="";
+ document.getElementById("change")
+ .innerHTML="";
 
  document.getElementById("cashModal")
  .classList.add("show");
 }
 
 
-function cashKey(v){
+function cashKey(value){
 
- if(v==="."&&cash.includes("."))return;
+ if(
+  value==="." &&
+  cash.includes(".")
+ )
+  return;
 
- cash+=v;
+ cash+=value;
 
  document.getElementById("cashDisplay")
- .textContent=money(+cash||0);
+ .textContent=
+  money(+cash||0);
 }
 
 
@@ -2038,66 +2258,133 @@ function cashClear(){
  document.getElementById("cashDisplay")
  .textContent="€ 0,00";
 
- document.getElementById("change").innerHTML="";
+ document.getElementById("change")
+ .innerHTML="";
 }
 
 
 function confirmCash(){
 
  const given=+cash||0;
- const t=total();
+ const amount=total();
 
- if(given<t){
+ if(given<amount){
 
-  document.getElementById("change").innerHTML=
-   `<div class="cover"
-   style="background:#7d2020;text-align:center;font-size:22px">
-   ⚠️ MANCANO<br>
-   <b>${money(t-given)}</b>
-   </div>`;
+  document.getElementById("change")
+  .innerHTML=`
+   <div class="cover"
+    style="
+     background:#7d2020;
+     text-align:center;
+     font-size:22px
+    ">
+    ⚠️ MANCANO<br>
+    <b>${money(amount-given)}</b>
+   </div>
+  `;
 
   return;
  }
 
- const resto=given-t;
+ const change=given-amount;
 
- document.getElementById("change").innerHTML=
-  `<div class="cover"
-  style="background:#145d30;text-align:center;font-size:22px">
-  💶 RESTO<br>
-  <b>${money(resto)}</b>
-  </div>`;
+ document.getElementById("change")
+ .innerHTML=`
+  <div class="cover"
+   style="
+    background:#145d30;
+    text-align:center;
+    font-size:22px
+   ">
+   💶 RESTO<br>
+   <b>${money(change)}</b>
+  </div>
+ `;
 
  setTimeout(()=>{
-  if(confirm("Pagamento completato.\n\nChiudere la comanda?"))
+
+  if(
+   confirm(
+    "Pagamento completato.\n\n"+
+    "Chiudere la comanda?"
+   )
+  ){
+
    finishPayment();
+
+  }
+
  },300);
 }
 
+
+/* =========================
+   PAGAMENTO CARTA
+========================= */
 
 function payCard(){
 
  if(!cart.length)
   return alert("La comanda è vuota.");
 
- if(confirm("💳 Pagare "+money(total())+" con carta?"))
-  finishPayment();
+ const amount=money(total());
+
+ if(
+  !confirm(
+   "💳 PAGAMENTO CON CARTA\n\n"+
+   "Totale: "+amount+
+   "\n\nConfermare il pagamento?"
+  )
+ )
+  return;
+
+ /*
+  Prima viene simulato il pagamento.
+  Dopo il pagamento chiediamo se visualizzare
+  lo scontrino DEMO.
+ */
+
+ const showReceipt=confirm(
+  "✅ PAGAMENTO CON CARTA COMPLETATO\n\n"+
+  "Vuoi visualizzare lo scontrino DEMO?\n\n"+
+  "⚠️ Il documento è NON FISCALE."
+ );
+
+ if(showReceipt){
+
+  showDemoReceipt("CARTA");
+
+ }
+
+ /*
+  La comanda viene chiusa dopo la scelta
+  dello scontrino.
+ */
+
+ finishPayment();
 }
 
 
+/* =========================
+   CHIUSURA PAGAMENTO
+========================= */
+
 function finishPayment(){
 
- if(selectedTable){
+ if(selectedTable!==null){
 
   tables[selectedTable-1].status="free";
   tables[selectedTable-1].order=[];
+  tables[selectedTable-1].reservation=null;
+
  }
 
  cart=[];
  cover=0;
  selectedTable=null;
 
- document.getElementById("coverQty").value=0;
+ document.getElementById("coverQty")
+ .value=0;
 
  document.getElementById("orderInfo")
  .textContent="Nessun tavolo / ordine";
@@ -2110,45 +2397,132 @@ function finishPayment(){
 
 
 /* =========================
-   SCONTRINO
+   SCONTRINO DEMO
 ========================= */
+
+function buildReceipt(paymentMethod){
+
+ let html=`
+
+ <div class="demoWarning">
+  ⚠️ DOCUMENTO DEMO<br>
+  NON FISCALE
+ </div>
+
+ <h2 style="text-align:center">
+  🍕 PIZZERIA
+ </h2>
+
+ <div style="text-align:center">
+  CASSA 01<br>
+  ${new Date().toLocaleString("it-IT")}<br>
+  PAGAMENTO: ${esc(paymentMethod)}
+ </div>
+
+ <hr>
+ `;
+
+ cart.forEach(item=>{
+
+  html+=`
+
+   <div style="
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+   ">
+    <span>
+     ${item.qty} × ${esc(item.name)}
+    </span>
+
+    <span>
+     ${money(item.price*item.qty)}
+    </span>
+   </div>
+  `;
+
+  if(item.mods?.length){
+
+   html+=`
+    <div style="font-size:12px;color:#555">
+     ${item.mods
+       .map(m=>esc(m.text))
+       .join(" • ")}
+    </div>
+   `;
+
+  }
+
+  if(item.note){
+
+   html+=`
+    <div style="font-size:12px">
+     📝 ${esc(item.note)}
+    </div>
+   `;
+
+  }
+
+  html+="<hr>";
+ });
+
+ if(cover){
+
+  html+=`
+
+   <div style="
+    display:flex;
+    justify-content:space-between
+   ">
+    <span>
+     Coperti ${cover} × €0,50
+    </span>
+
+    <span>
+     ${money(cover*.5)}
+    </span>
+   </div>
+
+  `;
+
+ }
+
+ html+=`
+
+  <h2 style="text-align:right">
+   TOTALE ${money(total())}
+  </h2>
+
+  <p style="text-align:center;font-weight:bold">
+   *** DOCUMENTO DEMO - NON FISCALE ***
+  </p>
+
+ `;
+
+ return html;
+}
+
+
+function showDemoReceipt(paymentMethod){
+
+ if(!cart.length)
+  return;
+
+ document.getElementById("receipt")
+ .innerHTML=
+  buildReceipt(paymentMethod);
+
+ document.getElementById("receiptModal")
+ .classList.add("show");
+}
+
 
 function printReceipt(){
 
  if(!cart.length)
   return alert("La comanda è vuota.");
 
- let html=`
- <h2 style="text-align:center">🍕 PIZZERIA</h2>
- <div style="text-align:center">
- CASSA 01<br>
- ${new Date().toLocaleString("it-IT")}
- </div>
- <hr>
- `;
-
- cart.forEach(x=>{
-  html+=`
-   ${x.qty} × ${esc(x.name)}
-   <span style="float:right">
-   ${money(x.price*x.qty)}
-   </span>
-   <br><hr>
-  `;
- });
-
- if(cover)
-  html+=`Coperti ${cover} × €0,50<br>`;
-
- html+=`
- <h2>TOTALE ${money(total())}</h2>
- <p style="text-align:center">*** GRAZIE ***</p>
- `;
-
- document.getElementById("receipt").innerHTML=html;
-
- document.getElementById("receiptModal")
- .classList.add("show");
+ showDemoReceipt("DA DEFINIRE");
 }
 
 
@@ -2156,7 +2530,14 @@ function printReceipt(){
    TIMER
 ========================= */
 
-const fryTimers=[null,null,null,null,null];
+const fryTimers=[
+ null,
+ null,
+ null,
+ null,
+ null
+];
+
 
 function showTimers(){
 
@@ -2171,13 +2552,15 @@ function showTimers(){
 
 function renderTimers(){
 
- const box=document.getElementById("timers");
+ const box=
+  document.getElementById("timers");
 
  box.innerHTML="";
 
  for(let i=0;i<5;i++){
 
   box.innerHTML+=`
+
    <div class="timerCard">
 
     <h2>🍟 TIMER ${i+1}</h2>
@@ -2202,6 +2585,7 @@ function renderTimers(){
     </button>
 
    </div>
+
   `;
  }
 }
@@ -2209,11 +2593,12 @@ function renderTimers(){
 
 function startTimer(i){
 
- if(fryTimers[i])return;
+ if(fryTimers[i])
+  return;
 
- const end=Date.now()+600000;
-
- fryTimers[i]={end};
+ fryTimers[i]={
+  end:Date.now()+600000
+ };
 
  runTimer(i);
 }
@@ -2221,29 +2606,34 @@ function startTimer(i){
 
 function runTimer(i){
 
- if(!fryTimers[i])return;
+ if(!fryTimers[i])
+  return;
 
- const sec=Math.max(
+ const seconds=Math.max(
   0,
-  Math.ceil((fryTimers[i].end-Date.now())/1000)
+  Math.ceil(
+   (fryTimers[i].end-Date.now())/1000
+  )
  );
 
- const el=document.getElementById("timer"+i);
+ const element=
+  document.getElementById("timer"+i);
 
- if(!sec){
+ if(!seconds){
 
-  el.innerHTML="🔔 <b>FRITTO PRONTO!</b>";
+  element.innerHTML=
+   "🔔 <b>FRITTO PRONTO!</b>";
 
-  el.classList.add("ready");
+  element.classList.add("ready");
 
   fryTimers[i]=null;
 
   return;
  }
 
- el.textContent=
-  Math.floor(sec/60)+":"+
-  String(sec%60).padStart(2,"0");
+ element.textContent=
+  Math.floor(seconds/60)+":"+
+  String(seconds%60).padStart(2,"0");
 
  setTimeout(()=>runTimer(i),500);
 }
@@ -2253,12 +2643,13 @@ function stopTimer(i){
 
  fryTimers[i]=null;
 
- const el=document.getElementById("timer"+i);
+ const element=
+  document.getElementById("timer"+i);
 
- if(el){
+ if(element){
 
-  el.textContent="LIBERO";
-  el.classList.remove("ready");
+  element.textContent="LIBERO";
+  element.classList.remove("ready");
 
  }
 }
@@ -2268,116 +2659,39 @@ function callTimer(i){
 
  alert(
   "🎙️ MICROFONO\n\n"+
-  "🍟 FRITTURA NUMERO "+(i+1)+" PRONTA!"
+  "🍟 FRITTURA NUMERO "+(i+1)+
+  " PRONTA!"
  );
 }
 
 
 /* =========================
-   TASTIERA NOMI
-========================= */
-
-const letters=[
-"Q","W","E","R","T","Y","U","I","O","P",
-"A","S","D","F","G","H","J","K","L",
-"Z","X","C","V","B","N","M"
-];
-
-function openNameKeyboard(target){
-
- keyboardTarget=target;
-
- keyboardValue=
-  document.getElementById(target).value||"";
-
- document.getElementById("keyboardDisplay")
- .value=keyboardValue;
-
- const box=document.getElementById("keyboard");
-
- box.innerHTML="";
-
- letters.forEach(l=>{
-
-  const b=document.createElement("button");
-
-  b.textContent=l;
-
-  b.onclick=()=>{
-
-   keyboardValue+=l;
-
-   document.getElementById("keyboardDisplay")
-   .value=keyboardValue;
-  };
-
-  box.appendChild(b);
- });
-
- [
-  ["⌫",()=>{
-
-   keyboardValue=keyboardValue.slice(0,-1);
-
-   document.getElementById("keyboardDisplay")
-   .value=keyboardValue;
-
-  }],
-  ["SPAZIO",()=>{
-
-   keyboardValue+=" ";
-
-   document.getElementById("keyboardDisplay")
-   .value=keyboardValue;
-
-  }]
- ].forEach(([txt,fn])=>{
-
-  const b=document.createElement("button");
-
-  b.textContent=txt;
-  b.className=txt==="SPAZIO"?"space":"wide";
-
-  b.onclick=fn;
-
-  box.appendChild(b);
- });
-
- document.getElementById("keyboardModal")
- .classList.add("show");
-}
-
-
-function confirmKeyboard(){
-
- document.getElementById(keyboardTarget)
- .value=keyboardValue;
-
- closeModal("keyboardModal");
-}
-
-
-/* =========================
    DATI DEMO
-   ORDINI GIÀ PRESENTI
 ========================= */
 
 function createDemoOrders(){
 
- const find=(cat,name)=>
-  menu[cat].find(x=>x.name===name);
+ const find=(category,name)=>
+  menu[category].find(
+   product=>product.name===name
+  );
 
- function item(cat,name,qty=1,note=""){
+ function item(
+  category,
+  name,
+  qty=1,
+  note=""
+ ){
 
-  const p=find(cat,name);
+  const product=find(category,name);
 
   return {
    name,
-   price:p?p.price:8,
+   price:product?product.price:8,
    qty,
    note,
    mods:[],
-   category:cat
+   category
   };
  }
 
@@ -2402,10 +2716,10 @@ function createDemoOrders(){
    name:"Marco - Asporto",
    cover:0,
    cart:[
-    item("Pizze","Capricciosa",1),
-    item("Pizze","Bufalina",1),
-    item("Pizze","Patatosa",1),
-    item("Fritti","Olive Ascolane",1),
+    item("Pizze","Capricciosa"),
+    item("Pizze","Bufalina"),
+    item("Pizze","Patatosa"),
+    item("Fritti","Olive Ascolane"),
     item("Bibite","Coca-Cola Zero",2)
    ]
   },
@@ -2417,8 +2731,8 @@ function createDemoOrders(){
    cart:[
     item("Pizze","Prosciutto e Funghi",2),
     item("Pizze","Salsiccia e Friarielli",2),
-    item("Pizze","Pistacchio e Burrata",1),
-    item("Panini","Panino Special",1),
+    item("Pizze","Pistacchio e Burrata"),
+    item("Panini","Panino Special"),
     item("Fritti","Misto Fritto",2),
     item("Birre","Birra Grande",3),
     item("Bibite","Acqua Naturale",3),
@@ -2432,12 +2746,12 @@ function createDemoOrders(){
    cover:0,
    cart:[
     item("Pizze","Margherita",2),
-    item("Pizze","Nduja",1),
-    item("Pizze","Crudo e Rucola",1),
-    item("Panini","Panino BBQ",1),
+    item("Pizze","Nduja"),
+    item("Pizze","Crudo e Rucola"),
+    item("Panini","Panino BBQ"),
     item("Fritti","Patatine Fritte",2),
     item("Bibite","Fanta",2),
-    item("Dolci","Pizza Nutella",1)
+    item("Dolci","Pizza Nutella")
    ]
   },
 
@@ -2447,9 +2761,9 @@ function createDemoOrders(){
    cover:8,
    cart:[
     item("Pizze","Quattro Stagioni",2),
-    item("Pizze","Tartufo e Funghi",1),
+    item("Pizze","Tartufo e Funghi"),
     item("Pizze","Carbonara",2),
-    item("Pizze","Cacio e Pepe",1),
+    item("Pizze","Cacio e Pepe"),
     item("Fritti","Supplì",3),
     item("Fritti","Mozzarelline",2),
     item("Birre","Birra Artigianale",3),
@@ -2464,9 +2778,9 @@ function createDemoOrders(){
    cover:0,
    cart:[
     item("Pizze","Americana",2),
-    item("Pizze","BBQ",1),
-    item("Pizze","Kebab Special",1),
-    item("Fritti","Anelli di Cipolla",1),
+    item("Pizze","BBQ"),
+    item("Pizze","Kebab Special"),
+    item("Fritti","Anelli di Cipolla"),
     item("Bibite","Sprite",2)
    ]
   }
@@ -2476,28 +2790,18 @@ function createDemoOrders(){
 
 
 /* =========================
-   DEMO TAVOLI
+   TAVOLI DEMO
 ========================= */
 
 function createDemoTables(){
 
- const demo=[
-  [3,"busy"],
-  [7,"busy"],
-  [11,"busy"],
-  [15,"busy"],
-  [19,"busy"],
-  [24,"busy"],
-  [28,"busy"],
-  [34,"busy"],
-  [41,"busy"],
-  [47,"busy"],
-  [53,"busy"],
-  [61,"busy"]
+ const busyTables=[
+  3,7,11,15,19,24,
+  28,34,41,47,53,61
  ];
 
- demo.forEach(([n,status])=>{
-  tables[n-1].status=status;
+ busyTables.forEach(number=>{
+  tables[number-1].status="busy";
  });
 
  const reservations=[
@@ -2515,35 +2819,37 @@ function createDemoTables(){
   [56,"Andrea","21:30",2]
  ];
 
- reservations.forEach(x=>{
+ reservations.forEach(
+  ([number,name,time,people])=>{
 
-  const t=tables[x[0]-1];
+   const table=tables[number-1];
 
-  t.status="reserved";
+   table.status="reserved";
 
-  t.reservation={
-   name:x[1],
-   time:x[2],
-   people:x[3]
-  };
+   table.reservation={
+    name,
+    time,
+    people
+   };
 
- });
+  }
+ );
 }
 
 
 /* =========================
-   CHIUSURA MODAL
+   CLICK FUORI MODAL
 ========================= */
 
 document.querySelectorAll(".modal")
-.forEach(m=>{
+.forEach(modal=>{
 
- m.onclick=e=>{
+ modal.addEventListener("click",event=>{
 
-  if(e.target===m)
-   m.classList.remove("show");
+  if(event.target===modal)
+   modal.classList.remove("show");
 
- };
+ });
 
 });
 
