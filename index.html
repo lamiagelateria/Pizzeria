@@ -7,88 +7,246 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
-  margin:0;background:#171717;color:#fff;
-  font-family:Arial,sans-serif;overflow:hidden
+ margin:0;
+ background:#171717;
+ color:white;
+ font-family:Arial,sans-serif;
+ overflow:hidden
 }
+
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 
 header{
-  height:65px;background:#c62828;display:flex;align-items:center;
-  justify-content:space-between;padding:0 20px;font-size:23px;
-  font-weight:bold;box-shadow:0 2px 8px #000;position:relative;z-index:20
+ height:65px;
+ background:#c62828;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 20px;
+ font-size:23px;
+ font-weight:bold;
+ box-shadow:0 2px 8px #000;
+ position:relative;
+ z-index:20
 }
-.badge{background:#991c1c;padding:9px 13px;border-radius:8px;font-size:13px}
+
+.badge{
+ background:#991c1c;
+ padding:9px 13px;
+ border-radius:8px;
+ font-size:13px
+}
 
 .app{
-  height:calc(100vh - 65px);
-  display:grid;grid-template-columns:115px 1fr 370px
+ height:calc(100vh - 65px);
+ display:grid;
+ grid-template-columns:115px 1fr 370px
 }
-nav{
-  background:#242424;padding:8px;overflow:auto;border-right:1px solid #444
-}
-nav button{
-  width:100%;min-height:65px;margin-bottom:7px;border:0;border-radius:9px;
-  background:#383838;color:#fff;font-weight:bold;font-size:12px
-}
-nav button:hover,nav button.active{background:#e53935}
-.ico{display:block;font-size:24px;margin-bottom:3px}
-nav hr{border:0;border-top:1px solid #555;margin:8px 0}
 
-main{padding:17px;overflow:auto;background:#202020}
-.title{
-  display:flex;justify-content:space-between;align-items:center;margin-bottom:15px
+nav{
+ background:#242424;
+ padding:8px;
+ overflow:auto;
+ border-right:1px solid #444
 }
+
+nav button{
+ width:100%;
+ min-height:62px;
+ margin-bottom:7px;
+ border:0;
+ border-radius:9px;
+ background:#383838;
+ color:white;
+ font-weight:bold;
+ font-size:12px
+}
+
+nav button:hover,
+nav button.active{
+ background:#e53935
+}
+
+.ico{
+ display:block;
+ font-size:23px;
+ margin-bottom:3px
+}
+
+nav hr{
+ border:0;
+ border-top:1px solid #555;
+ margin:8px 0
+}
+
+main{
+ padding:17px;
+ overflow:auto;
+ background:#202020
+}
+
+.title{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:15px
+}
+
 .title h2{margin:0}
 
 .products{
-  display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:11px
+ display:grid;
+ grid-template-columns:repeat(4,minmax(150px,1fr));
+ gap:11px
 }
+
 .product{
-  min-height:135px;padding:14px;text-align:left;color:#fff;
-  background:#353535;border:2px solid #484848;border-radius:11px
+ min-height:135px;
+ padding:14px;
+ text-align:left;
+ color:white;
+ background:#353535;
+ border:2px solid #484848;
+ border-radius:11px
 }
-.product:hover{background:#444;border-color:#ef5350}
-.product b{display:block;font-size:16px;margin-bottom:8px}
-.product small{display:block;color:#bbb;min-height:40px}
+
+.product:hover{
+ background:#444;
+ border-color:#ef5350
+}
+
+.product b{
+ display:block;
+ font-size:16px;
+ margin-bottom:8px
+}
+
+.product small{
+ display:block;
+ color:#bbb;
+ min-height:40px
+}
+
 .price{
-  display:block;color:#ffc107;font-size:19px;font-weight:bold;margin-top:9px
+ display:block;
+ color:#ffc107;
+ font-size:19px;
+ font-weight:bold;
+ margin-top:9px
 }
 
 aside{
-  background:#101010;border-left:2px solid #333;display:flex;flex-direction:column
-}
-.orderHead{background:#292929;padding:14px;font-size:19px;font-weight:bold}
-.orderInfo{display:block;color:#aaa;font-size:12px;margin-top:4px}
-.cart{flex:1;overflow:auto;padding:9px}
-.empty{text-align:center;color:#777;padding:60px 10px}
-.item{
-  background:#292929;border-left:4px solid #c62828;border-radius:8px;
-  padding:10px;margin-bottom:7px
-}
-.itemTop{display:flex;justify-content:space-between;gap:5px;font-weight:bold}
-.details{color:#aaa;font-size:12px;margin-top:6px;line-height:1.5}
-.itemBtns{display:flex;gap:5px;margin-top:8px}
-.itemBtns button{
-  border:0;background:#555;color:#fff;border-radius:5px;padding:7px 12px
+ background:#101010;
+ border-left:2px solid #333;
+ display:flex;
+ flex-direction:column
 }
 
-.cover{background:#202020;padding:9px 12px}
+.orderHead{
+ background:#292929;
+ padding:14px;
+ font-size:19px;
+ font-weight:bold
+}
+
+.orderInfo{
+ display:block;
+ color:#aaa;
+ font-size:12px;
+ margin-top:4px
+}
+
+.cart{
+ flex:1;
+ overflow:auto;
+ padding:9px
+}
+
+.empty{
+ text-align:center;
+ color:#777;
+ padding:60px 10px
+}
+
+.item{
+ background:#292929;
+ border-left:4px solid #c62828;
+ border-radius:8px;
+ padding:10px;
+ margin-bottom:7px
+}
+
+.itemTop{
+ display:flex;
+ justify-content:space-between;
+ gap:5px;
+ font-weight:bold
+}
+
+.details{
+ color:#aaa;
+ font-size:12px;
+ margin-top:6px;
+ line-height:1.5
+}
+
+.itemBtns{
+ display:flex;
+ gap:5px;
+ margin-top:8px
+}
+
+.itemBtns button{
+ border:0;
+ background:#555;
+ color:white;
+ border-radius:5px;
+ padding:7px 12px
+}
+
+.cover{
+ background:#202020;
+ padding:9px 12px
+}
+
 .cover input{
-  width:60px;padding:7px;background:#333;border:1px solid #555;
-  color:#fff;border-radius:5px
+ width:60px;
+ padding:7px;
+ background:#333;
+ border:1px solid #555;
+ color:white;
+ border-radius:5px
 }
+
 .total{
-  display:flex;justify-content:space-between;border-top:1px solid #444;
-  padding:14px;font-size:22px
+ display:flex;
+ justify-content:space-between;
+ border-top:1px solid #444;
+ padding:14px;
+ font-size:22px
 }
+
 .total b{color:#ffc107}
 
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px}
-.actions button,.modal button{
-  border:0;border-radius:7px;padding:12px;color:#fff;font-weight:bold
+.actions{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:6px;
+ padding:8px
 }
+
+.actions button,
+.modal button{
+ border:0;
+ border-radius:7px;
+ padding:12px;
+ color:white;
+ font-weight:bold
+}
+
 .green{background:#168844!important}
 .blue{background:#1769aa!important}
 .red{background:#c62828!important}
@@ -96,106 +254,288 @@ aside{
 .orange{background:#b77700!important}
 .purple{background:#7040a0!important}
 
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.big{
-  min-height:120px;border:0;border-radius:12px;background:#353535;
-  color:#fff;font-size:18px;font-weight:bold
+.grid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:12px
 }
+
+.big{
+ min-height:120px;
+ border:0;
+ border-radius:12px;
+ background:#353535;
+ color:white;
+ font-size:18px;
+ font-weight:bold
+}
+
 .big:hover{background:#e53935}
 
-.tables{display:grid;grid-template-columns:repeat(7,1fr);gap:9px}
-.table{
-  height:80px;border:0;border-radius:9px;color:#fff;font-weight:bold
+.tables{
+ display:grid;
+ grid-template-columns:repeat(7,1fr);
+ gap:9px
 }
-.table small{display:block;margin-top:5px}
+
+.table{
+ height:80px;
+ border:0;
+ border-radius:9px;
+ color:white;
+ font-weight:bold
+}
+
+.table small{
+ display:block;
+ margin-top:5px
+}
+
 .free{background:#168844}
 .busy{background:#c62828}
 .reserved{background:#b77700}
 
-.card{
-  background:#303030;padding:14px;border-radius:9px;margin-bottom:9px;
-  border-left:5px solid #ffc107
+.disabledTable{
+ background:#252525!important;
+ color:#666!important;
+ border:2px dashed #555;
+ cursor:not-allowed!important
 }
+
+.card{
+ background:#303030;
+ padding:14px;
+ border-radius:9px;
+ margin-bottom:9px;
+ border-left:5px solid #ffc107
+}
+
 .card h3{margin:0 0 7px}
+
 .card button{margin-right:5px}
 
 .modal{
-  position:fixed;inset:0;background:#000b;display:none;
-  align-items:center;justify-content:center;z-index:100;padding:15px
+ position:fixed;
+ inset:0;
+ background:#000b;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ z-index:100;
+ padding:15px
 }
+
 .modal.show{display:flex}
+
 .box{
-  width:min(700px,96vw);max-height:94vh;overflow:auto;background:#292929;
-  border-radius:13px;padding:20px;box-shadow:0 5px 40px #000
+ width:min(760px,96vw);
+ max-height:94vh;
+ overflow:auto;
+ background:#292929;
+ border-radius:13px;
+ padding:20px;
+ box-shadow:0 5px 40px #000
 }
+
 .box h2{margin-top:0}
-label{display:block;color:#ccc;margin-top:11px}
-.box input,.box textarea,.box select{
-  width:100%;padding:11px;margin-top:5px;border:0;border-radius:6px;
-  background:#fff;color:#111
+
+label{
+ display:block;
+ color:#ccc;
+ margin-top:11px
 }
+
+.box input,
+.box textarea,
+.box select{
+ width:100%;
+ padding:11px;
+ margin-top:5px;
+ border:0;
+ border-radius:6px;
+ background:white;
+ color:#111
+}
+
 textarea{min-height:75px}
 
-.ingredients{max-height:300px;overflow:auto}
+.ingredients{
+ max-height:280px;
+ overflow:auto
+}
+
 .ing{
-  display:flex;justify-content:space-between;align-items:center;
-  background:#353535;margin:5px 0;padding:8px;border-radius:6px;gap:8px
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:8px;
+ background:#353535;
+ margin:5px 0;
+ padding:7px;
+ border-radius:6px
 }
-.ing button{padding:7px!important;margin:0 2px}
-.mods{background:#171717;padding:9px;border-radius:6px;margin-top:8px}
+
+.ing button{
+ padding:7px!important;
+ margin:0 2px
+}
+
+.mods{
+ background:#171717;
+ padding:9px;
+ border-radius:6px;
+ margin-top:8px
+}
+
 .mod{
-  display:flex;justify-content:space-between;border-bottom:1px solid #333;
-  padding:6px
+ display:flex;
+ justify-content:space-between;
+ border-bottom:1px solid #333;
+ padding:5px
 }
-.final{text-align:right;color:#ffc107;font-size:24px;padding:14px}
+
+.final{
+ text-align:right;
+ color:#ffc107;
+ font-size:24px;
+ padding:14px
+}
 
 .keypad{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:7px;
+ margin-top:10px
 }
-.keypad button{font-size:25px;background:#444;padding:17px}
-.keypad .ok{grid-column:span 3;background:#168844}
+
+.keypad button{
+ font-size:25px;
+ background:#444;
+ padding:17px
+}
+
+.keypad .ok{
+ grid-column:span 3;
+ background:#168844
+}
+
 .display{
-  background:#080808;color:#7cff8a;padding:14px;border-radius:8px;
-  text-align:right;font-size:30px
+ background:#080808;
+ color:#7cff8a;
+ padding:14px;
+ border-radius:8px;
+ text-align:right;
+ font-size:30px
 }
 
 .receipt{
-  background:#fff;color:#111;padding:18px;font-family:monospace;
-  max-height:65vh;overflow:auto
+ background:white;
+ color:#111;
+ padding:18px;
+ font-family:monospace;
+ max-height:65vh;
+ overflow:auto
 }
+
 .warning{
-  color:#c62828;border:3px solid #c62828;text-align:center;padding:9px;
-  font-weight:bold;margin-bottom:10px
+ color:#c62828;
+ border:3px solid #c62828;
+ text-align:center;
+ padding:9px;
+ font-weight:bold;
+ margin-bottom:10px
 }
 
 .timer{
-  background:#292929;padding:16px;border-radius:9px;margin-bottom:10px
+ background:#292929;
+ padding:16px;
+ border-radius:9px;
+ margin-bottom:10px
 }
-.clock{color:#ffc107;font-size:29px;font-weight:bold;margin:9px 0}
+
+.clock{
+ color:#ffc107;
+ font-size:29px;
+ font-weight:bold;
+ margin:9px 0
+}
+
 .ready{color:#7cff8a}
 
-.focacciaTag{
-  display:inline-block;background:#8e24aa;color:#fff;padding:4px 7px;
-  border-radius:5px;font-size:11px;margin-bottom:7px
+.questionBox{
+ background:#191919;
+ border:1px solid #444;
+ border-radius:10px;
+ padding:12px;
+ margin:10px 0
+}
+
+.questionBox h3{
+ margin:0 0 9px;
+ color:#ffc107
+}
+
+.question{
+ padding:9px;
+ margin:5px 0;
+ border-radius:7px;
+ background:#303030;
+ border-left:4px solid #ffc107;
+ font-size:14px
+}
+
+.question.done{
+ border-left-color:#168844;
+ color:#8cff9c;
+ background:#1e3025
+}
+
+.tableSummary{
+ background:#303030;
+ padding:12px;
+ border-radius:8px;
+ margin-bottom:10px
+}
+
+.quick{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:7px;
+ margin-top:10px
+}
+
+.quick button{
+ border:0;
+ border-radius:7px;
+ padding:10px;
+ color:white;
+ font-weight:bold
 }
 
 @media(max-width:1200px){
-  .app{grid-template-columns:100px 1fr 330px}
-  .products{grid-template-columns:repeat(3,1fr)}
+ .app{grid-template-columns:100px 1fr 330px}
+ .products{grid-template-columns:repeat(3,1fr)}
 }
+
 @media(max-width:900px){
-  .app{grid-template-columns:85px 1fr}
-  aside{
-    position:fixed;right:0;top:65px;width:360px;max-width:94vw;
-    height:calc(100vh - 65px);z-index:50
-  }
-  .products{grid-template-columns:repeat(2,1fr)}
+ .app{grid-template-columns:85px 1fr}
+ aside{
+  position:fixed;
+  right:0;
+  top:65px;
+  width:360px;
+  max-width:94vw;
+  height:calc(100vh - 65px);
+  z-index:50
+ }
+ .products{grid-template-columns:repeat(2,1fr)}
 }
+
 @media(max-width:600px){
-  .products{grid-template-columns:repeat(2,1fr);gap:6px}
-  .product{padding:9px;min-height:120px}
-  .tables{grid-template-columns:repeat(3,1fr)}
-  .grid{grid-template-columns:1fr 1fr}
+ .products{grid-template-columns:repeat(2,1fr);gap:6px}
+ .product{padding:9px;min-height:120px}
+ .tables{grid-template-columns:repeat(3,1fr)}
+ .grid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -286,10 +626,15 @@ textarea{min-height:75px}
 
 <div class="title">
 <h2>🪑 TAVOLI</h2>
-<span>70 tavoli</span>
+<span>66 disponibili • 4 fuori servizio</span>
 </div>
 
-<p>🟢 Libero &nbsp; 🔴 Occupato &nbsp; 🟡 Prenotato</p>
+<p>
+🟢 Libero &nbsp;
+🔴 Occupato &nbsp;
+🟡 Prenotato &nbsp;
+⚫ Fuori servizio
+</p>
 
 <div id="tables" class="tables"></div>
 
@@ -319,10 +664,13 @@ textarea{min-height:75px}
 <aside>
 
 <div class="orderHead">
+
 🧾 COMANDA
+
 <span id="orderInfo" class="orderInfo">
 Nessun tavolo / ordine
 </span>
+
 </div>
 
 <div id="cart" class="cart"></div>
@@ -339,12 +687,31 @@ Nessun tavolo / ordine
 </div>
 
 <div class="actions">
-<button class="green" onclick="cashPayment()">💶 CONTANTI</button>
-<button class="blue" onclick="cardPayment()">💳 CARTA</button>
-<button class="orange" onclick="receiptDemo()">🧾 SCONTRINO</button>
-<button class="purple" onclick="saveOrder()">📋 SALVA</button>
-<button class="red" onclick="cancelOrder()">🗑️ ANNULLA</button>
-<button class="gray" onclick="showTimers()">⏱️ TIMER</button>
+
+<button class="green" onclick="cashPayment()">
+💶 CONTANTI
+</button>
+
+<button class="blue" onclick="cardPayment()">
+💳 CARTA
+</button>
+
+<button class="orange" onclick="receiptDemo()">
+🧾 SCONTRINO
+</button>
+
+<button class="purple" onclick="saveOrder()">
+📋 SALVA
+</button>
+
+<button class="red" onclick="cancelOrder()">
+🗑️ ANNULLA
+</button>
+
+<button class="gray" onclick="showTimers()">
+⏱️ TIMER
+</button>
+
 </div>
 
 </aside>
@@ -359,19 +726,13 @@ Nessun tavolo / ordine
 
 <h2 id="productName"></h2>
 
-<div id="productCategoryLabel"></div>
-
 <div class="cover">
 Prezzo base: <b id="basePrice"></b>
 </div>
 
 <div id="ingredientsBox">
 
-<h3>🧀 PERSONALIZZA INGREDIENTI</h3>
-
-<p style="color:#aaa;font-size:13px">
-Puoi togliere ingredienti, raddoppiarli oppure aggiungerli come extra.
-</p>
+<h3>🧀 MODIFICA INGREDIENTI</h3>
 
 <div id="ingredients" class="ingredients"></div>
 
@@ -397,63 +758,27 @@ Puoi togliere ingredienti, raddoppiarli oppure aggiungerli come extra.
 
 <label>📝 Note</label>
 
-<textarea id="note" placeholder="Es. ben cotta, senza cipolla..."></textarea>
+<textarea id="note"
+placeholder="Es. ben cotta, senza cipolla..."></textarea>
 
 <div class="final">
 Totale: <b id="finalPrice"></b>
 </div>
 
-<button class="green" style="width:100%" onclick="addProduct()">
+<button class="green"
+style="width:100%"
+onclick="addProduct()">
+
 ➕ AGGIUNGI ALLA COMANDA
+
 </button>
 
-<button class="gray" style="width:100%" onclick="closeModal('productModal')">
+<button class="gray"
+style="width:100%"
+onclick="closeModal('productModal')">
+
 ANNULLA
-</button>
 
-</div>
-</div>
-
-
-<!-- CONTANTI -->
-
-<div class="modal" id="cashModal">
-
-<div class="box">
-
-<h2>💶 PAGAMENTO CONTANTI</h2>
-
-<div class="cover">
-Totale: <b id="cashTotal"></b>
-</div>
-
-<div class="display" id="cashDisplay">€ 0,00</div>
-
-<div class="keypad">
-
-<button onclick="cashKey('1')">1</button>
-<button onclick="cashKey('2')">2</button>
-<button onclick="cashKey('3')">3</button>
-<button onclick="cashKey('4')">4</button>
-<button onclick="cashKey('5')">5</button>
-<button onclick="cashKey('6')">6</button>
-<button onclick="cashKey('7')">7</button>
-<button onclick="cashKey('8')">8</button>
-<button onclick="cashKey('9')">9</button>
-<button class="red" onclick="cashClear()">C</button>
-<button onclick="cashKey('0')">0</button>
-<button onclick="cashKey('.')">,</button>
-
-<button class="ok" onclick="confirmCash()">
-CONFERMA PAGAMENTO
-</button>
-
-</div>
-
-<div id="change"></div>
-
-<button class="gray" style="width:100%" onclick="closeModal('cashModal')">
-ANNULLA
 </button>
 
 </div>
@@ -470,20 +795,38 @@ ANNULLA
 
 <div id="tableInfo"></div>
 
-<button class="green" style="width:100%" onclick="openTable()">
-🧾 APRI COMANDA
+<div id="automaticQuestions"></div>
+
+<button class="green"
+style="width:100%"
+onclick="openTable()">
+
+🧾 APRI / CONTINUA COMANDA
+
 </button>
 
-<button class="orange" style="width:100%" onclick="reserveTable()">
+<button class="orange"
+style="width:100%"
+onclick="reserveTable()">
+
 📅 PRENOTA TAVOLO
+
 </button>
 
-<button class="red" style="width:100%" onclick="freeTable()">
+<button class="red"
+style="width:100%"
+onclick="freeTable()">
+
 🟢 LIBERA TAVOLO
+
 </button>
 
-<button class="gray" style="width:100%" onclick="closeModal('tableModal')">
+<button class="gray"
+style="width:100%"
+onclick="closeModal('tableModal')">
+
 CHIUDI
+
 </button>
 
 </div>
@@ -502,7 +845,7 @@ CHIUDI
 <input id="bookingName">
 
 <label>Persone</label>
-<input id="bookingPeople" type="number" min="1">
+<input id="bookingPeople" type="number">
 
 <label>Orario</label>
 <input id="bookingTime" type="time">
@@ -510,12 +853,74 @@ CHIUDI
 <label>Tavolo</label>
 <select id="bookingTable"></select>
 
-<button class="green" style="width:100%" onclick="saveBooking()">
+<button class="green"
+style="width:100%"
+onclick="saveBooking()">
+
 💾 SALVA
+
 </button>
 
-<button class="gray" style="width:100%" onclick="closeModal('bookingModal')">
+<button class="gray"
+style="width:100%"
+onclick="closeModal('bookingModal')">
+
 ANNULLA
+
+</button>
+
+</div>
+</div>
+
+
+<!-- CONTANTI -->
+
+<div class="modal" id="cashModal">
+
+<div class="box">
+
+<h2>💶 PAGAMENTO CONTANTI</h2>
+
+<div class="cover">
+Totale: <b id="cashTotal"></b>
+</div>
+
+<div class="display" id="cashDisplay">
+€ 0,00
+</div>
+
+<div class="keypad">
+
+<button onclick="cashKey('1')">1</button>
+<button onclick="cashKey('2')">2</button>
+<button onclick="cashKey('3')">3</button>
+
+<button onclick="cashKey('4')">4</button>
+<button onclick="cashKey('5')">5</button>
+<button onclick="cashKey('6')">6</button>
+
+<button onclick="cashKey('7')">7</button>
+<button onclick="cashKey('8')">8</button>
+<button onclick="cashKey('9')">9</button>
+
+<button class="red" onclick="cashClear()">C</button>
+<button onclick="cashKey('0')">0</button>
+<button onclick="cashKey('.')">,</button>
+
+<button class="ok" onclick="confirmCash()">
+CONFERMA PAGAMENTO
+</button>
+
+</div>
+
+<div id="change"></div>
+
+<button class="gray"
+style="width:100%"
+onclick="closeModal('cashModal')">
+
+ANNULLA
+
 </button>
 
 </div>
@@ -550,31 +955,35 @@ ANNULLA
 <label>Telefono</label>
 <input id="takePhone">
 
-<div id="addressField">
-
 <label>Indirizzo</label>
 <input id="takeAddress">
-
-</div>
 
 <label>Orario</label>
 <input id="takeTime" type="time">
 
-<button class="green" style="width:100%" onclick="openTakeawayOrder()">
+<button class="green"
+style="width:100%"
+onclick="openTakeawayOrder()">
+
 📋 APRI ORDINE
+
 </button>
 
 </div>
 
-<button class="gray" style="width:100%" onclick="closeModal('takeawayModal')">
+<button class="gray"
+style="width:100%"
+onclick="closeModal('takeawayModal')">
+
 CHIUDI
+
 </button>
 
 </div>
 </div>
 
 
-<!-- SCONTRINO -->
+<!-- ORDINE -->
 
 <div class="modal" id="receiptModal">
 
@@ -582,19 +991,21 @@ CHIUDI
 
 <div class="receipt" id="receipt"></div>
 
-<button class="green" style="width:100%" onclick="closeModal('receiptModal')">
+<button class="green"
+style="width:100%"
+onclick="closeModal('receiptModal')">
+
 CHIUDI
+
 </button>
 
 </div>
 </div>
 
 
-<script>
+<!-- SCRIPT -->
 
-/* =====================================================
-   MENU
-===================================================== */
+<script>
 
 const menu={
 
@@ -618,107 +1029,21 @@ Pizze:[
 "Siciliana","Greca","Mediterranea","Italiana"
 ].map((name,i)=>({
  name,
- price:+(7.5+(i%8)*.5).toFixed(2),
+ price:+(7.5+(i%4)*.5).toFixed(2),
  desc:"Pizza della casa"
 })),
 
-/* =====================================================
-   NUOVE FOCACCE
-===================================================== */
-
 Focacce:[
-{
- name:"Focaccia Semplice",
- price:5.5,
- desc:"Olio extravergine, sale e rosmarino",
- ingredients:[
-  ["Olio EVO",0],
-  ["Sale",0],
-  ["Rosmarino",0]
- ]
-},
-{
- name:"Focaccia Mortadella e Pistacchio",
- price:7.5,
- desc:"Mortadella, stracciatella e pistacchio",
- ingredients:[
-  ["Olio EVO",0],
-  ["Mortadella",1.5],
-  ["Stracciatella",2],
-  ["Pistacchio",2]
- ]
-},
-{
- name:"Focaccia Parma",
- price:7.5,
- desc:"Prosciutto crudo, mozzarella, rucola e grana",
- ingredients:[
-  ["Olio EVO",0],
-  ["Crudo",2],
-  ["Mozzarella",0],
-  ["Rucola",1],
-  ["Grana",1]
- ]
-},
-{
- name:"Focaccia Mediterranea",
- price:7,
- desc:"Pomodorini, mozzarella, olive e rucola",
- ingredients:[
-  ["Olio EVO",0],
-  ["Pomodorini",0],
-  ["Mozzarella",0],
-  ["Olive",0.7],
-  ["Rucola",1],
-  ["Origano",0]
- ]
-},
-{
- name:"Focaccia Speck e Brie",
- price:7.5,
- desc:"Speck, brie e rucola",
- ingredients:[
-  ["Olio EVO",0],
-  ["Speck",1.5],
-  ["Brie",1.5],
-  ["Rucola",1]
- ]
-},
-{
- name:"Focaccia Piccante",
- price:7.5,
- desc:"Salame piccante, provola e nduja",
- ingredients:[
-  ["Olio EVO",0],
-  ["Salame piccante",1],
-  ["Provola",1.5],
-  ["Nduja",1.5]
- ]
-},
-{
- name:"Focaccia Vegetariana",
- price:7,
- desc:"Verdure grigliate, mozzarella e pesto",
- ingredients:[
-  ["Olio EVO",0],
-  ["Melanzane",1],
-  ["Zucchine",1],
-  ["Peperoni",1],
-  ["Mozzarella",0],
-  ["Pesto",1]
- ]
-},
-{
- name:"Focaccia Porchetta e Provola",
- price:7.5,
- desc:"Porchetta, provola e rucola",
- ingredients:[
-  ["Olio EVO",0],
-  ["Porchetta",2],
-  ["Provola",1.5],
-  ["Rucola",1]
- ]
-}
+{name:"Focaccia Semplice",price:5.5,desc:"Olio, sale e rosmarino"},
+{name:"Focaccia Margherita",price:6,desc:"Pomodoro, mozzarella e basilico"},
+{name:"Focaccia Prosciutto",price:6.5,desc:"Prosciutto e mozzarella"},
+{name:"Focaccia Speck",price:7,desc:"Speck e mozzarella"},
+{name:"Focaccia Salsiccia",price:7,desc:"Salsiccia e provola"},
+{name:"Focaccia Vegetariana",price:6.5,desc:"Verdure e mozzarella"},
+{name:"Focaccia Bufala",price:7,desc:"Bufala e pomodorini"},
+{name:"Focaccia Crudo",price:7,desc:"Crudo, rucola e mozzarella"},
+{name:"Focaccia Mortadella",price:7,desc:"Mortadella, stracciatella e pistacchio"},
+{name:"Focaccia Special",price:7.5,desc:"Farcitura speciale della casa"}
 ],
 
 Panini:[
@@ -733,9 +1058,7 @@ Panini:[
 ["Panino Bresaola","Bresaola, rucola, parmigiano",8.5],
 ["Panino Nduja","Nduja, mozzarella, rucola",8],
 ["Panino Special","Hamburger, burrata, speck",9]
-].map(x=>({
- name:x[0],desc:x[1],price:x[2]
-})),
+].map(x=>({name:x[0],desc:x[1],price:x[2]})),
 
 Bibite:[
 {name:"Acqua Naturale 0,5 L",price:1.5},
@@ -789,43 +1112,12 @@ Caffe:[
 {name:"Ginseng",price:2}
 ],
 
-/* =====================================================
-   MENÙ BAMBINI
-===================================================== */
-
 Bambini:[
-{
- name:"Menù Bimbi Margherita",
- price:6,
- desc:"Pizza Margherita + patatine"
-},
-{
- name:"Menù Bimbi Wurstel",
- price:6,
- desc:"Pizza wurstel + patatine"
-},
-{
- name:"Menù Bimbi Patatine",
- price:5,
- desc:"Patatine fritte"
-},
-{
- name:"Pizza Baby",
- price:5,
- desc:"Pizza piccola a scelta"
-},
-{
- name:"Focaccia Semplice",
- price:5.5,
- desc:"Olio, sale e rosmarino",
- source:"Focacce",
- focacciaIndex:0,
- ingredients:[
-  ["Olio EVO",0],
-  ["Sale",0],
-  ["Rosmarino",0]
- ]
-}
+{name:"Menù Bimbi Margherita",price:6},
+{name:"Menù Bimbi Wurstel",price:6},
+{name:"Menù Bimbi Patatine",price:5},
+{name:"Pizza Baby",price:5},
+{name:"Focaccia Semplice Baby",price:5,desc:"Focaccia semplice con olio e sale"}
 ],
 
 Extra:[
@@ -837,27 +1129,17 @@ Extra:[
 {name:"Olive",price:1},
 {name:"Rucola",price:1},
 {name:"Burrata",price:2},
-{name:"Bufala",price:2},
-{name:"Pistacchio",price:2},
-{name:"Stracciatella",price:2},
-{name:"Crudo",price:2},
-{name:"Speck",price:1.5}
+{name:"Bufala",price:2}
 ]
 
 };
 
 
-/* =====================================================
-   INGREDIENTI EXTRA GENERALI
-===================================================== */
-
-const extraIngredients=[
+const ingredients=[
 ["Pomodoro",0],
 ["Mozzarella",0],
 ["Basilico",0],
 ["Origano",0],
-["Olio EVO",0],
-["Sale",0],
 ["Rosmarino",0],
 ["Funghi",1],
 ["Prosciutto",1.5],
@@ -885,10 +1167,7 @@ const extraIngredients=[
 ["Mortadella",1.5],
 ["Stracciatella",2],
 ["Porcini",2],
-["Crudo",2],
-["Grana",1],
-["Pomodorini",0],
-["Porchetta",2]
+["Crudo",2]
 ];
 
 const gelati=[
@@ -896,14 +1175,8 @@ const gelati=[
 "Nocciola","Fiordilatte","Fragola","Limone","Crema","Caffè"
 ];
 
-
-/* =====================================================
-   STATO
-===================================================== */
-
 let categoryNow="Pizze";
 let selectedProduct=null;
-let selectedMenuProduct=null;
 let modifications=[];
 let cart=[];
 let covers=0;
@@ -912,29 +1185,30 @@ let savedOrders=[];
 let takeawayType="";
 let cash="";
 
+const OUT_OF_SERVICE=[67,68,69,70];
+
 const tables=Array.from({length:70},(_,i)=>({
  number:i+1,
- status:"free",
+ status:OUT_OF_SERVICE.includes(i+1)?"disabled":"free",
  order:[],
  reservation:null,
+ notes:"",
  covers:0
 }));
 
 const timers=Array(5).fill(null);
-
-
-/* =====================================================
-   FUNZIONI GENERALI
-===================================================== */
 
 function money(n){
  return "€ "+Number(n||0).toFixed(2).replace(".",",");
 }
 
 function esc(s){
- return String(s??"").replace(/[&<>"']/g,m=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",
- '"':"&quot;","'":"&#039;"
+ return String(s).replace(/[&<>"']/g,m=>({
+ "&":"&amp;",
+ "<":"&lt;",
+ ">":"&gt;",
+ '"':"&quot;",
+ "'":"&#039;"
  }[m]));
 }
 
@@ -948,15 +1222,11 @@ function closeModal(id){
 
 function hidePages(){
  ["productsPage","tablesPage","ordersPage","timersPage"]
- .forEach(id=>{
-  document.getElementById(id).style.display="none";
- });
+ .forEach(id=>document.getElementById(id).style.display="none");
 }
 
 
-/* =====================================================
-   CATEGORIE
-===================================================== */
+/* CATEGORIE */
 
 const titles={
  Pizze:"🍕 Pizze",
@@ -994,7 +1264,7 @@ function renderProducts(){
  const box=document.getElementById("products");
  box.innerHTML="";
 
- const arr=menu[categoryNow]||[];
+ const arr=menu[categoryNow];
 
  document.getElementById("count").textContent=
  arr.length+" prodotti";
@@ -1004,18 +1274,10 @@ function renderProducts(){
   const b=document.createElement("button");
   b.className="product";
 
-  let tag="";
-
-  if(categoryNow==="Focacce" ||
-     p.source==="Focacce"){
-   tag='<span class="focacciaTag">🫓 MODIFICABILE</span>';
-  }
-
   b.innerHTML=`
-   ${tag}
-   <b>${esc(p.name)}</b>
-   <small>${esc(p.desc||"Premi per aggiungere")}</small>
-   <span class="price">${money(p.price)}</span>
+  <b>${esc(p.name)}</b>
+  <small>${esc(p.desc||"Premi per aggiungere")}</small>
+  <span class="price">${money(p.price)}</span>
   `;
 
   b.onclick=()=>openProduct(i);
@@ -1025,9 +1287,7 @@ function renderProducts(){
 }
 
 
-/* =====================================================
-   PRODOTTO
-===================================================== */
+/* PRODOTTO */
 
 function openProduct(i){
 
@@ -1036,29 +1296,22 @@ function openProduct(i){
 
  const p=menu[categoryNow][i];
 
- selectedMenuProduct=p;
-
  document.getElementById("productName").textContent=p.name;
  document.getElementById("basePrice").textContent=money(p.price);
  document.getElementById("quantity").value=1;
  document.getElementById("note").value="";
 
  const editable=
-  categoryNow==="Pizze" ||
-  categoryNow==="Focacce" ||
-  categoryNow==="Panini" ||
-  p.source==="Focacce";
+ categoryNow==="Pizze"||
+ categoryNow==="Focacce"||
+ categoryNow==="Panini"||
+ categoryNow==="Bambini";
 
  document.getElementById("ingredientsBox")
  .style.display=editable?"block":"none";
 
- document.getElementById("productCategoryLabel").innerHTML=
-  categoryNow==="Focacce"||p.source==="Focacce"
-  ?'<div class="focacciaTag">🫓 FOCACCIA PERSONALIZZABILE</div>'
-  :"";
-
  const gelato=
-  categoryNow==="Dolci"&&p.name==="Gelato";
+ categoryNow==="Dolci"&&p.name==="Gelato";
 
  document.getElementById("gelatoBox")
  .style.display=gelato?"block":"none";
@@ -1068,10 +1321,11 @@ function openProduct(i){
  if(gelato){
 
   ["gelato1","gelato2"].forEach(id=>{
-   document.getElementById(id).innerHTML=
-    gelati.map(x=>`<option>${esc(x)}</option>`).join("");
-  });
 
+   document.getElementById(id).innerHTML=
+   gelati.map(x=>`<option>${esc(x)}</option>`).join("");
+
+  });
  }
 
  updatePrice();
@@ -1079,208 +1333,83 @@ function openProduct(i){
  document.getElementById("productModal").classList.add("show");
 }
 
-
-/* =====================================================
-   INGREDIENTI DEL PRODOTTO
-===================================================== */
-
-function getProductIngredients(){
-
- const p=selectedMenuProduct;
-
- if(p.ingredients&&Array.isArray(p.ingredients)){
-  return p.ingredients;
- }
-
- if(categoryNow==="Pizze"){
-  return [
-   ["Pomodoro",0],
-   ["Mozzarella",0],
-   ["Basilico",0]
-  ];
- }
-
- if(categoryNow==="Panini"){
-  return [
-   ["Hamburger",0],
-   ["Mozzarella",0],
-   ["Pomodoro",0],
-   ["Insalata",0]
-  ];
- }
-
- return extraIngredients;
-}
-
 function renderIngredients(){
 
  const box=document.getElementById("ingredients");
  box.innerHTML="";
 
- const productIngredients=getProductIngredients();
+ ingredients.forEach(([name,price])=>{
 
- /*
-  * Prima mostriamo gli ingredienti già presenti.
-  * Poi permettiamo di aggiungere qualsiasi extra.
-  */
+  const row=document.createElement("div");
+  row.className="ing";
 
- const shown=new Set();
-
- productIngredients.forEach(([name,price])=>{
-
-  shown.add(name);
-
-  createIngredientRow(box,name,price,true);
-
- });
-
- const extrasTitle=document.createElement("div");
-
- extrasTitle.innerHTML=`
-  <h4 style="margin:14px 0 5px;color:#ffc107">
-   ➕ AGGIUNGI ALTRI INGREDIENTI
-  </h4>
- `;
-
- box.appendChild(extrasTitle);
-
- extraIngredients.forEach(([name,price])=>{
-
-  if(shown.has(name))return;
-
-  createIngredientRow(box,name,price,false);
-
- });
-}
-
-function createIngredientRow(box,name,price,present){
-
- const row=document.createElement("div");
- row.className="ing";
-
- row.innerHTML=`
+  row.innerHTML=`
   <span>
    <b>${esc(name)}</b><br>
-   <small>
-    ${present?"Presente":"Disponibile come extra"}
-    ${price?` • ${money(price)}`:""}
-   </small>
+   <small>Extra ${money(price)}</small>
   </span>
 
   <span>
-   <button class="red"
-    onclick="modifyIngredient(${JSON.stringify(name)},'remove')">
-    ❌
-   </button>
-
-   <button class="gray"
-    onclick="modifyIngredient(${JSON.stringify(name)},'half')">
-    ½
-   </button>
-
-   <button class="blue"
-    onclick="modifyIngredient(${JSON.stringify(name)},'double')">
-    ×2
-   </button>
-
-   <button class="green"
-    onclick="modifyIngredient(${JSON.stringify(name)},'extra')">
-    ➕
-   </button>
+   <button class="red" onclick="modify('${esc(name)}','remove')">❌</button>
+   <button class="gray" onclick="modify('${esc(name)}','half')">½</button>
+   <button class="blue" onclick="modify('${esc(name)}','double')">×2</button>
+   <button class="green" onclick="modify('${esc(name)}','extra')">➕</button>
   </span>
- `;
+  `;
 
- box.appendChild(row);
+  box.appendChild(row);
+ });
 }
 
-
-/* =====================================================
-   MODIFICA INGREDIENTE
-===================================================== */
-
-function modifyIngredient(name,type){
+function modify(name,type){
 
  modifications=modifications.filter(x=>x.name!==name);
 
- let found=
-  getProductIngredients().find(x=>x[0]===name) ||
-  extraIngredients.find(x=>x[0]===name);
-
- const price=found?Number(found[1]):1;
+ const found=ingredients.find(x=>x[0]===name);
+ const price=found?found[1]:1;
 
  let text="";
- let amount=0;
 
- if(type==="remove"){
-  text="❌ Senza "+name;
-  amount=0;
- }
-
- if(type==="half"){
-  text="½ "+name;
-  amount=0;
- }
-
- if(type==="double"){
-  text="×2 "+name;
-  amount=price;
- }
-
- if(type==="extra"){
-  text="➕ Extra "+name;
-  amount=price;
- }
+ if(type==="remove")text="❌ Senza "+name;
+ if(type==="half")text="½ "+name;
+ if(type==="double")text="×2 "+name;
+ if(type==="extra")text="➕ Extra "+name;
 
  modifications.push({
   name,
   text,
-  price:amount,
-  type
+  price:type==="remove"||type==="half"?0:price
  });
 
  updatePrice();
 }
 
-
-/* =====================================================
-   PREZZO
-===================================================== */
-
 function updatePrice(){
 
  if(selectedProduct===null)return;
 
- const p=selectedMenuProduct;
+ const p=menu[categoryNow][selectedProduct];
 
  const price=
-  Number(p.price)+
-  modifications.reduce((s,x)=>s+Number(x.price||0),0);
+ p.price+
+ modifications.reduce((s,x)=>s+x.price,0);
 
  document.getElementById("finalPrice").textContent=money(price);
 
  document.getElementById("mods").innerHTML=
-  modifications.length
-  ?
-  modifications.map(x=>`
-   <div class="mod">
-    <span>${esc(x.text)}</span>
-    <b>${x.price?money(x.price):""}</b>
-   </div>
-  `).join("")
-  :
-  "Nessuna";
+ modifications.length
+ ?modifications.map(x=>`
+  <div class="mod">
+   <span>${esc(x.text)}</span>
+   <b>${x.price?money(x.price):""}</b>
+  </div>
+ `).join("")
+ :"Nessuna";
 }
-
-
-/* =====================================================
-   AGGIUNGI ALLA COMANDA
-===================================================== */
 
 function addProduct(){
 
- const p=selectedMenuProduct;
-
- if(!p)return;
+ const p=menu[categoryNow][selectedProduct];
 
  const qty=Math.max(
   1,
@@ -1293,17 +1422,15 @@ function addProduct(){
 
  if(categoryNow==="Dolci"&&p.name==="Gelato"){
 
-  name+=
-   ` (${document.getElementById("gelato1").value} + `+
-   `${document.getElementById("gelato2").value})`;
+  name+=` (${document.getElementById("gelato1").value} + ${document.getElementById("gelato2").value})`;
+
  }
 
  const price=
-  Number(p.price)+
-  modifications.reduce((s,x)=>s+Number(x.price||0),0);
+ p.price+
+ modifications.reduce((s,x)=>s+x.price,0);
 
  cart.push({
-  id:Date.now()+Math.random(),
   name,
   price,
   qty,
@@ -1312,15 +1439,22 @@ function addProduct(){
   category:categoryNow
  });
 
+ if(selectedTable!==null){
+  tables[selectedTable-1].order=
+  JSON.parse(JSON.stringify(cart));
+ }
+
  renderCart();
 
  closeModal("productModal");
+
+ if(selectedTable!==null){
+  refreshTableQuestions();
+ }
 }
 
 
-/* =====================================================
-   COMANDA
-===================================================== */
+/* COMANDA */
 
 function renderCart(){
 
@@ -1329,10 +1463,9 @@ function renderCart(){
  if(!cart.length){
 
   box.innerHTML=`
-   <div class="empty">
-    🧾<br><br>Nessun prodotto
-   </div>
-  `;
+  <div class="empty">
+   🧾<br><br>Nessun prodotto
+  </div>`;
 
  }else{
 
@@ -1342,40 +1475,28 @@ function renderCart(){
 
    let details="";
 
-   if(item.mods?.length){
+   if(item.mods?.length)
+    details+=item.mods.map(x=>esc(x.text)).join("<br>");
 
-    details+=item.mods
-     .map(x=>esc(x.text))
-     .join("<br>");
-   }
-
-   if(item.note){
-
-    details+=
-     (details?"<br>":"")+
-     "📝 "+esc(item.note);
-   }
+   if(item.note)
+    details+=(details?"<br>":"")+"📝 "+esc(item.note);
 
    const div=document.createElement("div");
    div.className="item";
 
    div.innerHTML=`
-    <div class="itemTop">
-     <span>${item.qty} × ${esc(item.name)}</span>
-     <span>${money(item.price*item.qty)}</span>
-    </div>
+   <div class="itemTop">
+    <span>${item.qty} × ${esc(item.name)}</span>
+    <span>${money(item.price*item.qty)}</span>
+   </div>
 
-    ${details
-     ?`<div class="details">${details}</div>`
-     :""
-    }
+   ${details?`<div class="details">${details}</div>`:""}
 
-    <div class="itemBtns">
-     <button onclick="changeQty(${i},1)">＋</button>
-     <button onclick="changeQty(${i},-1)">−</button>
-     <button onclick="editCartItem(${i})">✏️</button>
-     <button onclick="removeItem(${i})">🗑️</button>
-    </div>
+   <div class="itemBtns">
+    <button onclick="changeQty(${i},1)">＋</button>
+    <button onclick="changeQty(${i},-1)">−</button>
+    <button onclick="removeItem(${i})">🗑️</button>
+   </div>
    `;
 
    box.appendChild(div);
@@ -1385,55 +1506,6 @@ function renderCart(){
  document.getElementById("total").textContent=money(orderTotal());
 }
 
-
-/* =====================================================
-   MODIFICA ARTICOLO GIÀ IN COMANDA
-===================================================== */
-
-function editCartItem(i){
-
- const item=cart[i];
-
- /*
-  * Per semplicità riapriamo il prodotto e ricostruiamo
-  * le modifiche già presenti.
-  */
-
- const arr=menu[item.category]||[];
-
- let index=arr.findIndex(p=>p.name===item.name);
-
- if(index<0){
-
-  /*
-   * Gestione speciale per il gelato e prodotti modificati.
-   */
-  index=arr.findIndex(p=>item.name.startsWith(p.name));
- }
-
- if(index<0){
-  alert("Questo articolo non può essere modificato.");
-  return;
- }
-
- categoryNow=item.category;
- openProduct(index);
-
- document.getElementById("quantity").value=item.qty||1;
- document.getElementById("note").value=item.note||"";
-
- modifications=
-  JSON.parse(JSON.stringify(item.mods||[]));
-
- updatePrice();
-
- /*
-  * Rimuoviamo l'articolo vecchio quando viene confermata
-  * una nuova versione.
-  */
- cart.splice(i,1);
-}
-
 function changeQty(i,n){
 
  cart[i].qty+=n;
@@ -1441,24 +1513,161 @@ function changeQty(i,n){
  if(cart[i].qty<=0)
   cart.splice(i,1);
 
+ syncTableOrder();
  renderCart();
+ refreshTableQuestions();
 }
 
 function removeItem(i){
 
  cart.splice(i,1);
+
+ syncTableOrder();
  renderCart();
+ refreshTableQuestions();
+}
+
+function syncTableOrder(){
+
+ if(selectedTable!==null){
+
+  tables[selectedTable-1].order=
+  JSON.parse(JSON.stringify(cart));
+
+ }
 }
 
 document.getElementById("covers").oninput=function(){
 
- covers=Math.max(
-  0,
-  Number(this.value)||0
- );
+ covers=Math.max(0,Number(this.value)||0);
+
+ if(selectedTable!==null)
+  tables[selectedTable-1].covers=covers;
 
  renderCart();
+ refreshTableQuestions();
 };
+
+
+/* DOMANDE AUTOMATICHE */
+
+function getQuestionState(){
+
+ const hasPizza=cart.some(x=>x.category==="Pizze");
+ const hasFocaccia=cart.some(x=>x.category==="Focacce");
+ const hasDrink=cart.some(x=>
+  x.category==="Bibite"||
+  x.category==="Birre"
+ );
+ const hasFood=cart.some(x=>
+  ["Pizze","Focacce","Panini","Fritti","Bambini"].includes(x.category)
+ );
+ const hasDessert=cart.some(x=>x.category==="Dolci");
+ const hasCoffee=cart.some(x=>x.category==="Caffe");
+ const hasNote=cart.some(x=>x.note);
+ const hasExtra=cart.some(x=>x.mods?.some(m=>m.text.includes("Extra")));
+
+ return {
+  people:covers>0,
+  food:hasFood,
+  pizza:hasPizza||hasFocaccia,
+  drinks:hasDrink,
+  extras:hasExtra,
+  notes:hasNote,
+  dessert:hasDessert,
+  coffee:hasCoffee,
+  bill:cart.length>0
+ };
+}
+
+function automaticQuestionsHTML(){
+
+ const q=getQuestionState();
+
+ const questions=[
+
+ {
+  done:q.people,
+  text:q.people
+   ?"✅ Coperti inseriti"
+   :"👥 Quante persone ci sono al tavolo?"
+ },
+
+ {
+  done:q.food,
+  text:q.food
+   ?"✅ Cibo ordinato"
+   :"🍽️ Hanno già scelto cosa mangiare?"
+ },
+
+ {
+  done:q.pizza,
+  text:q.pizza
+   ?"✅ Pizza/focaccia gestita"
+   :"🍕 Vogliono pizza o focaccia?"
+ },
+
+ {
+  done:q.drinks,
+  text:q.drinks
+   ?"✅ Bevande ordinate"
+   :"🥤 Hanno ordinato da bere?"
+ },
+
+ {
+  done:q.extras,
+  text:q.extras
+   ?"✅ Eventuali extra inseriti"
+   :"➕ Vogliono ingredienti extra?"
+ },
+
+ {
+  done:q.notes,
+  text:q.notes
+   ?"✅ Note presenti"
+   :"📝 Ci sono richieste particolari?"
+ },
+
+ {
+  done:q.dessert,
+  text:q.dessert
+   ?"✅ Dolce ordinato"
+   :"🍰 Vogliono il dolce?"
+ },
+
+ {
+  done:q.coffee,
+  text:q.coffee
+   ?"✅ Caffè ordinato"
+   :"☕ Vogliono caffè?"
+ },
+
+ {
+  done:q.bill,
+  text:q.bill
+   ?"💶 Conto pronto da verificare"
+   :"💶 Chiedere il conto?"
+ }
+
+ ];
+
+ return `
+ <div class="questionBox">
+
+ <h3>🤖 DOMANDE AUTOMATICHE</h3>
+
+ ${questions.map(x=>`
+  <div class="question ${x.done?"done":""}">
+   ${x.text}
+  </div>
+ `).join("")}
+
+ </div>
+ `;
+}
+
+
+/* ANNULLA */
 
 function cancelOrder(){
 
@@ -1468,20 +1677,27 @@ function cancelOrder(){
 
  cart=[];
  covers=0;
+
+ if(selectedTable!==null){
+
+  tables[selectedTable-1].order=[];
+  tables[selectedTable-1].covers=0;
+  tables[selectedTable-1].status="free";
+
+ }
+
  selectedTable=null;
 
  document.getElementById("covers").value=0;
  document.getElementById("orderInfo").textContent=
-  "Nessun tavolo / ordine";
+ "Nessun tavolo / ordine";
 
  renderCart();
  renderTables();
 }
 
 
-/* =====================================================
-   TAVOLI
-===================================================== */
+/* TAVOLI */
 
 function showTables(){
 
@@ -1503,24 +1719,32 @@ function renderTables(){
 
   b.className="table "+t.status;
 
-  const text=
-   t.status==="free"
-   ?"LIBERO"
-   :
-   t.status==="busy"
-   ?"OCCUPATO"
-   :"PRENOTATO";
+  if(t.status==="disabled"){
 
-  b.innerHTML=`
+   b.className="table disabledTable";
+
+   b.innerHTML=`
+   TAVOLO ${t.number}
+   <small>FUORI SERVIZIO</small>
+   `;
+
+   b.disabled=true;
+
+  }else{
+
+   const text=
+    t.status==="free"?"LIBERO":
+    t.status==="busy"?"OCCUPATO":"PRENOTATO";
+
+   b.innerHTML=`
    TAVOLO ${t.number}
    <small>
-    ${text}
-    ${t.order.length?" • 🧾":""}
-    ${t.covers?` • 👥 ${t.covers}`:""}
+   ${text}${t.order.length?" • 🧾":""}
    </small>
-  `;
+   `;
 
-  b.onclick=()=>selectTable(t.number);
+   b.onclick=()=>selectTable(t.number);
+  }
 
   box.appendChild(b);
  });
@@ -1528,35 +1752,96 @@ function renderTables(){
 
 function selectTable(n){
 
+ if(OUT_OF_SERVICE.includes(n))return;
+
  selectedTable=n;
 
  const t=tables[n-1];
 
- document.getElementById("tableTitle").textContent=
-  "🪑 TAVOLO "+n;
+ document.getElementById("tableTitle")
+ .textContent="🪑 TAVOLO "+n;
 
- document.getElementById("tableInfo").innerHTML=
+ document.getElementById("tableInfo").innerHTML=`
 
-  t.reservation
-  ?
-  `
-   <div class="cover">
-    📅 <b>${esc(t.reservation.name)}</b><br>
-    Ore ${esc(t.reservation.time)}<br>
-    ${t.reservation.people} persone
-   </div>
-  `
-  :
-  t.order.length
-  ?
-  `<p>
-   🧾 Comanda presente: ${t.order.length} prodotti.
-   <br>👥 Coperti: ${t.covers||0}
-  </p>`
-  :
-  "<p>Tavolo libero.</p>";
+ <div class="tableSummary">
+
+ <b>Stato:</b>
+ ${
+  t.status==="free"?"🟢 Libero":
+  t.status==="busy"?"🔴 Occupato":
+  "🟡 Prenotato"
+ }
+
+ <br>
+
+ <b>Coperti:</b> ${t.covers||0}
+
+ <br>
+
+ <b>Prodotti:</b> ${t.order.length}
+
+ </div>
+
+ ${
+ t.reservation
+ ?`
+ <div class="cover">
+ 📅 <b>${esc(t.reservation.name)}</b><br>
+ Ore ${esc(t.reservation.time)}<br>
+ ${t.reservation.people} persone
+ </div>
+ `
+ :""
+ }
+
+ `;
+
+ document.getElementById("automaticQuestions").innerHTML=
+ automaticQuestionsHTML();
 
  document.getElementById("tableModal").classList.add("show");
+}
+
+function refreshTableQuestions(){
+
+ if(selectedTable===null)return;
+
+ const el=document.getElementById("automaticQuestions");
+
+ if(el){
+  el.innerHTML=automaticQuestionsHTML();
+ }
+
+ const t=tables[selectedTable-1];
+
+ if(t){
+
+  const info=document.getElementById("tableInfo");
+
+  if(info){
+
+   info.innerHTML=`
+   <div class="tableSummary">
+
+   <b>Stato:</b>
+   ${
+    t.status==="free"?"🟢 Libero":
+    t.status==="busy"?"🔴 Occupato":
+    "🟡 Prenotato"
+   }
+
+   <br>
+
+   <b>Coperti:</b> ${covers}
+
+   <br>
+
+   <b>Prodotti:</b> ${cart.length}
+
+   </div>
+   `;
+  }
+ }
 }
 
 function openTable(){
@@ -1565,33 +1850,19 @@ function openTable(){
 
  cart=JSON.parse(JSON.stringify(t.order||[]));
 
- covers=Number(t.covers||0);
-
- t.status="busy";
+ covers=t.covers||0;
 
  document.getElementById("covers").value=covers;
 
- document.getElementById("orderInfo").textContent=
-  "🪑 Tavolo "+selectedTable;
+ t.status="busy";
+
+ document.getElementById("orderInfo")
+ .textContent="🪑 Tavolo "+selectedTable;
 
  closeModal("tableModal");
 
  renderCart();
  renderTables();
-}
-
-function saveTable(){
-
- if(selectedTable!==null){
-
-  const t=tables[selectedTable-1];
-
-  t.order=JSON.parse(JSON.stringify(cart));
-  t.covers=covers;
-
-  if(cart.length)
-   t.status="busy";
- }
 }
 
 function freeTable(){
@@ -1602,16 +1873,17 @@ function freeTable(){
 
  t.status="free";
  t.order=[];
- t.covers=0;
  t.reservation=null;
+ t.covers=0;
 
  cart=[];
  covers=0;
  selectedTable=null;
 
  document.getElementById("covers").value=0;
- document.getElementById("orderInfo").textContent=
-  "Nessun tavolo / ordine";
+
+ document.getElementById("orderInfo")
+ .textContent="Nessun tavolo / ordine";
 
  closeModal("tableModal");
 
@@ -1620,9 +1892,7 @@ function freeTable(){
 }
 
 
-/* =====================================================
-   PRENOTAZIONE
-===================================================== */
+/* PRENOTAZIONE */
 
 function reserveTable(){
 
@@ -1630,14 +1900,13 @@ function reserveTable(){
 
  const select=document.getElementById("bookingTable");
 
- select.innerHTML=
-  tables
-  .filter(t=>t.status!=="busy")
-  .map(t=>
-   `<option value="${t.number}">
-    Tavolo ${t.number}
-   </option>`
-  ).join("");
+ select.innerHTML=tables
+ .filter(t=>t.status!=="busy"&&t.status!=="disabled")
+ .map(t=>`
+ <option value="${t.number}">
+ Tavolo ${t.number}
+ </option>
+ `).join("");
 
  if(selectedTable)
   select.value=selectedTable;
@@ -1652,21 +1921,22 @@ function reserveTable(){
 function saveBooking(){
 
  const name=
-  document.getElementById("bookingName").value.trim();
+ document.getElementById("bookingName").value.trim();
 
  const people=
-  Number(document.getElementById("bookingPeople").value)||0;
+ Number(document.getElementById("bookingPeople").value)||0;
 
  const time=
-  document.getElementById("bookingTime").value;
+ document.getElementById("bookingTime").value;
 
  const number=
-  Number(document.getElementById("bookingTable").value);
+ Number(document.getElementById("bookingTable").value);
 
  if(!name||!time){
 
   alert("Inserisci nome e orario.");
   return;
+
  }
 
  const t=tables[number-1];
@@ -1687,16 +1957,13 @@ function saveBooking(){
 }
 
 
-/* =====================================================
-   ASPORTO
-===================================================== */
+/* ASPORTO */
 
 function openTakeaway(){
 
  takeawayType="";
 
  document.getElementById("takeForm").style.display="none";
- document.getElementById("addressField").style.display="block";
 
  document.getElementById("takeawayModal").classList.add("show");
 }
@@ -1707,8 +1974,8 @@ function takeaway(type){
 
  document.getElementById("takeForm").style.display="block";
 
- document.getElementById("addressField").style.display=
-  type==="Domicilio"?"block":"none";
+ document.getElementById("takeAddress").style.display=
+ type==="Domicilio"?"block":"none";
 }
 
 function openTakeawayOrder(){
@@ -1717,6 +1984,7 @@ function openTakeawayOrder(){
 
   alert("Scegli domicilio o ritiro.");
   return;
+
  }
 
  cart=[];
@@ -1726,9 +1994,9 @@ function openTakeawayOrder(){
  document.getElementById("covers").value=0;
 
  document.getElementById("orderInfo").textContent=
-  takeawayType==="Domicilio"
-  ?"🚚 Ordine domicilio"
-  :"🏪 Ordine ritiro";
+ takeawayType==="Domicilio"
+ ?"🚚 Ordine domicilio"
+ :"🏪 Ordine ritiro";
 
  closeModal("takeawayModal");
 
@@ -1736,9 +2004,7 @@ function openTakeawayOrder(){
 }
 
 
-/* =====================================================
-   ORDINI
-===================================================== */
+/* ORDINI */
 
 function saveOrder(){
 
@@ -1746,18 +2012,12 @@ function saveOrder(){
 
   alert("La comanda è vuota.");
   return;
+
  }
 
- /*
-  * Se la comanda è di un tavolo, aggiorniamo prima
-  * il tavolo.
-  */
-
- saveTable();
-
  const name=prompt(
-  "Nome ordine:",
-  "Ordine "+(savedOrders.length+1)
+ "Nome ordine:",
+ "Ordine "+(savedOrders.length+1)
  );
 
  if(!name)return;
@@ -1790,12 +2050,12 @@ function renderOrders(){
  box.innerHTML="";
 
  document.getElementById("orderCount").textContent=
-  savedOrders.length+" ordini";
+ savedOrders.length+" ordini";
 
  if(!savedOrders.length){
 
   box.innerHTML=
-   '<div class="empty">📋<br><br>Nessun ordine aperto</div>';
+  '<div class="empty">📋<br><br>Nessun ordine aperto</div>';
 
   return;
  }
@@ -1803,37 +2063,41 @@ function renderOrders(){
  savedOrders.forEach((o,i)=>{
 
   const total=
-   o.cart.reduce((s,x)=>s+x.price*x.qty,0)+
-   o.covers*.5;
+  o.cart.reduce((s,x)=>s+x.price*x.qty,0)+o.covers*.5;
 
   const div=document.createElement("div");
 
   div.className="card";
 
   div.innerHTML=`
-   <h3>📋 ${esc(o.name)}</h3>
 
-   <div>
-    ${o.cart.map(x=>
-     `${x.qty} × ${esc(x.name)}`
-    ).join("<br>")}
-   </div>
+  <h3>📋 ${esc(o.name)}</h3>
 
-   <h3 style="color:#ffc107">
-    ${money(total)}
-   </h3>
+  <div>
+   ${o.cart.map(x=>
+    `${x.qty} × ${esc(x.name)}`
+   ).join("<br>")}
+  </div>
 
-   <button class="green" onclick="loadOrder(${i})">
-    APRI
-   </button>
+  <h3 style="color:#ffc107">
+   ${money(total)}
+  </h3>
 
-   <button class="blue" onclick="paySaved(${i})">
-    PAGA
-   </button>
+  <button class="green"
+  onclick="loadOrder(${i})">
+   APRI
+  </button>
 
-   <button class="red" onclick="deleteOrder(${i})">
-    🗑️
-   </button>
+  <button class="blue"
+  onclick="paySaved(${i})">
+   PAGA
+  </button>
+
+  <button class="red"
+  onclick="deleteOrder(${i})">
+   🗑️
+  </button>
+
   `;
 
   box.appendChild(div);
@@ -1849,8 +2113,8 @@ function loadOrder(i){
 
  document.getElementById("covers").value=covers;
 
- document.getElementById("orderInfo").textContent=
-  "📋 "+o.name;
+ document.getElementById("orderInfo")
+ .textContent="📋 "+o.name;
 
  savedOrders.splice(i,1);
 
@@ -1863,6 +2127,7 @@ function paySaved(i){
  const o=savedOrders[i];
 
  cart=JSON.parse(JSON.stringify(o.cart));
+
  covers=o.covers;
 
  document.getElementById("covers").value=covers;
@@ -1885,9 +2150,7 @@ function deleteOrder(i){
 }
 
 
-/* =====================================================
-   PAGAMENTI
-===================================================== */
+/* PAGAMENTI */
 
 function cashPayment(){
 
@@ -1895,15 +2158,16 @@ function cashPayment(){
 
   alert("La comanda è vuota.");
   return;
+
  }
 
  cash="";
 
  document.getElementById("cashTotal").textContent=
-  money(orderTotal());
+ money(orderTotal());
 
  document.getElementById("cashDisplay").textContent=
-  "€ 0,00";
+ "€ 0,00";
 
  document.getElementById("change").innerHTML="";
 
@@ -1917,7 +2181,7 @@ function cashKey(x){
  cash+=x;
 
  document.getElementById("cashDisplay").textContent=
-  money(Number(cash)||0);
+ money(Number(cash)||0);
 }
 
 function cashClear(){
@@ -1925,7 +2189,7 @@ function cashClear(){
  cash="";
 
  document.getElementById("cashDisplay").textContent=
-  "€ 0,00";
+ "€ 0,00";
 
  document.getElementById("change").innerHTML="";
 }
@@ -1933,27 +2197,36 @@ function cashClear(){
 function confirmCash(){
 
  const given=Number(cash)||0;
+
  const amount=orderTotal();
 
  if(given<amount){
 
   document.getElementById("change").innerHTML=`
-   <div class="card"
-    style="background:#7d2020;text-align:center">
-    ⚠️ MANCANO<br>
-    <b>${money(amount-given)}</b>
-   </div>
+
+  <div class="card"
+  style="background:#7d2020;text-align:center">
+
+   ⚠️ MANCANO<br>
+   <b>${money(amount-given)}</b>
+
+  </div>
+
   `;
 
   return;
  }
 
  document.getElementById("change").innerHTML=`
-  <div class="card"
-   style="background:#145d30;text-align:center">
-   💶 RESTO<br>
-   <b>${money(given-amount)}</b>
-  </div>
+
+ <div class="card"
+ style="background:#145d30;text-align:center">
+
+ 💶 RESTO<br>
+ <b>${money(given-amount)}</b>
+
+ </div>
+
  `;
 
  setTimeout(()=>{
@@ -1970,12 +2243,13 @@ function cardPayment(){
 
   alert("La comanda è vuota.");
   return;
+
  }
 
  if(!confirm(
-  "💳 PAGAMENTO CON CARTA\n\n"+
-  "Totale: "+money(orderTotal())+
-  "\n\nConfermare?"
+ "💳 PAGAMENTO CON CARTA\n\n"+
+ "Totale: "+money(orderTotal())+
+ "\n\nConfermare?"
  ))return;
 
  alert("✅ PAGAMENTO CON CARTA COMPLETATO");
@@ -1991,8 +2265,8 @@ function finishPayment(){
 
   t.status="free";
   t.order=[];
-  t.covers=0;
   t.reservation=null;
+  t.covers=0;
  }
 
  cart=[];
@@ -2001,8 +2275,8 @@ function finishPayment(){
 
  document.getElementById("covers").value=0;
 
- document.getElementById("orderInfo").textContent=
-  "Nessun tavolo / ordine";
+ document.getElementById("orderInfo")
+ .textContent="Nessun tavolo / ordine";
 
  closeModal("cashModal");
 
@@ -2011,9 +2285,7 @@ function finishPayment(){
 }
 
 
-/* =====================================================
-   SCONTRINO DEMO
-===================================================== */
+/* SCONTRINO */
 
 function receiptDemo(){
 
@@ -2021,89 +2293,88 @@ function receiptDemo(){
 
   alert("La comanda è vuota.");
   return;
+
  }
 
  let html=`
-  <div class="warning">
-   ⚠️ DOCUMENTO DEMO<br>
-   NON FISCALE
-  </div>
 
-  <h2 style="text-align:center">
-   🍕 PIZZERIA
-  </h2>
+ <div class="warning">
+ ⚠️ DOCUMENTO DEMO<br>
+ NON FISCALE
+ </div>
 
-  <div style="text-align:center">
-   CASSA 01<br>
-   ${new Date().toLocaleString("it-IT")}
-  </div>
+ <h2 style="text-align:center">
+ 🍕 PIZZERIA
+ </h2>
 
-  <hr>
+ <div style="text-align:center">
+ CASSA 01<br>
+ ${new Date().toLocaleString("it-IT")}
+ </div>
+
+ <hr>
+
  `;
 
  cart.forEach(x=>{
 
   html+=`
-   <div style="
-    display:flex;
-    justify-content:space-between">
-    <span>${x.qty} × ${esc(x.name)}</span>
-    <span>${money(x.price*x.qty)}</span>
-   </div>
+
+  <div style="display:flex;justify-content:space-between">
+
+   <span>
+   ${x.qty} × ${esc(x.name)}
+   </span>
+
+   <span>
+   ${money(x.price*x.qty)}
+   </span>
+
+  </div>
+
   `;
 
-  if(x.mods?.length){
-
-   html+=`
-    <small>
-     ${x.mods.map(m=>esc(m.text)).join("<br>")}
-    </small>
-   `;
-  }
-
-  if(x.note){
-
-   html+=`
-    <small>
-     📝 ${esc(x.note)}
-    </small>
-   `;
-  }
+  if(x.note)
+   html+=`<small>📝 ${esc(x.note)}</small>`;
 
   html+="<hr>";
+
  });
 
- if(covers){
+ if(covers)
 
   html+=`
-   <div style="
-    display:flex;
-    justify-content:space-between">
-    <span>Coperti ${covers}</span>
-    <span>${money(covers*.5)}</span>
-   </div>
+
+  <div style="display:flex;justify-content:space-between">
+
+   <span>Coperti ${covers}</span>
+
+   <span>${money(covers*.5)}</span>
+
+  </div>
+
   `;
- }
 
  html+=`
-  <h2 style="text-align:right">
-   TOTALE ${money(orderTotal())}
-  </h2>
 
-  <p style="text-align:center;font-weight:bold">
-   *** NON FISCALE - DEMO ***
-  </p>
+ <h2 style="text-align:right">
+ TOTALE ${money(orderTotal())}
+ </h2>
+
+ <p style="text-align:center;font-weight:bold">
+ *** NON FISCALE - DEMO ***
+ </p>
+
  `;
 
  document.getElementById("receipt").innerHTML=html;
 
- document.getElementById("receiptModal").classList.add("show");
+ document.getElementById("receiptModal")
+ .classList.add("show");
 }
 
 
-/* =====================================================
-   TIMER
-===================================================== */
+/* TIMER */
 
 function showTimers(){
 
@@ -2123,30 +2394,32 @@ function renderTimers(){
  for(let i=0;i<5;i++){
 
   box.innerHTML+=`
-   <div class="timer">
 
-    <h2>🍟 TIMER ${i+1}</h2>
+  <div class="timer">
 
-    <div id="clock${i}" class="clock">
-     LIBERO
-    </div>
+   <h2>🍟 TIMER ${i+1}</h2>
 
-    <button class="green"
-     onclick="startTimer(${i})">
-     ▶️ AVVIA 10 MIN
-    </button>
-
-    <button class="red"
-     onclick="stopTimer(${i})">
-     ⏹️ FERMA
-    </button>
-
-    <button class="purple"
-     onclick="callTimer(${i})">
-     🎙️ CHIAMA
-    </button>
-
+   <div id="clock${i}" class="clock">
+    LIBERO
    </div>
+
+   <button class="green"
+   onclick="startTimer(${i})">
+    ▶️ AVVIA 10 MIN
+   </button>
+
+   <button class="red"
+   onclick="stopTimer(${i})">
+    ⏹️ FERMA
+   </button>
+
+   <button class="purple"
+   onclick="callTimer(${i})">
+    🎙️ CHIAMA
+   </button>
+
+  </div>
+
   `;
  }
 }
@@ -2191,8 +2464,8 @@ function updateTimer(i){
  el.classList.remove("ready");
 
  el.textContent=
-  Math.floor(seconds/60)+":"+
-  String(seconds%60).padStart(2,"0");
+ Math.floor(seconds/60)+":"+
+ String(seconds%60).padStart(2,"0");
 
  setTimeout(()=>updateTimer(i),500);
 }
@@ -2214,15 +2487,12 @@ function stopTimer(i){
 function callTimer(i){
 
  alert(
-  "🎙️ FRITTURA NUMERO "+
-  (i+1)+" PRONTA!"
+  "🎙️ FRITTURA NUMERO "+(i+1)+" PRONTA!"
  );
 }
 
 
-/* =====================================================
-   CHIUSURA MODALI
-===================================================== */
+/* CHIUSURA MODALI */
 
 document.querySelectorAll(".modal").forEach(modal=>{
 
@@ -2232,13 +2502,10 @@ document.querySelectorAll(".modal").forEach(modal=>{
    modal.classList.remove("show");
 
  });
-
 });
 
 
-/* =====================================================
-   AVVIO
-===================================================== */
+/* AVVIO */
 
 category(
  "Pizze",
